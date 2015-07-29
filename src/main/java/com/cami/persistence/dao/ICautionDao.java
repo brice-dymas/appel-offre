@@ -16,6 +16,9 @@ public interface ICautionDao extends JpaRepository<Caution, Long>, JpaSpecificat
     @Query("SELECT c FROM Caution c WHERE c.appelOffre.id = :appelOffreId")
     List<Caution> filterByAppelOffre(@Param("appelOffreId") Long appelOffreId);
 
+    @Query("SELECT c FROM Caution c WHERE c.appelOffre.id = :appelOffreId AND c.commercial.id= :idCommercial")
+    List<Caution> filterByAppelOffreAndUser(@Param("appelOffreId") Long appelOffreId, @Param("idCommercial") Long idCommercial);
+
     @Query("SELECT c FROM Caution c WHERE c.dateDebut LIKE :dateDebut OR c.dateFin LIKE :dateFin OR c.banque LIKE :banque")
     Page<Caution> filterByPeriod(@Param("dateDebut") String dateDebut,
             @Param("dateFin") String dateFin, @Param("banque") String banque,
@@ -23,6 +26,9 @@ public interface ICautionDao extends JpaRepository<Caution, Long>, JpaSpecificat
 
     @Query("SELECT c FROM Caution c WHERE c.banque.libelle LIKE :banque")
     Page<Caution> filterByBank(@Param("banque") String banque, Pageable pageable);
+
+    @Query("SELECT c FROM Caution c WHERE c.banque.libelle LIKE :banque AND c.commercial.id= :idUser")
+    Page<Caution> filterByBankAndUser(@Param("banque") String banque, @Param("idUser") long idUser, Pageable pageable);
 
     @Query("SELECT c FROM Caution c WHERE c.commercial.user.username LIKE :username")
     Page<Caution> filterByUsername(@Param("username") String username, Pageable pageable);

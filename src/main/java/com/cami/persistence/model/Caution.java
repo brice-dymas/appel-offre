@@ -52,8 +52,6 @@ public class Caution
     private int montantMarche;
 
     @NotBlank(message = "{blank.message}")
-//    @Size(min = 3, max = 255, message = "{size.message}")
-//    @Column(nullable = false, length = 255)
     private String referenceMarche;
 
     @ManyToOne(targetEntity = AppelOffre.class)
