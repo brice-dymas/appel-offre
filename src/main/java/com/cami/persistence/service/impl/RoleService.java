@@ -59,6 +59,7 @@ public class RoleService extends AbstractService<Role> implements IRoleService
             throw new Exception("exist");
         }
         User user = role.getUser();
+        user.setEnabled(true);
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         role.setRole(getTheRealRoleOf(role.getRole()));
@@ -70,21 +71,24 @@ public class RoleService extends AbstractService<Role> implements IRoleService
     }
 
     @Override
-    public Role updateUser(Role role) throws Exception
+    public Role updateUser(final Role role) throws Exception
     {
+        System.out.println("updating user with ID " + role.getId());
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        User userToUpdate = userDao.findByUsername(role.getUser().getUsername());
+
+        User userToUpdate = role.getUser();
         userToUpdate.setEnabled(true);
         userToUpdate.setNom(role.getUser().getNom());
         userToUpdate.setUsername(role.getUser().getUsername());
         userToUpdate.setPassword(passwordEncoder.encode(role.getUser().getPassword()));
         userToUpdate = userDao.save(userToUpdate);
 
-        Role roleToUpdate = roleDao.findOne(role.getId());
+        final Role roleToUpdate = roleDao.findOne(role.getId());
+        final String vraiRole = getTheRealRoleOf(role.getRole());
         roleToUpdate.setUser(userToUpdate);
-        roleToUpdate.setRole(getTheRealRoleOf(role.getRole()));
-        role = roleDao.save(roleToUpdate);
-        return role;
+        roleToUpdate.setRole(vraiRole);
+        System.out.println("in update service user role= " + roleToUpdate.getRole());
+        return roleDao.save(roleToUpdate);
     }
 
     @Override
@@ -110,14 +114,18 @@ public class RoleService extends AbstractService<Role> implements IRoleService
     private String getTheRealRoleOf(String roleToBuildFrom)
     {
         String role = "ros";
-        if ("2".equals(roleToBuildFrom)) {
+        if (roleToBuildFrom.equals("2")) {
+
             role = "ROLE_TRESORIER";
+            System.out.println("roleToBuildFrom=2 donc role =" + role);
         }
         if (roleToBuildFrom.equals("1")) {
             role = "ROLE_ADMIN";
+            System.out.println("roleToBuildFrom=1 donc role =" + role);
         }
         if (roleToBuildFrom.equals("3")) {
             role = "ROLE_COMMERCIAL";
+            System.out.println("roleToBuildFrom=3 donc role =" + role);
         }
         return role;
     }
@@ -149,11 +157,6 @@ public class RoleService extends AbstractService<Role> implements IRoleService
 
     public boolean exists(User user)
     {
-//        boolean exist;
-//        Role existed ;
-//        existed= roleDao.retrieveAUser(user.getUsername());
-//        exist = existed == null;
-//        return exist;
         return roleDao.retrieveAUser(user.getUsername()) instanceof Role;
     }
 }

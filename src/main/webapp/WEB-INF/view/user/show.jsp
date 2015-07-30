@@ -43,12 +43,6 @@
                             </th>
                             <td>${user.user.username}</td>
                         </tr>
-                        <tr>
-                            <th>
-                                <spring:message code="user.password" />
-                            </th>
-                            <td>${user.user.password}</td>
-                        </tr>
                     </tbody>
                 </table>
 

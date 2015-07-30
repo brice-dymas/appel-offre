@@ -56,7 +56,7 @@
                     <c:if test="${user.id == userConnected.id}">
                         <sec:authorize access="hasAnyRole('ROLE_COMMERCIAL','ROLE_TRESORIER','ROLE_ADMIN') and isAuthenticated()">
                             <spring:url value="/user/${user.id}/edit" var="user_edit"/>
-                            <a href="${user_edit}" class="btn btn-default  btn-sm">
+                            <a href="${user_edit}" class="btn btn-default  btn-danger">
                                 <span class="glyphicon glyphicon-edit"></span>
                                 <spring:message code="action.modifier" />
                             </a>

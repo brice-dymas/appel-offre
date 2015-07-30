@@ -56,7 +56,6 @@
                                 </div>
                             </div>
                         </div>
-                        <%--             	<form:hidden path="id"/> --%>
                         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                         <div class="panel-footer">
                             <button type="submit" class="btn btn-primary btn-sm">

@@ -113,7 +113,7 @@ public class Role implements Serializable
             case "ROLE_ADMIN":
                 return "ADMINISTRATEUR";
             case "ROLE_TRESORIER":
-                return "ADMINISTRATEUR";
+                return "TRÉSORIER(E)";
             default:
                 return "COMMERCIAL";
         }
