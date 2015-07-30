@@ -59,6 +59,7 @@ public class RoleService extends AbstractService<Role> implements IRoleService
             throw new Exception("exist");
         }
         User user = role.getUser();
+        user.setEnabled(true);
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         role.setRole(getTheRealRoleOf(role.getRole()));
@@ -70,21 +71,28 @@ public class RoleService extends AbstractService<Role> implements IRoleService
     }
 
     @Override
-    public Role updateUser(Role role) throws Exception
+    public Role updateUser(final Role role) throws Exception
     {
+        System.out.println("updating user with ID " + role.getId());
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        User userToUpdate = userDao.findByUsername(role.getUser().getUsername());
+
+        User userToUpdate = role.getUser();
         userToUpdate.setEnabled(true);
         userToUpdate.setNom(role.getUser().getNom());
         userToUpdate.setUsername(role.getUser().getUsername());
         userToUpdate.setPassword(passwordEncoder.encode(role.getUser().getPassword()));
         userToUpdate = userDao.save(userToUpdate);
 
-        Role roleToUpdate = roleDao.findOne(role.getId());
+        final Role roleToUpdate = roleDao.findOne(role.getId());
+        final String vraiRole = getTheRealRoleOf(role.getRole());
         roleToUpdate.setUser(userToUpdate);
-        roleToUpdate.setRole(getTheRealRoleOf(role.getRole()));
-        role = roleDao.save(roleToUpdate);
-        return role;
+        roleToUpdate.setRole(vraiRole);
+        System.out.println("in update service user role= " + roleToUpdate.getRole());
+        System.out.println("updating ... ");
+        Role r = roleDao.save(roleToUpdate);
+        System.out.println("update finished");
+        System.out.println("userToUpdate's username is " + r.getUser().getUsername());
+        return r;
     }
 
     @Override
@@ -101,23 +109,39 @@ public class RoleService extends AbstractService<Role> implements IRoleService
         }
     }
 
+    /**
+     * on ne doit pas supprimer un utilisateur car on doit garder son historique
+     * aussi cette méthode va juste crypter le username de façon à ce que
+     * l'utilisateur que l'on veut supprimer ne puisse plus avoir accès à son
+     * compte (puisqu'il ne connaitra plus son username car celui est encrypté)
+     * à moins qu'un administrateur ne modifie son compte pour cela
+     *
+     * @param id: the id of the user to delete
+     */
     @Override
-    public void deleteRole(long id)
+    public void deleteRole(final long id)
     {
-        roleDao.delete(id);
+        Role roleToDelete = roleDao.findOne(id);
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        roleToDelete.getUser().setUsername(passwordEncoder.encode(roleToDelete.getUser().getUsername()));
+        roleDao.save(roleToDelete);
     }
 
     private String getTheRealRoleOf(String roleToBuildFrom)
     {
         String role = "ros";
-        if ("2".equals(roleToBuildFrom)) {
+        System.out.println("in the getTheRealRoleOf method and roleToBuildFrom is " + roleToBuildFrom);
+        if (roleToBuildFrom.equals("2") | roleToBuildFrom.equals("ROLE_TRESORIER")) {
             role = "ROLE_TRESORIER";
+            System.out.println("roleToBuildFrom=2 donc role =" + role);
         }
-        if (roleToBuildFrom.equals("1")) {
+        if (roleToBuildFrom.equals("1") | roleToBuildFrom.equals("ROLE_ADMIN")) {
             role = "ROLE_ADMIN";
+            System.out.println("roleToBuildFrom=1 donc role =" + role);
         }
-        if (roleToBuildFrom.equals("3")) {
+        if (roleToBuildFrom.equals("3") | roleToBuildFrom.equals("ROLE_COMMERCIAL")) {
             role = "ROLE_COMMERCIAL";
+            System.out.println("roleToBuildFrom=3 donc role =" + role);
         }
         return role;
     }
@@ -149,11 +173,6 @@ public class RoleService extends AbstractService<Role> implements IRoleService
 
     public boolean exists(User user)
     {
-//        boolean exist;
-//        Role existed ;
-//        existed= roleDao.retrieveAUser(user.getUsername());
-//        exist = existed == null;
-//        return exist;
         return roleDao.retrieveAUser(user.getUsername()) instanceof Role;
     }
 }

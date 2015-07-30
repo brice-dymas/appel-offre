@@ -1,3 +1,2 @@
 # Appel-d-offre
-Pull from upstream and push to upstream
-
+ Always commit before push 2 Upstream

@@ -8,8 +8,10 @@ package com.cami.persistence.service.impl;
 import com.cami.persistence.dao.IAppelOffreDao;
 import com.cami.persistence.dao.ICautionDao;
 import com.cami.persistence.dao.ILigneAppelDao;
+import com.cami.persistence.dao.IRoleDao;
 import com.cami.persistence.model.AppelOffre;
 import com.cami.persistence.model.Caution;
+import com.cami.persistence.model.Role;
 import com.cami.persistence.service.ICautionService;
 import com.cami.persistence.service.common.AbstractService;
 import java.util.ArrayList;
@@ -19,6 +21,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.PagingAndSortingRepository;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -34,22 +38,6 @@ public class CautionService
         ICautionService
 {
 
-    // This method returns a list of appeloffre complete with their cautions and ligneAppel
-//    this will be used to generate the final report for excel and pdf format
-    @Override
-    public List<AppelOffre> getThemComplete()
-    {
-        List<Caution> cautions = new ArrayList<>();
-        List<AppelOffre> appelOffres = offreDao.findAll();
-
-        for (AppelOffre appelOffre : appelOffres)
-        {
-            appelOffre.setCautions(dao.filterByAppelOffre(appelOffre.getId()));
-            appelOffre.setLigneAppels(ligneAppelDao.filterByAppelOffre(appelOffre.getId()));
-        }
-        return appelOffres;
-    }
-
     @Autowired
     private ICautionDao dao;
 
@@ -59,16 +47,51 @@ public class CautionService
     @Autowired
     private ILigneAppelDao ligneAppelDao;
 
+    @Autowired
+    IRoleDao roleDao;
+
     @Override
     protected PagingAndSortingRepository<Caution, Long> getDao()
     {
         return dao;
     }
 
+    // This method returns a list of appeloffre complete with their cautions and ligneAppel
+//    this will be used to generate the final report for excel and pdf format
+    @Override
+    public List<AppelOffre> getThemComplete()
+    {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        final Role userConnected = roleDao.retrieveAUser(auth.getName()); // get the current logged user
+        List<Caution> cautions = new ArrayList<>();
+        List<AppelOffre> appelOffres = offreDao.findAll();
+        if (!userConnected.getRole().equals("ROLE_ADMIN")) {
+            for (AppelOffre appelOffre : appelOffres) {
+                appelOffre.setCautions(dao.filterByAppelOffreAndUser(appelOffre.getId(), userConnected.getId()));
+                appelOffre.setLigneAppels(ligneAppelDao.filterByAppelOffre(appelOffre.getId()));
+            }
+            return appelOffres;
+        }
+        else {
+            for (AppelOffre appelOffre : appelOffres) {
+                appelOffre.setCautions(dao.filterByAppelOffre(appelOffre.getId()));
+                appelOffre.setLigneAppels(ligneAppelDao.filterByAppelOffre(appelOffre.getId()));
+            }
+            return appelOffres;
+        }
+    }
+
     @Override
     public List<Caution> filterByAppelOffre(final Long appelOffreId)
     {
-        return dao.filterByAppelOffre(appelOffreId);
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        final Role userConnected = roleDao.retrieveAUser(auth.getName()); // get the current logged user
+        if (!userConnected.getRole().equals("ROLE_ADMIN")) {
+            return dao.filterByAppelOffreAndUser(appelOffreId, userConnected.getId());
+        }
+        else {
+            return dao.filterByAppelOffre(appelOffreId);
+        }
     }
 
     @Override
@@ -92,8 +115,16 @@ public class CautionService
     public Page<Caution> filterByBank(final String banque, final int page,
             final Integer size)
     {
-        return dao.filterByBank('%' + banque + '%', new PageRequest(page, size,
-                Sort.Direction.DESC, "dateFin"));
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        final Role userConnected = roleDao.retrieveAUser(auth.getName()); // get the current logged user
+        if (!userConnected.getRole().equals("ROLE_ADMIN")) {
+            return dao.filterByBankAndUser('%' + banque + '%', userConnected.getId(), new PageRequest(page, size,
+                    Sort.Direction.DESC, "dateFin"));
+        }
+        else {
+            return dao.filterByBank('%' + banque + '%', new PageRequest(page, size,
+                    Sort.Direction.DESC, "dateFin"));
+        }
     }
 
     @Override

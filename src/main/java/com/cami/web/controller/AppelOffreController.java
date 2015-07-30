@@ -86,9 +86,10 @@ public class AppelOffreController
             final ModelMap model)
     {
         AppelOffre appelOffre = new AppelOffre();
+        final List<Caution> cautions;
         appelOffre = appelOffreService.findOne(id);
         final List<LigneAppel> ligneAppels = ligneAppelService.filterByAppelOffre(appelOffre.getId());
-        final List<Caution> cautions = cautionService.filterByAppelOffre(appelOffre.getId());
+        cautions = cautionService.filterByAppelOffre(appelOffre.getId());
         appelOffre.setCautions(cautions);
         appelOffre.setLigneAppels(ligneAppels);
         final TreeMap<String, String> breadcrumb = getBreadcrumb();

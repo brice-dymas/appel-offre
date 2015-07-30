@@ -26,43 +26,43 @@
 
         <div class="row">
             <div class="col-md-6 col-md-offset-3">
-                <spring:url value="/user/update" var="user_update"
+                <spring:url value="/user/${user.id}/update" var="user_update"
                             htmlEscape="true" />
                 <form:form method="post" commandName="user" action="${user_update}">
                     <div class="panel panel-default">
                         <div class="panel-body">
+                            <c:if test="${fonction_user.equals('ROLE_ADMIN')}">
+                                <fieldset class="form-group divider">
+                                    <legend>
+                                        <spring:message code="user.infos" />
 
-                            <fieldset class="form-group divider">
-                                <legend>
-                                    <spring:message code="user.infos" />
+                                    </legend>
 
-                                </legend>
-                                <div class="row">
-                                    <div class="form-group">
-                                        <form:label for="nom" path="">
-                                            <spring:message code="user.nom" /> :
-                                        </form:label>
-                                        <form:input id="nom" path="user.nom" cssClass="form-control"/>
-                                        <form:errors path="user.nom" cssClass="text-danger"/>
+                                    <div class="row">
+                                        <div class="form-group">
+                                            <form:label for="nom" path="">
+                                                <spring:message code="user.nom" /> :
+                                            </form:label>
+                                            <form:input id="nom" path="user.nom" cssClass="form-control"/>
+                                            <form:errors path="user.nom" cssClass="text-danger"/>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <form:label for="role" path="">
+                                                <spring:message code="user.role" /> :
+                                            </form:label>
+                                            <form:select id="role" path="role" cssClass="form-control">
+                                                <form:option value="NONE" label="+++Select+++"/>
+                                                <form:options  items="${roles}" />
+                                            </form:select>
+                                            <form:errors path="role" cssClass="text-danger"/>
+                                        </div>
                                     </div>
-
-                                    <div class="form-group">
-                                        <form:label for="role" path="">
-                                            <spring:message code="user.role" /> :
-                                        </form:label>
-                                        <form:select id="role" path="role" cssClass="form-control">
-                                            <form:option value="NONE" label="+++Select+++"/>
-                                            <form:options  items="${roles}" />
-                                        </form:select>
-                                        <form:errors path="role" cssClass="text-danger"/>
-                                    </div>
-                                </div>
-
-                            </fieldset>
-
+                                </fieldset>
+                            </c:if>
                             <hr/>
                             <fieldset class="form-group divider">
-                                <legend class="ui-widget-shadow label-danger">
+                                <legend class="ui-widget-shadow ui-accordion-header label-danger">
                                     <spring:message code="security.infos" />
                                 </legend>
                                 <div class="row">
@@ -90,8 +90,8 @@
                                 </div>
                             </fieldset>
                         </div>
+
                         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                        <form:hidden path="id"/>
                         <div class="panel-footer">
                             <button type="submit" class="btn btn-primary btn-sm">
                                 <span class="glyphicon glyphicon-save"></span>

@@ -146,6 +146,7 @@ public class UserController
         final Role userConnected = roleService.retrieveAUser(name);
         final Role role = roleService.findOne(id);
         if (userConnected.getId() == role.getId() | userConnected.getRole().equals("ROLE_ADMIN")) {
+            model.addAttribute("fonction_user", userConnected.getRole());
             model.addAttribute("user", role);
             return "user/edit";
         }
@@ -155,32 +156,39 @@ public class UserController
 
     }
 
-    @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public String updateAction(final ModelMap model,
+    @RequestMapping(value = "/{id}/update", method = RequestMethod.POST)
+    public String updateAction(final ModelMap model, @PathVariable("id") final Long id,
             @Valid final Role role, final BindingResult result,
             final RedirectAttributes redirectAttributes)
     {
         System.out.println("here we are in the controller update method");
+        System.out.println("the role= " + role.getRole() + " -P=" + role.getUser().getPassword() + " -U" + role.getUser().getUsername());
         if (result.hasErrors()) {
             System.out.println("erreur lors de l'update");
             model.addAttribute("error", "error");
+            model.addAttribute("user", role);
             return "user/edit";
         }
         if (!role.getUser().getPassword().equals(role.getUser().getConfirmPassword())) {
             System.out.println("mots de passe not identiques: password=" + role.getUser().getPassword() + " et confirm=" + role.getUser().getConfirmPassword());
             model.addAttribute("password.error", "password.error");
+            model.addAttribute("user", role);
             return "user/edit";
         }
         else {
+            System.out.println("tout va bien ... ou presque! ");
             try {
+
                 redirectAttributes.addFlashAttribute("info", "alert.success.new");
-                role.getUser().setEnabled(true);
-                roleService.updateUser(role);
-                return "redirect:/user/" + role.getId() + "/show";
+                System.out.println("in controller user role= " + role.getRole());
+                final Role roleUpdated = roleService.updateUser(role);
+                System.out.println("là c sur tout va bien et le role nouveau c " + roleUpdated.getRole());
+                return "redirect:/user/" + roleUpdated.getId() + "/show";
             }
             catch (Exception ex) {
                 System.out.println("le username choisi existant");
                 model.addAttribute("exist", "exist");
+                model.addAttribute("user", role);
                 Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);
                 return "user/edit";
 

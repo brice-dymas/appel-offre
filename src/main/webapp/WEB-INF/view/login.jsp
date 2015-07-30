@@ -42,8 +42,8 @@
                                             <form name='loginForm'
                                                   action="<c:url value='/login' />" method='POST' >
                                                 <ul class="ul-list">
-                                                    <li><input type="text" required class="inputL" placeholder="Votre nom d'utilisateur" id="username" name='username' /><span class="icon"><i class="fa fa-user"></i></span></li>
-                                                    <li><input type="password" id="password"  name='password' required class="inputL" placeholder="Votre Mot de passe"/><span class="icon"><i class="fa fa-lock"></i></span></li>
+                                                    <li><input type="text" required class="inputL form-control" placeholder="Votre nom d'utilisateur" id="username" name='username' /><span class="icon"><i class="fa fa-user"></i></span></li>
+                                                    <li><input type="password" id="password"  name='password' required class="inputL form-control" placeholder="Votre Mot de passe"/><span class="icon"><i class="fa fa-lock"></i></span></li>
                                                     <li><b><input type="submit"  value="Se Connecter" class="btnL"></b></li>
                                                     <li><b><a href="<c:url value='/'/>" class="btnL text-center" > Annuler</a></b></li>
                                                 </ul>
