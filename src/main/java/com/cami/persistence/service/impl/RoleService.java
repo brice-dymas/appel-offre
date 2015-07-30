@@ -88,7 +88,11 @@ public class RoleService extends AbstractService<Role> implements IRoleService
         roleToUpdate.setUser(userToUpdate);
         roleToUpdate.setRole(vraiRole);
         System.out.println("in update service user role= " + roleToUpdate.getRole());
-        return roleDao.save(roleToUpdate);
+        System.out.println("updating ... ");
+        Role r = roleDao.save(roleToUpdate);
+        System.out.println("update finished");
+        System.out.println("userToUpdate's username is " + r.getUser().getUsername());
+        return r;
     }
 
     @Override
@@ -105,25 +109,37 @@ public class RoleService extends AbstractService<Role> implements IRoleService
         }
     }
 
+    /**
+     * on ne doit pas supprimer un utilisateur car on doit garder son historique
+     * aussi cette méthode va juste crypter le username de façon à ce que
+     * l'utilisateur que l'on veut supprimer ne puisse plus avoir accès à son
+     * compte (puisqu'il ne connaitra plus son username car celui est encrypté)
+     * à moins qu'un administrateur ne modifie son compte pour cela
+     *
+     * @param id: the id of the user to delete
+     */
     @Override
-    public void deleteRole(long id)
+    public void deleteRole(final long id)
     {
-        roleDao.delete(id);
+        Role roleToDelete = roleDao.findOne(id);
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        roleToDelete.getUser().setUsername(passwordEncoder.encode(roleToDelete.getUser().getUsername()));
+        roleDao.save(roleToDelete);
     }
 
     private String getTheRealRoleOf(String roleToBuildFrom)
     {
         String role = "ros";
-        if (roleToBuildFrom.equals("2")) {
-
+        System.out.println("in the getTheRealRoleOf method and roleToBuildFrom is " + roleToBuildFrom);
+        if (roleToBuildFrom.equals("2") | roleToBuildFrom.equals("ROLE_TRESORIER")) {
             role = "ROLE_TRESORIER";
             System.out.println("roleToBuildFrom=2 donc role =" + role);
         }
-        if (roleToBuildFrom.equals("1")) {
+        if (roleToBuildFrom.equals("1") | roleToBuildFrom.equals("ROLE_ADMIN")) {
             role = "ROLE_ADMIN";
             System.out.println("roleToBuildFrom=1 donc role =" + role);
         }
-        if (roleToBuildFrom.equals("3")) {
+        if (roleToBuildFrom.equals("3") | roleToBuildFrom.equals("ROLE_COMMERCIAL")) {
             role = "ROLE_COMMERCIAL";
             System.out.println("roleToBuildFrom=3 donc role =" + role);
         }
