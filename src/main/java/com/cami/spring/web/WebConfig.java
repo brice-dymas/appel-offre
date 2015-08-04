@@ -91,12 +91,6 @@ public class WebConfig extends WebMvcConfigurerAdapter
         return resolver;
     }
 
-    //	@Bean
-    //	public UrlBasedViewResolver viewResolver() {
-    //		UrlBasedViewResolver viewResolver = new UrlBasedViewResolver();
-    //		viewResolver.setViewClass(TilesView.class);
-    //		return viewResolver;
-    //	}
     @Override
     public void addResourceHandlers(final ResourceHandlerRegistry registry)
     {

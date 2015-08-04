@@ -44,7 +44,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
     {
         http.authorizeRequests()
                 .antMatchers("/appeloffre/new").access("hasRole('ROLE_ADMIN')")
-                .antMatchers("/appeloffre/edit**").access("hasRole('ROLE_ADMIN')")
+                .antMatchers("/appeloffre/**/edit**").access("hasRole('ROLE_ADMIN')")
                 .antMatchers("/appeloffre/**").authenticated()
                 .antMatchers("/banque/new").access("hasRole('ROLE_ADMIN')")
                 .antMatchers("/banque/**/edit**").access("hasRole('ROLE_ADMIN')")
