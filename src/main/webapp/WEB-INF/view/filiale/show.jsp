@@ -57,7 +57,7 @@
                         <spring:message code="filiale.liste" />
                     </a>
                     <spring:url value="/filiale/${filiale.id}/edit" var="filiale_edit"/>
-                    <a href="${filiale_edit}" class="btn btn-default  btn-sm">
+                    <a href="${filiale_edit}" class="btn btn-default  btn-warning">
                         <span class="glyphicon glyphicon-edit"></span>
                         <spring:message code="action.modifier" />
                     </a>

@@ -58,12 +58,12 @@
                         <spring:message code="banque.liste" />
                     </a>
                     <spring:url value="/banque/${banque.id}/edit" var="banque_edit"/>
-                    <a href="${banque_edit}" class="btn btn-default  btn-sm">
+                    <a href="${banque_edit}" class="btn btn-default  btn-warning">
                         <span class="glyphicon glyphicon-edit"></span>
                         <spring:message code="action.modifier" />
                     </a>
                     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                    <button type="submit" class="btn btn-default  btn-sm">
+                    <button type="submit" class="btn btn-default  btn-danger">
                         <span class="glyphicon glyphicon-remove-sign"></span>
                         <spring:message code="action.effacer" />
                     </button>

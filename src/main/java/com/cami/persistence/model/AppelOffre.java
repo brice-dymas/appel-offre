@@ -10,6 +10,7 @@ import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.NotBlank;
@@ -88,10 +89,36 @@ public class AppelOffre
     @NotBlank(message = "{blank.message}")
     private String maitreDouvrage;
 
+    @ManyToOne(targetEntity = Role.class, fetch = FetchType.EAGER)
+    Role user;
+
+    @Temporal(TemporalType.DATE)
+    private Date dateModification;
+
     private String etat;
 
     public AppelOffre()
     {
+    }
+
+    public Date getDateModification()
+    {
+        return dateModification;
+    }
+
+    public void setDateModification(Date dateModification)
+    {
+        this.dateModification = dateModification;
+    }
+
+    public Role getUser()
+    {
+        return user;
+    }
+
+    public void setUser(Role user)
+    {
+        this.user = user;
     }
 
     public Date getDateDepot()
@@ -351,8 +378,7 @@ public class AppelOffre
     }
 
     /**
-     * @param etat
-     *             the etat to set
+     * @param etat the etat to set
      */
     public void setEtat(final String etat)
     {

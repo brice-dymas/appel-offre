@@ -81,7 +81,7 @@
                     <spring:message code="caution.liste" />
                 </a>
                 <spring:url value="/appeloffre/${caution.appelOffre.id}/show" var="caution_appel"/>
-                <a href="${caution_appel}" class="btn btn-primary  btn-sm">
+                <a href="${caution_appel}" class="btn btn-primary  btn-warning">
                     <span class="glyphicon glyphicon-open"></span>
                     <spring:message code="caution.appelOffre" />
                 </a>

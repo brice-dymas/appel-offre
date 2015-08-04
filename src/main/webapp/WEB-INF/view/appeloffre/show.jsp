@@ -32,7 +32,6 @@
                             <td>${appelOffre.intitule}</td>
                             <th><spring:message code="appelOffre.filiale" /></th>
                             <td>${appelOffre.filiale.nom}</td>
-
                         </tr>
 
                         <tr>
@@ -43,7 +42,14 @@
                             <th><spring:message code="appelOffre.delai" /></th>
                             <td>${appelOffre.delaiDeValidite}</td>
                         </tr>
-
+                        <tr class="text-danger">
+                            <th><spring:message code="appelOffre.dateModification" /></th>
+                            <td>${appelOffre.getTrueDate(appelOffre.dateModification)}</td>
+                            <th><spring:message code="modified.byNom" /></th>
+                            <td>${user.user.nom}</td>
+                            <th><spring:message code="modified.byUsername" /></th>
+                            <td>${user.user.username}</td>
+                        </tr>
                     </tbody>
                 </table>
 
@@ -224,12 +230,12 @@
                         <spring:message code="appelOffre.liste" />
                     </a>
                     <spring:url value="/appeloffre/${appelOffre.id}/edit" var="appeloffre_edit"/>
-                    <a href="${appeloffre_edit}" class="btn btn-default  btn-sm">
+                    <a href="${appeloffre_edit}" class="btn btn-default  btn-warning">
                         <span class="glyphicon glyphicon-edit"></span>
                         <spring:message code="action.modifier" />
                     </a>
                     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                    <button type="submit" class="btn btn-default  btn-sm">
+                    <button type="submit" class="btn btn-default  btn-danger">
                         <span class="glyphicon glyphicon-remove-sign"></span>
                         <spring:message code="action.effacer" />
                     </button>

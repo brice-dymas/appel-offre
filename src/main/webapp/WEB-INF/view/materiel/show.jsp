@@ -69,12 +69,12 @@
                         <spring:message code="materiel.liste" />
                     </a>
                     <spring:url value="/materiel/${materiel.id}/edit" var="materiel_edit"/>
-                    <a href="${materiel_edit}" class="btn btn-default  btn-sm">
+                    <a href="${materiel_edit}" class="btn btn-default  btn-warning">
                         <span class="glyphicon glyphicon-edit"></span>
                         <spring:message code="action.modifier" />
                     </a>
                     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                    <button type="submit" class="btn btn-default  btn-sm">
+                    <button type="submit" class="btn btn-default  btn-danger">
                         <span class="glyphicon glyphicon-remove-sign"></span>
                         <spring:message code="action.effacer" />
                     </button>

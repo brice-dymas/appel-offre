@@ -90,12 +90,15 @@ public class AppelOffreController
         appelOffre = appelOffreService.findOne(id);
         final List<LigneAppel> ligneAppels = ligneAppelService.filterByAppelOffre(appelOffre.getId());
         cautions = cautionService.filterByAppelOffre(appelOffre.getId());
+        Role role = roleService.findOne(appelOffre.getUser().getId());
         appelOffre.setCautions(cautions);
         appelOffre.setLigneAppels(ligneAppels);
+        appelOffre.setUser(role);
         final TreeMap<String, String> breadcrumb = getBreadcrumb();
         breadcrumb.put("breadcrumb.appeloffre.show", "");
         model.addAttribute("breadcrumbs", breadcrumb);
         model.addAttribute("appelOffre", appelOffre);
+        model.addAttribute("user", role);
         model.addAttribute("ligneAppels", ligneAppels);
         model.addAttribute("cautions", cautions);
         return "appeloffre/show";
@@ -105,6 +108,7 @@ public class AppelOffreController
     public String editAction(@PathVariable("id") final Long id,
             final ModelMap model)
     {
+
         final AppelOffre appelOffre = appelOffreService.findOne(id);
         final List<LigneAppel> ligneAppels = ligneAppelService.filterByAppelOffre(appelOffre.getId());
         final List<Caution> cautions = cautionService.filterByAppelOffre(appelOffre.getId());

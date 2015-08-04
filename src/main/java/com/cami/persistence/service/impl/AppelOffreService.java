@@ -11,14 +11,18 @@ import com.cami.persistence.dao.ITypeCautionDao;
 import com.cami.persistence.model.AppelOffre;
 import com.cami.persistence.model.Caution;
 import com.cami.persistence.model.LigneAppel;
+import com.cami.persistence.model.Role;
 import com.cami.persistence.service.IAppelOffreService;
 import com.cami.persistence.service.common.AbstractService;
+import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.PagingAndSortingRepository;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -89,7 +93,12 @@ public class AppelOffreService
     public AppelOffre create(AppelOffre appelOffre)
     {
         System.out.println("DEBUT SAVE");
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        final Role userConnected = roleDao.retrieveAUser(auth.getName()); // get the current logged user
         appelOffre.setFiliale(filialeDao.findOne(appelOffre.getFiliale().getId()));
+        appelOffre.setDateModification(new Date());
+        appelOffre.setUser(userConnected);
         appelOffre = dao.save(appelOffre);
 
         System.out.println("Debut Caution - size : " + appelOffre.getCautions().size());
@@ -127,13 +136,17 @@ public class AppelOffreService
         System.out.println("DEBUT UPDATE");
         AppelOffre editAppelOffre = dao.findOne(appelOffre.getId());
 
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        final Role userConnected = roleDao.retrieveAUser(auth.getName()); // get the current logged user
         editAppelOffre.setFiliale(filialeDao.findOne(appelOffre.getFiliale().getId()));
         editAppelOffre.setIntitule(appelOffre.getIntitule());
         editAppelOffre.setEtat("En cours");
+        editAppelOffre.setDateModification(new Date());
         editAppelOffre.setDelaiDeValidite(appelOffre.getDelaiDeValidite());
         editAppelOffre.setNumero(appelOffre.getNumero());
         editAppelOffre.setMaitreDouvrage(appelOffre.getMaitreDouvrage());
         editAppelOffre.setDateDepot(appelOffre.getDateDepot());
+        editAppelOffre.setUser(userConnected);
         editAppelOffre = dao.save(editAppelOffre);
 
         cautionDao.deleteInBatch(cautionDao.filterByAppelOffre(editAppelOffre
