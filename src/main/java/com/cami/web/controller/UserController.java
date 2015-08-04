@@ -197,7 +197,7 @@ public class UserController
     }
 
     @ModelAttribute("roles")
-    public Map<Long, String> populateCautionFields()
+    public Map<Long, String> populateRolesFields()
     {
         final Map<Long, String> results = new HashMap();
         results.put(1L, "ADMINISTRATEUR");
