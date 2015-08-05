@@ -19,14 +19,17 @@
             <img alt="cami.png" height="92" width="400" src="<c:url value="/resources/img/cami.png"/>"/>
         </div>
         <div id="login-form">
+            <br>
             <div>
                 <c:if test="${not empty error}">
-                    <div class="text-info label-info">
-                        ${error}
+                    <div class="text ui-widget-shadow text-center text-danger ">
+                        <h4 class="text-uppercase">
+                            <b>${error}</b>
+                        </h4>
                     </div>
                 </c:if>
                 <c:if test="${not empty msg}">
-                    <div class="text label-danger">${msg}</div>
+                    <div class="text text-danger">${msg}</div>
                 </c:if>
             </div>
         </div>

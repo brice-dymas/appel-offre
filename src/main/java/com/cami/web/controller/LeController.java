@@ -55,11 +55,11 @@ public class LeController
 
         ModelAndView model = new ModelAndView();
         if (error != null) {
-            model.addObject("error", "Mot de Passe Et Nom d'Utilisateur Incorrects !");
+            model.addObject("error", "Mot de Passe ou Nom d'Utilisateur Incorrect !");
         }
 
         if (logout != null) {
-            model.addObject("msg", "Deconnexion reussie");
+            model.addObject("error", "Deconnexion reussie");
         }
         model.setViewName("login");
 
