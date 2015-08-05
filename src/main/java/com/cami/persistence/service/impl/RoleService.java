@@ -72,7 +72,9 @@ public class RoleService extends AbstractService<Role> implements IRoleService
     {
         System.out.println("updating user with ID " + role.getId());
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-
+        System.out.println("in updateUser service method ...");
+        System.out.println("in updateUser service method displaying user to update ");
+        System.out.println("deleteAction of a user =" + role.getId() + " -Role=" + role.getRole() + " username=" + role.getUser().getUsername() + " enabled=" + role.getUser().isEnabled());
         User userToUpdate = role.getUser();
         userToUpdate.setEnabled(role.getUser().isEnabled());
         userToUpdate.setNom(role.getUser().getNom());
@@ -89,6 +91,9 @@ public class RoleService extends AbstractService<Role> implements IRoleService
         Role r = roleDao.save(roleToUpdate);
         System.out.println("update finished");
         System.out.println("userToUpdate's username is " + r.getUser().getUsername());
+        System.out.println("\n \n \n \n in updateUser service method displaying user updated ");
+        System.out.println("deleteAction of a user =" + role.getId() + " -Role=" + role.getRole() + " username=" + role.getUser().getUsername() + " enabled=" + role.getUser().isEnabled());
+
         return r;
     }
 

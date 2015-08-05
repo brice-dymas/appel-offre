@@ -60,19 +60,19 @@
                 <form:form method="post" commandName="user" action="${user_delete}">
 
                     <spring:url value="/user/" var="user_home"/>
-                    <a href="${user_home}" class="btn btn-primary  btn-sm">
+                    <a href="${user_home}" class="btn btn-primary  btn-primary">
                         <span class="glyphicon glyphicon-list"></span>
                         <spring:message code="user.liste" />
                     </a>
                     <sec:authorize access="hasRole('ROLE_ADMIN')" >
                         <form:hidden path="id"/>
                         <spring:url value="/user/${user.id}/edit" var="user_edit"/>
-                        <a href="${user_edit}" class="btn btn-default  btn-sm">
+                        <a href="${user_edit}" class="btn btn-default  btn-warning">
                             <span class="glyphicon glyphicon-edit"></span>
                             <spring:message code="action.modifier" />
                         </a>
                         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                        <button type="submit" class="btn btn-default  btn-sm">
+                        <button type="submit" class="btn btn-default  btn-danger">
                             <span class="glyphicon glyphicon-remove-sign"></span>
                             <spring:message code="action.effacer" />
                         </button>

@@ -133,8 +133,11 @@ public class UserController
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
     public String deleteAction(final Role role, final ModelMap model)
     {
-        role.getUser().setEnabled(false);
-        roleService.updateUser(role);
+        System.out.println("in delete action for user with ID=" + role.getId());
+        Role roleToDelete = roleService.findOne(role.getId());
+        roleToDelete.getUser().setEnabled(false);
+        System.out.println("deleteAction of a user =" + roleToDelete.getId() + " -Role=" + roleToDelete.getRole() + " username=" + roleToDelete.getUser().getUsername() + " enabled=" + roleToDelete.getUser().isEnabled());
+        roleService.updateUser(roleToDelete);
         return "redirect:/user/";
     }
 

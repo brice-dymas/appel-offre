@@ -31,7 +31,7 @@
                 <form:form method="post" commandName="user" action="${user_update}">
                     <div class="panel panel-default">
                         <div class="panel-body">
-                            <c:if test="${fonction_user.equals('ROLE_ADMIN')}">
+                            <sec:authorize access="hasRole('ROLE_ADMIN')" >
                                 <fieldset class="form-group divider">
                                     <legend>
                                         <spring:message code="user.infos" />
@@ -59,20 +59,23 @@
                                         </div>
                                     </div>
                                 </fieldset>
-                            </c:if>
+                            </sec:authorize>
+
                             <hr/>
                             <fieldset class="form-group divider">
-                                <legend class="ui-widget-shadow ui-accordion-header label-danger">
-                                    <spring:message code="security.infos" />
+                                <legend class="ui-widget-shadow ui-accordion-header-icon">
+                                    <b><spring:message code="security.infos" /></b>
                                 </legend>
                                 <div class="row">
-                                    <div class="form-group">
-                                        <form:label for="username" path="">
-                                            <spring:message code="user.username" /> :
-                                        </form:label>
-                                        <form:input id="username" path="user.username" cssClass="form-control"/>
-                                        <form:errors path="user.username" cssClass="text-danger"/>
-                                    </div>
+                                    <sec:authorize access="hasRole('ROLE_ADMIN')" >
+                                        <div class="form-group">
+                                            <form:label for="username" path="">
+                                                <spring:message code="user.username" /> :
+                                            </form:label>
+                                            <form:input id="username" path="user.username" cssClass="form-control"/>
+                                            <form:errors path="user.username" cssClass="text-danger"/>
+                                        </div>
+                                    </sec:authorize>
                                     <div class="form-group">
                                         <form:label for="password" path="">
                                             <spring:message code="user.password" /> :
