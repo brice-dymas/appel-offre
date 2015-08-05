@@ -104,33 +104,65 @@
 
                 <c:if test="${users.size() ne 0}">
                     <c:forEach items="${users}" var="user_var">
-                        <tr>
-                            <td>
-                                ${user_var.user.nom}
-                            </td>
-                            <td>
-                                ${user_var.getFunction(user_var.role)}
-                            </td>
-                            <td>
-                                ${user_var.user.username}
-                            </td>
+                        <c:if test="${not user_var.user.enabled}" >
+                            <tr class="text text-danger">
+                                <td>
+                                    ${user_var.user.nom}
+                                </td>
+                                <td>
+                                    ${user_var.getFunction(user_var.role)}
+                                </td>
+                                <td>
+                                    ${user_var.user.username}
+                                </td>
 
-                            <td class="text-center">
-                                <sec:authorize access="hasRole('ROLE_ADMIN')" >
-                                    <spring:url value="/user/${user_var.id}/edit" htmlEscape="true" var="user_edit" />
-                                    <a href="${user_edit}" class="btn btn-primary btn-sm">
-                                        <span class="glyphicon glyphicon-edit"></span>
-                                        <spring:message code="action.modifier" />
+                                <td class="text-center">
+                                    <sec:authorize access="hasRole('ROLE_ADMIN')" >
+                                        <spring:url value="/user/${user_var.id}/edit" htmlEscape="true" var="user_edit" />
+                                        <a href="${user_edit}" class="btn btn-primary btn-sm">
+                                            <span class="glyphicon glyphicon-edit"></span>
+                                            <spring:message code="action.modifier" />
+                                        </a>
+                                        &nbsp;&nbsp;
+                                    </sec:authorize>
+                                    <spring:url value="/user/${user_var.id}/show" htmlEscape="true" var="user_show" />
+                                    <a href="${user_show}" class="btn btn-primary btn-sm">
+                                        <span class="glyphicon glyphicon-open"></span>
+                                        <spring:message code="action.detail" />
                                     </a>
-                                    &nbsp;&nbsp;
-                                </sec:authorize>
-                                <spring:url value="/user/${user_var.id}/show" htmlEscape="true" var="user_show" />
-                                <a href="${user_show}" class="btn btn-primary btn-sm">
-                                    <span class="glyphicon glyphicon-open"></span>
-                                    <spring:message code="action.detail" />
-                                </a>
-                            </td>
-                        </tr>
+                                </td>
+                            </tr>
+                        </c:if>
+                        <c:if test="${user_var.user.enabled}" >
+                            <tr >
+                                <td>
+                                    ${user_var.user.nom}
+                                </td>
+                                <td>
+                                    ${user_var.getFunction(user_var.role)}
+                                </td>
+                                <td>
+                                    ${user_var.user.username}
+                                </td>
+
+                                <td class="text-center">
+                                    <sec:authorize access="hasRole('ROLE_ADMIN')" >
+                                        <spring:url value="/user/${user_var.id}/edit" htmlEscape="true" var="user_edit" />
+                                        <a href="${user_edit}" class="btn btn-primary btn-sm">
+                                            <span class="glyphicon glyphicon-edit"></span>
+                                            <spring:message code="action.modifier" />
+                                        </a>
+                                        &nbsp;&nbsp;
+                                    </sec:authorize>
+                                    <spring:url value="/user/${user_var.id}/show" htmlEscape="true" var="user_show" />
+                                    <a href="${user_show}" class="btn btn-primary btn-sm">
+                                        <span class="glyphicon glyphicon-open"></span>
+                                        <spring:message code="action.detail" />
+                                    </a>
+                                </td>
+                            </tr>
+                        </c:if>
+
                     </c:forEach>
 
                     </tbody>

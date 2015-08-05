@@ -135,7 +135,13 @@ public class UserController
     {
         System.out.println("in delete action for user with ID=" + role.getId());
         Role roleToDelete = roleService.findOne(role.getId());
-        roleToDelete.getUser().setEnabled(false);
+        if (roleToDelete.getUser().isEnabled() == true) {
+            roleToDelete.getUser().setEnabled(false);
+        }
+        else {
+            roleToDelete.getUser().setEnabled(true);
+        }
+
         System.out.println("deleteAction of a user =" + roleToDelete.getId() + " -Role=" + roleToDelete.getRole() + " username=" + roleToDelete.getUser().getUsername() + " enabled=" + roleToDelete.getUser().isEnabled());
         roleService.updateUser(roleToDelete);
         return "redirect:/user/";
