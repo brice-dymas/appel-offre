@@ -6,6 +6,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
+
 <tiles:insertDefinition name="layout">
     <tiles:putAttribute name="body">
 
@@ -72,12 +73,13 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <hr/>
-                            <spring:url value="/user/new" htmlEscape="true" var="user_new" />
-                            <a href="${user_new}" class="btn btn-primary btn-sm">
-                                <span class="glyphicon glyphicon-new-window"></span>
-                                <spring:message code="action.nouveau" />
-                            </a>
-
+                            <sec:authorize access="hasRole('ROLE_ADMIN')" >
+                                <spring:url value="/user/new" htmlEscape="true" var="user_new" />
+                                <a href="${user_new}" class="btn btn-primary btn-sm">
+                                    <span class="glyphicon glyphicon-new-window"></span>
+                                    <spring:message code="action.nouveau" />
+                                </a>
+                            </sec:authorize>
                             <div class="pull-right">
                                 <ul class="pager">
 
@@ -114,12 +116,14 @@
                             </td>
 
                             <td class="text-center">
-                                <spring:url value="/user/${user_var.id}/edit" htmlEscape="true" var="user_edit" />
-                                <a href="${user_edit}" class="btn btn-primary btn-sm">
-                                    <span class="glyphicon glyphicon-edit"></span>
-                                    <spring:message code="action.modifier" />
-                                </a>
-                                &nbsp;&nbsp;
+                                <sec:authorize access="hasRole('ROLE_ADMIN')" >
+                                    <spring:url value="/user/${user_var.id}/edit" htmlEscape="true" var="user_edit" />
+                                    <a href="${user_edit}" class="btn btn-primary btn-sm">
+                                        <span class="glyphicon glyphicon-edit"></span>
+                                        <spring:message code="action.modifier" />
+                                    </a>
+                                    &nbsp;&nbsp;
+                                </sec:authorize>
                                 <spring:url value="/user/${user_var.id}/show" htmlEscape="true" var="user_show" />
                                 <a href="${user_show}" class="btn btn-primary btn-sm">
                                     <span class="glyphicon glyphicon-open"></span>
@@ -134,11 +138,13 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <hr/>
-                            <spring:url value="/user/new" htmlEscape="true" var="user_new" />
-                            <a href="${user_new}" class="btn btn-primary btn-sm">
-                                <span class="glyphicon glyphicon-new-window"></span>
-                                <spring:message code="action.nouveau" />
-                            </a>
+                            <sec:authorize access="hasRole('ROLE_ADMIN')" >
+                                <spring:url value="/user/new" htmlEscape="true" var="user_new" />
+                                <a href="${user_new}" class="btn btn-primary btn-sm">
+                                    <span class="glyphicon glyphicon-new-window"></span>
+                                    <spring:message code="action.nouveau" />
+                                </a>
+                            </sec:authorize>
                             <div class="pull-right">
                                 <ul class="pager">
 

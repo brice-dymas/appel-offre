@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
 
@@ -26,15 +27,21 @@
                             <spring:message code="menu.filiale" />
                         </a>
                     </li>
-                    <li><a href="<spring:url value="/typecaution/" />">
+                    <li>
+                        <a href="<spring:url value="/typecaution/" />">
                             <spring:message code="menu.typeCaution" />
-                        </a></li>
-                    <li><a href="<spring:url value="/typemateriel/" />">
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<spring:url value="/typemateriel/" />">
                             <spring:message code="menu.typeMateriel" />
-                        </a></li>
-                    <li><a href="<spring:url value="/banque/" />">
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<spring:url value="/banque/" />">
                             <spring:message code="banque.liste" />
-                        </a></li>
+                        </a>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -51,15 +58,25 @@
         <div id="collapseAppelOffre" class="panel-collapse collapse" role="tabpanel" aria-labelledby="appeloffre">
             <div class="panel-body">
                 <ul class="list-styled">
-                    <li><a href="<spring:url value="/caution/"/>" >
+                    <li>
+                        <a href="<spring:url value="/caution/"/>" >
                             <spring:message code="caution.liste" />
-                        </a></li>
-                    <li><a href="<spring:url value="/appeloffre/"/>" >
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<spring:url value="/appeloffre/"/>" >
                             <spring:message code="menu.appelOffre.liste" />
-                        </a></li>
-                    <li><a href="<spring:url value="/appeloffre/new"/>" >
-                            <spring:message code="menu.appelOffre.nouveau" />
-                        </a></li>
+                        </a>
+                    </li>
+
+                    <sec:authorize access="hasRole('ROLE_ADMIN')" >
+                        <li>
+                            <a href="<spring:url value="/user/"/>" >
+                                <spring:message code="user.title" />
+                            </a>
+                        </li>
+                    </sec:authorize>
+
                 </ul>
 
             </div>

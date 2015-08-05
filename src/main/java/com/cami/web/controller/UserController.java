@@ -133,7 +133,8 @@ public class UserController
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
     public String deleteAction(final Role role, final ModelMap model)
     {
-        roleService.deleteRole(role.getId());
+        role.getUser().setEnabled(false);
+        roleService.updateUser(role);
         return "redirect:/user/";
     }
 

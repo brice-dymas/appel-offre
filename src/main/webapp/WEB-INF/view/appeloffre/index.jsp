@@ -4,6 +4,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <tiles:insertDefinition name="layout">
     <tiles:putAttribute name="body">
@@ -13,7 +14,7 @@
                     <div class="col-md-12">
                         <div>
                             <h3>
-                            	<spring:message code="appelOffre.liste" />
+                                <spring:message code="appelOffre.liste" />
                             </h3>
                             <hr/>
                         </div>
@@ -37,32 +38,27 @@
                                 <tr>
                                     <th>
                                         <span class="btn">
-                                        	<spring:message code="appelOffre.numero" />
+                                            <spring:message code="appelOffre.numero" />
                                         </span>
                                     </th>
                                     <th>
                                         <span class="btn">
-                                        	<spring:message code="appelOffre.intitule" />
+                                            <spring:message code="appelOffre.intitule" />
                                         </span>
                                     </th>
                                     <th>
                                         <span class="btn">
-                                        	<spring:message code="appelOffre.filiale" />
+                                            <spring:message code="appelOffre.filiale" />
                                         </span>
                                     </th>
                                     <th>
                                         <span class="btn">
-                                        	<spring:message code="appelOffre.dateDepot" />
+                                            <spring:message code="appelOffre.dateDepot" />
                                         </span>
                                     </th>
-<!--                                     <th> -->
-<!--                                         <span class="btn"> -->
-<%--                                         	<spring:message code="appelOffre.maitreDouvrage" /> --%>
-<!--                                         </span> -->
-<!--                                     </th> -->
                                     <th>
                                         <span class="btn">
-                                        	<spring:message code="action.titre" />
+                                            <spring:message code="action.titre" />
                                         </span>
                                     </th>
                                 </tr>
@@ -90,22 +86,22 @@
                                             <td>
                                                 ${appelOffre.getTrueDate(appelOffre.dateDepot)}
                                             </td>
-<!--                                             <td> -->
-<%--                                                 ${appelOffre.maitreDouvrage} --%>
-<!--                                             </td> -->
                                             <td class="text-center">
-                                                <spring:url value="/appeloffre/${appelOffre.id}/edit" htmlEscape="true" var="appeloffre_edit" />
-                                                <a href="${appeloffre_edit}" class="btn btn-primary btn-sm">
-                                                    <span class="glyphicon glyphicon-edit">
-                                                    	<spring:message code="action.modifier" />
-                                                    </span>
-                                                    
-                                                </a>
-                                                &nbsp;&nbsp;
+                                                <sec:authorize access="hasRole('ROLE_ADMIN')">
+                                                    <spring:url value="/appeloffre/${appelOffre.id}/edit" htmlEscape="true" var="appeloffre_edit" />
+                                                    <a href="${appeloffre_edit}" class="btn btn-primary btn-sm">
+                                                        <span class="glyphicon glyphicon-edit">
+                                                            <spring:message code="action.modifier" />
+                                                        </span>
+
+                                                    </a>
+                                                    &nbsp;&nbsp;
+                                                </sec:authorize>
+
                                                 <spring:url value="/appeloffre/${appelOffre.id}/show" htmlEscape="true" var="appeloffre_show" />
                                                 <a href="${appeloffre_show}" class="btn btn-primary btn-sm">
                                                     <span class="glyphicon glyphicon-open">
-                                                    	<spring:message code="action.detail" />
+                                                        <spring:message code="action.detail" />
                                                     </span>
                                                 </a>
                                             </td>
@@ -121,12 +117,13 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <hr/>
-                        <spring:url value="/appeloffre/new" htmlEscape="true" var="appeloffre_new" />
-                        <a href="${appeloffre_new}" class="btn btn-primary btn-sm">
-                            <span class="glyphicon glyphicon-new-window"></span>
-                            <spring:message code="action.nouveau" />
-                        </a>
-
+                        <sec:authorize access="hasRole('ROLE_ADMIN')" >
+                            <spring:url value="/appeloffre/new" htmlEscape="true" var="appeloffre_new" />
+                            <a href="${appeloffre_new}" class="btn btn-primary btn-sm">
+                                <span class="glyphicon glyphicon-new-window"></span>
+                                <spring:message code="action.nouveau" />
+                            </a>
+                        </sec:authorize>
 
                         <div class="pull-right">
                             <ul class="pager">
@@ -137,15 +134,15 @@
                                     <li><a href="?querynumero=${appeloffre.numero}&queryintitule=${appeloffre.intitule}&querymaitredouvrage=${appeloffre.maitreDouvrage}&queryfiliale=${appeloffre.filiale.id}&page=${page-1}&size=${size}" <c:if test="${page eq 0}">class ="btn btn-sm disabled"</c:if>>
                                             <span class="glyphicon glyphicon-backward"></span>
                                         </a></li>
-                                    <li><input type="text" class="pager_detail text-center" readonly 
+                                    <li><input type="text" class="pager_detail text-center" readonly
                                         <c:choose>
                                             <c:when test="${Totalpage eq 0}">value="${page+1}/${Totalpage+1}"</c:when>
                                             <c:otherwise>value="${page+1}/${Totalpage}"</c:otherwise>
-                                    </c:choose> 
-                                    />
+                                        </c:choose>
+                                        />
                                 </li>
                                 <li>
-                                    <a href="?querynumero=${appeloffre.numero}&queryintitule=${appeloffre.intitule}&querymaitredouvrage=${appeloffre.maitreDouvrage}&queryfiliale=${appeloffre.filiale.id}&page=${page+1}&size=${size}" 
+                                    <a href="?querynumero=${appeloffre.numero}&queryintitule=${appeloffre.intitule}&querymaitredouvrage=${appeloffre.maitreDouvrage}&queryfiliale=${appeloffre.filiale.id}&page=${page+1}&size=${size}"
                                        <c:choose>
                                            <c:when test="${page+1 eq Totalpage}">class ="btn btn-sm disabled"</c:when>
                                            <c:when test="${Totalpage eq 0}">class ="btn btn-sm disabled"</c:when>
@@ -154,7 +151,7 @@
                                         <span class="glyphicon glyphicon-forward"></span>
                                     </a>
                                 </li>
-                                <li><a href="?querynumero=${appeloffre.numero}&queryintitule=${appeloffre.intitule}&querymaitredouvrage=${appeloffre.maitreDouvrage}&queryfiliale=${appeloffre.filiale.id}&page=${Totalpage-1}&size=${size}" 
+                                <li><a href="?querynumero=${appeloffre.numero}&queryintitule=${appeloffre.intitule}&querymaitredouvrage=${appeloffre.maitreDouvrage}&queryfiliale=${appeloffre.filiale.id}&page=${Totalpage-1}&size=${size}"
                                        <c:choose>
                                            <c:when test="${page+1 eq Totalpage}">class ="btn btn-sm disabled"</c:when>
                                            <c:when test="${Totalpage eq 0}">class ="btn btn-sm disabled"</c:when>
@@ -170,7 +167,7 @@
             <div class="col-md-3">
                 <div>
                     <h3>
-                    	<spring:message code="action.rechercher" />
+                        <spring:message code="action.rechercher" />
                     </h3>
                     <hr/>
                 </div>
@@ -179,33 +176,33 @@
                 <form:form method="get" commandName="appelOffre" action="${appeloffre_home}">
                     <div class="form-group">
                         <label>
-                        	<spring:message code="appelOffre.numero" />
-                        :</label>
+                            <spring:message code="appelOffre.numero" />
+                            :</label>
                         <input type="text" value="${appelOffre.numero}" class="form-control input-sm" name="querynumero"/>
                         <input type="hidden" value="${size}" name="size"/>
                     </div>
                     <div class="form-group">
                         <label>
-                        	<spring:message code="appelOffre.intitule" />
-                        :</label>
+                            <spring:message code="appelOffre.intitule" />
+                            :</label>
                         <input type="text" value="${appelOffre.intitule}" class="form-control input-sm" name="queryintitule"/>
                     </div>
                     <div class="form-group">
                         <label>
-                        	<spring:message code="appelOffre.debutPeriode" />
+                            <spring:message code="appelOffre.debutPeriode" />
                         </label>
                         <input id="dateDebut" type="text" value="${materiel.nom}" class="form-control input-sm" name="querydebutperiode"/>
                     </div>
                     <div class="form-group">
                         <label>
-                        	<spring:message code="appelOffre.finPeriode" />
+                            <spring:message code="appelOffre.finPeriode" />
                         </label>
                         <input id="dateFin" type="text" value="${materiel.nom}" class="form-control input-sm" name="queryfinperiode"/>
                     </div>
 
                     <div class="form-group">
                         <label>
-                        	<spring:message code="appelOffre.filiale" />
+                            <spring:message code="appelOffre.filiale" />
                         </label>
 
                         <select name="queryfiliale" class="form-control input-sm">
@@ -225,14 +222,17 @@
 
                     <div class="form-group">
                         <label>
-                        	<spring:message code="appelOffre.maitreDouvrage" />
+                            <spring:message code="appelOffre.maitreDouvrage" />
                         </label>
                         <input type="text" value="${appelOffre.maitreDouvrage}" class="form-control input-sm" name="querymaitredouvrage"/>
                     </div>
                     <hr/>
                     <button class="btn btn-default btn-sm">
-                        <span class="glyphicon glyphicon-search"></span> <spring:message code="action.rechercher"/></button>
-                        <spring:url value="/appeloffre/" htmlEscape="true" var="appeloffre_home" />
+                        <span class="glyphicon glyphicon-search">
+
+                        </span> <spring:message code="action.rechercher"/>
+                    </button>
+                    <spring:url value="/appeloffre/" htmlEscape="true" var="appeloffre_home" />
                     <a href="${appeloffre_home}" class="btn btn-default btn-sm">
                         <span class="glyphicon glyphicon-refresh"></span>
                         <spring:message code="search.delete" />
@@ -242,18 +242,18 @@
             </div>
         </div>
 
-		
+
         <script src="<c:url value="/resources/js/jquery.dynamiclist.min.js" />"></script>
-        <script src="<c:url value="/resources/js/jquery-ui.js" />"></script> 
-		<script type="text/javascript">
-	        $(function() {
-	        	$("#dateDebut, #dateFin").datepicker({
-			      changeMonth: true,
-			      changeYear: true,
-				  dateFormat: "dd/mm/yy",
-			      showButtonPanel: false
-			    }).datepicker( "option", "showAnim", "clip");
-	        });
-		</script>
+        <script src="<c:url value="/resources/js/jquery-ui.js" />"></script>
+        <script type="text/javascript">
+            $(function () {
+                $("#dateDebut, #dateFin").datepicker({
+                    changeMonth: true,
+                    changeYear: true,
+                    dateFormat: "dd/mm/yy",
+                    showButtonPanel: false
+                }).datepicker("option", "showAnim", "clip");
+            });
+        </script>
     </tiles:putAttribute>
 </tiles:insertDefinition>

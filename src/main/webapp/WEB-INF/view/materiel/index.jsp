@@ -10,6 +10,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <tiles:insertDefinition name="layout">
     <tiles:putAttribute name="body">
@@ -77,12 +78,13 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <hr/>
-                            <spring:url value="/materiel/new" htmlEscape="true" var="materiel_new" />
-                            <a href="${materiel_new}" class="btn btn-primary btn-sm">
-                                <span class="glyphicon glyphicon-new-window"></span>
-                                <spring:message code="action.nouveau" />
-                            </a>
-
+                            <sec:authorize access="hasRole('ROLE_ADMIN')" >
+                                <spring:url value="/materiel/new" htmlEscape="true" var="materiel_new" />
+                                <a href="${materiel_new}" class="btn btn-primary btn-sm">
+                                    <span class="glyphicon glyphicon-new-window"></span>
+                                    <spring:message code="action.nouveau" />
+                                </a>
+                            </sec:authorize>
                             <div class="pull-right">
                                 <ul class="pager">
 
@@ -117,12 +119,14 @@
                                 ${materiel.typeMateriel.nom}
                             </td>
                             <td class="text-center">
-                                <spring:url value="/materiel/${materiel.id}/edit" htmlEscape="true" var="materiel_edit" />
-                                <a href="${materiel_edit}" class="btn btn-primary btn-sm">
-                                    <span class="glyphicon glyphicon-edit"></span>
-                                    <spring:message code="action.modifier" />
-                                </a>
-                                &nbsp;&nbsp;
+                                <sec:authorize access="hasRole('ROLE_ADMIN')" >
+                                    <spring:url value="/materiel/${materiel.id}/edit" htmlEscape="true" var="materiel_edit" />
+                                    <a href="${materiel_edit}" class="btn btn-primary btn-sm">
+                                        <span class="glyphicon glyphicon-edit"></span>
+                                        <spring:message code="action.modifier" />
+                                    </a>
+                                    &nbsp;&nbsp;
+                                </sec:authorize>
                                 <spring:url value="/materiel/${materiel.id}/show" htmlEscape="true" var="materiel_show" />
                                 <a href="${materiel_show}" class="btn btn-primary btn-sm">
                                     <span class="glyphicon glyphicon-open"></span>
@@ -137,12 +141,13 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <hr/>
-                            <spring:url value="/materiel/new" htmlEscape="true" var="materiel_new" />
-                            <a href="${materiel_new}" class="btn btn-primary btn-sm">
-                                <span class="glyphicon glyphicon-new-window"></span>
-                                <spring:message code="action.nouveau" />
-                            </a>
-
+                            <sec:authorize access="hasRole('ROLE_ADMIN')" >
+                                <spring:url value="/materiel/new" htmlEscape="true" var="materiel_new" />
+                                <a href="${materiel_new}" class="btn btn-primary btn-sm">
+                                    <span class="glyphicon glyphicon-new-window"></span>
+                                    <spring:message code="action.nouveau" />
+                                </a>
+                            </sec:authorize>
                             <div class="pull-right">
                                 <ul class="pager">
 

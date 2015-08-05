@@ -53,11 +53,8 @@ public class RoleService extends AbstractService<Role> implements IRoleService
     }
 
     @Override
-    public Role createRole(final Role role) throws Exception
+    public Role createRole(final Role role)
     {
-        if (exists(role.getUser())) {
-            throw new Exception("exist");
-        }
         User user = role.getUser();
         user.setEnabled(true);
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
@@ -71,13 +68,13 @@ public class RoleService extends AbstractService<Role> implements IRoleService
     }
 
     @Override
-    public Role updateUser(final Role role) throws Exception
+    public Role updateUser(final Role role)
     {
         System.out.println("updating user with ID " + role.getId());
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
         User userToUpdate = role.getUser();
-        userToUpdate.setEnabled(true);
+        userToUpdate.setEnabled(role.getUser().isEnabled());
         userToUpdate.setNom(role.getUser().getNom());
         userToUpdate.setUsername(role.getUser().getUsername());
         userToUpdate.setPassword(passwordEncoder.encode(role.getUser().getPassword()));
@@ -171,8 +168,8 @@ public class RoleService extends AbstractService<Role> implements IRoleService
         return roleDao.retrieveAUser(username);
     }
 
-    public boolean exists(User user)
-    {
-        return roleDao.retrieveAUser(user.getUsername()) instanceof Role;
-    }
+//    public boolean exists(User user)
+//    {
+//        return roleDao.retrieveAUser(user.getUsername()) instanceof Role;
+//    }
 }

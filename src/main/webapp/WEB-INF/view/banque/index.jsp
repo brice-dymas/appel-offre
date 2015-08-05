@@ -4,6 +4,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <tiles:insertDefinition name="layout">
     <tiles:putAttribute name="body">
@@ -95,12 +96,14 @@
                                 ${banque.libelle}
                             </td>
                             <td class="text-center">
-                                <spring:url value="/banque/${banque.id}/edit" htmlEscape="true" var="banque_edit" />
-                                <a href="${banque_edit}" class="btn btn-primary btn-sm">
-                                    <span class="glyphicon glyphicon-edit"></span>
-                                    <spring:message code="action.modifier" />
-                                </a>
-                                &nbsp;&nbsp;
+                                <sec:authorize access="hasRole('ROLE_ADMIN')" >
+                                    <spring:url value="/banque/${banque.id}/edit" htmlEscape="true" var="banque_edit" />
+                                    <a href="${banque_edit}" class="btn btn-primary btn-sm">
+                                        <span class="glyphicon glyphicon-edit"></span>
+                                        <spring:message code="action.modifier" />
+                                    </a>
+                                    &nbsp;&nbsp;
+                                </sec:authorize>
                                 <spring:url value="/banque/${banque.id}/show" htmlEscape="true" var="banque_show" />
                                 <a href="${banque_show}" class="btn btn-primary btn-sm">
                                     <span class="glyphicon glyphicon-open"></span>
@@ -117,12 +120,13 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <hr/>
-                            <spring:url value="/banque/new" htmlEscape="true" var="banque_new" />
-                            <a href="${banque_new}" class="btn btn-primary btn-sm">
-                                <span class="glyphicon glyphicon-new-window"></span>
-                                <spring:message code="action.nouveau" />
-                            </a>
-
+                            <sec:authorize access="hasRole('ROLE_ADMIN')" >
+                                <spring:url value="/banque/new" htmlEscape="true" var="banque_new" />
+                                <a href="${banque_new}" class="btn btn-primary btn-sm">
+                                    <span class="glyphicon glyphicon-new-window"></span>
+                                    <spring:message code="action.nouveau" />
+                                </a>
+                            </sec:authorize>
                             <div class="pull-right">
                                 <ul class="pager">
 

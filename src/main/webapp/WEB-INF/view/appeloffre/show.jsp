@@ -9,6 +9,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <tiles:insertDefinition name="layout">
     <tiles:putAttribute name="body">
@@ -62,76 +63,92 @@
                     <legend><spring:message code="appelOffre.listeAttachedFiles" /></legend>
                     <table class="table table-bordered">
                         <tr>
-                            <th>
-                                <spring:message code="appelOffre.attachedFile" />
-                            </th>
-                            <td>
-                                <a href="<c:url value="/resources/documents/${appelOffre.pieceJointe1}"/>">
-                                    <spring:message code="action.download" />
-                                </a>
-                            </td>
-                            <th>
-                                <spring:message code="appelOffre.attachedFile" />
-                            </th>
-                            <td>
-                                <a href="<c:url value="/resources/documents/${appelOffre.pieceJointe2}"/>">
-                                    <spring:message code="action.download" />
-                                </a>
-                            </td>
+                            <c:if test="${appelOffre.pieceJointe1 != null}">
+                                <th>
+                                    <spring:message code="appelOffre.attachedFile" />
+                                </th>
+                                <td>
+                                    <a href="<c:url value="/resources/documents/${appelOffre.pieceJointe1}"/>">
+                                        <spring:message code="action.download" />
+                                    </a>
+                                </td>
+                            </c:if>
+                            <c:if test="${appelOffre.pieceJointe2 != null}">
+                                <th>
+                                    <spring:message code="appelOffre.attachedFile" />
+                                </th>
+                                <td>
+                                    <a href="<c:url value="/resources/documents/${appelOffre.pieceJointe2}"/>">
+                                        <spring:message code="action.download" />
+                                    </a>
+                                </td>
+                            </c:if>
                         </tr>
                         <tr>
-                            <th>
-                                <spring:message code="appelOffre.attachedFile" />
-                            </th>
-                            <td>
-                                <a href="<c:url value="/resources/documents/${appelOffre.pieceJointe3}"/>">
-                                    <spring:message code="action.download" />
-                                </a>
-                            </td>
-                            <th>
-                                <spring:message code="appelOffre.attachedFile" />
-                            </th>
-                            <td>
-                                <a href="<c:url value="/resources/documents/${appelOffre.pieceJointe4}"/>">
-                                    <spring:message code="action.download" />
-                                </a>
-                            </td>
+                            <c:if test="${appelOffre.pieceJointe3 != null}">
+                                <th>
+                                    <spring:message code="appelOffre.attachedFile" />
+                                </th>
+                                <td>
+                                    <a href="<c:url value="/resources/documents/${appelOffre.pieceJointe3}"/>">
+                                        <spring:message code="action.download" />
+                                    </a>
+                                </td>
+                            </c:if>
+                            <c:if test="${appelOffre.pieceJointe4 != null}">
+                                <th>
+                                    <spring:message code="appelOffre.attachedFile" />
+                                </th>
+                                <td>
+                                    <a href="<c:url value="/resources/documents/${appelOffre.pieceJointe4}"/>">
+                                        <spring:message code="action.download" />
+                                    </a>
+                                </td>
+                            </c:if>
                         </tr>
                         <tr>
-                            <th>
-                                <spring:message code="appelOffre.attachedFile" />
-                            </th>
-                            <td>
-                                <a href="<c:url value="/resources/documents/${appelOffre.pieceJointe5}"/>">
-                                    <spring:message code="action.download" />
-                                </a>
-                            </td>
-                            <th>
-                                <spring:message code="appelOffre.attachedFile" />
-                            </th>
-                            <td>
-                                <a href="<c:url value="/resources/documents/${appelOffre.pieceJointe6}"/>">
-                                    <spring:message code="action.download" />
-                                </a>
-                            </td>
+                            <c:if test="${appelOffre.pieceJointe5 != null}">
+                                <th>
+                                    <spring:message code="appelOffre.attachedFile" />
+                                </th>
+                                <td>
+                                    <a href="<c:url value="/resources/documents/${appelOffre.pieceJointe5}"/>">
+                                        <spring:message code="action.download" />
+                                    </a>
+                                </td>
+                            </c:if>
+                            <c:if test="${appelOffre.pieceJointe6 != null}">
+                                <th>
+                                    <spring:message code="appelOffre.attachedFile" />
+                                </th>
+                                <td>
+                                    <a href="<c:url value="/resources/documents/${appelOffre.pieceJointe6}"/>">
+                                        <spring:message code="action.download" />
+                                    </a>
+                                </td>
+                            </c:if>
                         </tr>
                         <tr>
-                            <th>
-                                <spring:message code="appelOffre.attachedFile" />
-                            </th>
-                            <td>
-                                <a href="<c:url value="/resources/documents/${appelOffre.pieceJointe7}"/>">
-                                    <spring:message code="action.download" />
-                                </a>
-                            </td>
-                            <th>
-                                <spring:message code="appelOffre.attachedFile" />
-                            </th>
-                            <td>
-                                <a href="<c:url value="/resources/documents/${appelOffre.pieceJointe8}"/>">
-                                    <spring:message code="action.download" />
-                                </a>
-                            </td>
+                            <c:if test="${appelOffre.pieceJointe7 != null}">
+                                <th>
+                                    <spring:message code="appelOffre.attachedFile" />
+                                </th>
+                                <td>
+                                    <a href="<c:url value="/resources/documents/${appelOffre.pieceJointe7}"/>">
+                                        <spring:message code="action.download" />
+                                    </a>
+                                </td>
+                            </c:if>
+                            <c:if test="${appelOffre.pieceJointe8 != null}">
+                                <th>
+                                    <spring:message code="appelOffre.attachedFile" />
+                                </th>
+                                <td>
+                                    <a href="<c:url value="/resources/documents/${appelOffre.pieceJointe8}"/>">
+                                        <spring:message code="action.download" />
+                                    </a>
+                                </td>
+                            </c:if>
                         </tr>
                     </table>
                 </fieldset>
@@ -223,24 +240,26 @@
 
                 <spring:url value="/appeloffre/delete" var="appeloffre_delete"/>
                 <form:form method="post" commandName="appelOffre" action="${appeloffre_delete}">
-                    <form:hidden path="id"/>
                     <spring:url value="/appeloffre/" var="appeloffre_home"/>
-                    <a href="${appeloffre_home}" class="btn btn-primary  btn-sm">
+                    <a href="${appeloffre_home}" class="btn btn-primary btn-primary">
                         <span class="glyphicon glyphicon-list"></span>
                         <spring:message code="appelOffre.liste" />
                     </a>
-                    <spring:url value="/appeloffre/${appelOffre.id}/edit" var="appeloffre_edit"/>
-                    <a href="${appeloffre_edit}" class="btn btn-default  btn-warning">
-                        <span class="glyphicon glyphicon-edit"></span>
-                        <spring:message code="action.modifier" />
-                    </a>
-                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                    <button type="submit" class="btn btn-default  btn-danger">
-                        <span class="glyphicon glyphicon-remove-sign"></span>
-                        <spring:message code="action.effacer" />
-                    </button>
+                    <sec:authorize access="hasRole('ROLE_ADMIN')" >
+                        <form:hidden path="id"/>
+                        <spring:url value="/appeloffre/${appelOffre.id}/edit" var="appeloffre_edit"/>
+                        <a href="${appeloffre_edit}" class="btn btn-default  btn-warning">
+                            <span class="glyphicon glyphicon-edit"></span>
+                            <spring:message code="action.modifier" />
+                        </a>
+                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                        <button type="submit" class="btn btn-default  btn-danger">
+                            <span class="glyphicon glyphicon-remove-sign"></span>
+                            <spring:message code="action.effacer" />
+                        </button>
+                    </sec:authorize>
                     <div class="dropdown" style="display: inline-block !important">
-                        <button class="btn btn-default dropdown-toogle" id="dropdown-user" data-toggle="dropdown">
+                        <button class="btn btn-default dropdown-toogle btn-warning" id="dropdown-user" data-toggle="dropdown">
                             <i class="glyphicon glyphicon-print"></i>
                             <spring:message code="print.message" />
                             <i class="caret"></i>
@@ -248,24 +267,24 @@
                         <ul class="dropdown-menu" role="menu" aria-labeledby="dropdown-user">
                             <li>
                                 <spring:url htmlEscape="true" var="pdf_print" value="/appeloffre/${appelOffre.id}/show.pdf" />
-                                <a href="${pdf_print}" download="detail_appelOffre.pdf" >
+                                <a href="${pdf_print}" class="btn btn-warning" download="detail_appelOffre.pdf" >
+                                    <i class="glyphicon glyphicon-book"> </i>
                                     <spring:message code="print.pdf" />
                                 </a>
                             </li>
                             <li>
                                 <spring:url htmlEscape="true" var="xls_print" value="/appeloffre/${appelOffre.id}/show.xls" />
-                                <a href="${xls_print}">
+                                <a href="${xls_print}" class="btn btn-warning" >
+                                    <i class="glyphicon glyphicon-calendar"> </i>
                                     <spring:message code="print.xls" />
                                 </a>
                             </li>
                         </ul>
                     </div>
                 </form:form>
+
             </div>
         </div>
-
-
-
 
     </tiles:putAttribute>
 </tiles:insertDefinition>

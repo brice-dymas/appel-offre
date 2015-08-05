@@ -9,6 +9,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <tiles:insertDefinition name="layout">
     <tiles:putAttribute name="body">
@@ -49,25 +50,31 @@
 
                 <hr/>
 
+
+
+
                 <spring:url value="/banque/delete" var="banque_delete"/>
                 <form:form method="post" commandName="banque" action="${banque_delete}">
-                    <form:hidden path="id"/>
                     <spring:url value="/banque/" var="banque_home"/>
                     <a href="${banque_home}" class="btn btn-primary  btn-sm">
                         <span class="glyphicon glyphicon-list"></span>
                         <spring:message code="banque.liste" />
                     </a>
-                    <spring:url value="/banque/${banque.id}/edit" var="banque_edit"/>
-                    <a href="${banque_edit}" class="btn btn-default  btn-warning">
-                        <span class="glyphicon glyphicon-edit"></span>
-                        <spring:message code="action.modifier" />
-                    </a>
-                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                    <button type="submit" class="btn btn-default  btn-danger">
-                        <span class="glyphicon glyphicon-remove-sign"></span>
-                        <spring:message code="action.effacer" />
-                    </button>
+                    <sec:authorize access="hasRole('ROLE_ADMIN')" >
+                        <form:hidden path="id"/>
+                        <spring:url value="/banque/${banque.id}/edit" var="banque_edit"/>
+                        <a href="${banque_edit}" class="btn btn-default  btn-warning">
+                            <span class="glyphicon glyphicon-edit"></span>
+                            <spring:message code="action.modifier" />
+                        </a>
+                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                        <button type="submit" class="btn btn-default  btn-danger">
+                            <span class="glyphicon glyphicon-remove-sign"></span>
+                            <spring:message code="action.effacer" />
+                        </button>
+                    </sec:authorize>
                 </form:form>
+
             </div>
         </div>
 

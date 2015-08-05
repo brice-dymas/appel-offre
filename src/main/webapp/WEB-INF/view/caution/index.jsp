@@ -4,6 +4,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <tiles:insertDefinition name="layout">
     <tiles:putAttribute name="body">
@@ -37,17 +38,7 @@
                                 <tr>
                                     <th>
                                         <span class="btn">
-                                            <spring:message code="caution.numero" />
-                                        </span>
-                                    </th>
-                                    <th>
-                                        <span class="btn">
                                             <spring:message code="caution.dateDebut" />
-                                        </span>
-                                    </th>
-                                    <th>
-                                        <span class="btn">
-                                            <spring:message code="caution.dateFin" />
                                         </span>
                                     </th>
                                     <th>
@@ -57,7 +48,7 @@
                                     </th>
                                     <th>
                                         <span class="btn">
-                                            <spring:message code="caution.montant" />
+                                            <spring:message code="caution.commercial" />
                                         </span>
                                     </th>
                                     <th>
@@ -80,20 +71,15 @@
                                     <c:forEach items="${cautions}" var="caution">
                                         <c:if test="${caution.dateFin le todayDate}">
                                             <tr class="text-danger">
-                                                <td>
-                                                    ${caution.numero}
-                                                </td>
+
                                                 <td>
                                                     ${caution.getTrueDate(caution.dateDebut)}
-                                                </td>
-                                                <td>
-                                                    ${caution.getTrueDate(caution.dateFin)}
                                                 </td>
                                                 <td>
                                                     ${caution.banque.libelle}
                                                 </td>
                                                 <td>
-                                                    ${caution.montant}
+                                                    ${caution.commercial.user.nom}
                                                 </td>
                                                 <td class="text-center">
                                                     <spring:url value="/appeloffre/${caution.appelOffre.id}/show" htmlEscape="true" var="appeloffre_show" />
@@ -116,19 +102,13 @@
                                         <c:if test="${caution.dateFin gt todayDate}">
                                             <tr>
                                                 <td>
-                                                    ${caution.numero}
-                                                </td>
-                                                <td>
                                                     ${caution.getTrueDate(caution.dateDebut)}
-                                                </td>
-                                                <td>
-                                                    ${caution.getTrueDate(caution.dateFin)}
                                                 </td>
                                                 <td>
                                                     ${caution.banque.libelle}
                                                 </td>
                                                 <td>
-                                                    ${caution.montant}
+                                                    ${caution.commercial.user.nom}
                                                 </td>
                                                 <td class="text-center">
                                                     <spring:url value="/appeloffre/${caution.appelOffre.id}/show" htmlEscape="true" var="appeloffre_show" />
@@ -150,27 +130,29 @@
                                         </c:if>
 
                                     </c:forEach>
-                                <div class="dropdown" style="display: inline-block !important">
-                                    <button class="btn btn-default dropdown-toogle" id="dropdown-user" data-toggle="dropdown">
-                                        <i class="glyphicon glyphicon-print"></i>
-                                        <spring:message code="print.message" />
-                                        <i class="caret"></i>
-                                    </button>
-                                    <ul class="dropdown-menu" role="menu" aria-labeledby="dropdown-user">
-                                        <li>
-                                            <spring:url htmlEscape="true" var="pdf_print" value="/caution.pdf" />
-                                            <a href="${pdf_print}">
-                                                <spring:message code="print.pdf" />
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <spring:url htmlEscape="true" var="xls_print" value="/caution.xls" />
-                                            <a href="${xls_print}">
-                                                <spring:message code="print.xls" />
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
+                                    <c:if test="${not empty cautions}">
+                                    <div class="dropdown" style="display: inline-block !important">
+                                        <button class="btn btn-default dropdown-toogle" id="dropdown-user" data-toggle="dropdown">
+                                            <i class="glyphicon glyphicon-print"></i>
+                                            <spring:message code="print.message" />
+                                            <i class="caret"></i>
+                                        </button>
+                                        <ul class="dropdown-menu" role="menu" aria-labeledby="dropdown-user">
+                                            <li>
+                                                <spring:url htmlEscape="true" var="pdf_print" value="/caution.pdf" />
+                                                <a href="${pdf_print}">
+                                                    <spring:message code="print.pdf" />
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <spring:url htmlEscape="true" var="xls_print" value="/caution.xls" />
+                                                <a href="${xls_print}">
+                                                    <spring:message code="print.xls" />
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </c:if>
                             </c:if>
                             </tbody>
                         </table>

@@ -22,11 +22,11 @@ public interface IRoleService extends IOperations<Role>
 
     public Role findByUser(User user);
 
-    public Role createRole(Role role) throws Exception;
+    public Role createRole(Role role);
 
     public void deleteRole(long id);
 
-    public Role updateUser(Role role) throws Exception;
+    public Role updateUser(Role role);
 
     Page<Role> findPaginated(String nom, int page, Integer size);
 

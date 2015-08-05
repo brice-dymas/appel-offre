@@ -44,13 +44,13 @@
             <div class="row">
                 <div class="col-md-4 col-md-offset-4">
                     <hr/>
-                    <c:if test="${userConnected.role.equals('ROLE_ADMIN')}">
+                    <sec:authorize access="hasRole('ROLE_ADMIN')" >
                         <spring:url value="/user/" var="user_home"/>
                         <a href="${user_home}" class="btn btn-primary  btn-sm">
                             <span class="glyphicon glyphicon-list"></span>
                             <spring:message code="user.liste" />
                         </a>
-                    </c:if>
+                    </sec:authorize>
 
 
                     <c:if test="${user.id == userConnected.id}">

@@ -9,6 +9,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <tiles:insertDefinition name="layout">
     <tiles:putAttribute name="body">
@@ -40,7 +41,6 @@
                             <c:if test="${caution.dateFin gt todayDate}">
                                 <td>${caution.getTrueDate(caution.dateFin)}</td>
                             </c:if>
-                            <%--                             <td>${caution.getTrueDate(caution.dateFin)}</td> --%>
                         </tr>
 
                         <tr>
@@ -87,9 +87,5 @@
                 </a>
             </div>
         </div>
-
-
-
-
     </tiles:putAttribute>
 </tiles:insertDefinition>
