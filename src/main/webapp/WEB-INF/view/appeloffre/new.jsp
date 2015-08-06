@@ -34,7 +34,7 @@
                         <form:label for="numero" path="">
                             <spring:message code="appelOffre.numero" />
                         </form:label>
-                        <form:input id="numero" path="appelOffre.numero" cssClass="form-control"/>
+                        <form:input id="numero" path="appelOffre.numero" cssClass="form-control input-sm"/>
                         <form:errors path="appelOffre.numero" cssClass="text-danger"/>
                     </div>
                 </div>
@@ -43,7 +43,7 @@
                         <form:label for="intitule" path="">
                             <spring:message code="appelOffre.intitule" />
                         </form:label>
-                        <form:input id="intitule" path="appelOffre.intitule" cssClass="form-control"/>
+                        <form:input id="intitule" path="appelOffre.intitule" cssClass="form-control input-sm"/>
                         <form:errors path="appelOffre.intitule" cssClass="text-danger"/>
                     </div>
                 </div>
@@ -52,7 +52,7 @@
                         <form:label for="dateDepot" path="">
                             <spring:message code="appelOffre.datedepot" />
                         </form:label>
-                        <form:input id="dateDepot" path="appelOffre.dateDepot" cssClass="form-control"/>
+                        <form:input id="dateDepot" path="appelOffre.dateDepot" cssClass="form-control input-sm"/>
                         <form:errors path="appelOffre.dateDepot" cssClass="text-danger"/>
                     </div>
                 </div>
@@ -63,7 +63,7 @@
                         <form:label for="maitreDouvrage" path="">
                             <spring:message code="appelOffre.maitreDouvrage" />
                         </form:label>
-                        <form:input id="maitreDouvrage" path="appelOffre.maitreDouvrage" cssClass="form-control"/>
+                        <form:input id="maitreDouvrage" path="appelOffre.maitreDouvrage" cssClass="form-control input-sm"/>
                         <form:errors path="appelOffre.maitreDouvrage" cssClass="text-danger"/>
                     </div>
                 </div>
@@ -83,13 +83,13 @@
                         <form:label for="delaiDeValidite" path="">
                             <spring:message code="appelOffre.delai" />
                         </form:label>
-                        <form:input id="delaiDeValidite" path="appelOffre.delaiDeValidite" cssClass="form-control"/>
+                        <form:input id="delaiDeValidite" path="appelOffre.delaiDeValidite" cssClass="form-control input-sm"/>
                         <form:errors path="appelOffre.delaiDeValidite" cssClass="text-danger"/>
                     </div>
                 </div>
             </div>
 
-            <hr/>
+
             <hr/>
             <fieldset>
                 <legend><spring:message code="appelOffre.joinFile" />  </legend>
@@ -279,6 +279,9 @@
                                     </tr>
                                 </thead>
                                 <tbody id="caution">
+
+
+
                                     <c:if test="${0 le appelOffreForm.cautions.size()}">
                                         <c:forEach items="${appelOffreForm.cautions}" varStatus="status" begin="0">
 
@@ -331,13 +334,13 @@
                                                 </td>
                                                 <td>
                                                     <spring:bind path="cautions[${status.index}].dateDebut">
-                                                        <form:input id="dateDebut" path="${status.expression}" cssClass="form-control input-sm" />
+                                                        <form:input path="${status.expression}" cssClass="form-control input-sm" />
                                                         <form:errors path="${status.expression}" cssClass="text-danger"/>
                                                     </spring:bind>
                                                 </td>
                                                 <td>
                                                     <spring:bind path="cautions[${status.index}].dateFin">
-                                                        <form:input id="dateFin" path="${status.expression}" cssClass="form-control input-sm" />
+                                                        <form:input path="${status.expression}" cssClass="form-control input-sm" />
                                                         <form:errors path="${status.expression}" cssClass="text-danger"/>
                                                     </spring:bind>
                                                 </td>
@@ -457,8 +460,9 @@
                             });
                             return false;
                         });
+                        i++;
                     });
-                    i++;
+
 
                 }
 
@@ -491,6 +495,7 @@
                     addClass: "add-materiel",
                     removeClass: "remove-materiel"
                 });
+
                 $("#caution").dynamiclist({
                     itemClass: "list-caution",
                     addClass: "add-caution",
@@ -506,16 +511,9 @@
                     dateFormat: "dd/mm/yy",
                     showButtonPanel: false
                 });
-                $(":pj1").filestyle({buttonName: "btn-primary", buttonBefore: true});
-                $(":pj2").filestyle({buttonName: "btn-primary", buttonBefore: true});
-                $(":pj3").filestyle({buttonName: "btn-primary", buttonBefore: true});
-                $(":pj4").filestyle({buttonName: "btn-primary", buttonBefore: true});
-                $(":pj5").filestyle({buttonName: "btn-primary", buttonBefore: true});
-                $(":pj6").filestyle({buttonName: "btn-primary", buttonBefore: true});
-                $(":pj7").filestyle({buttonName: "btn-primary", buttonBefore: true});
-                $(":pj8").filestyle({buttonName: "btn-primary", buttonBefore: true});
 
                 setOnCautionDatePicker();
+
             });
 
         </script>

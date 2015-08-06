@@ -17,6 +17,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.PagingAndSortingRepository;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -70,31 +72,50 @@ public class RoleService extends AbstractService<Role> implements IRoleService
     @Override
     public Role updateUser(final Role role)
     {
-        System.out.println("updating user with ID " + role.getId());
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        System.out.println("in updateUser service method ...");
-        System.out.println("in updateUser service method displaying user to update ");
-        System.out.println("deleteAction of a user =" + role.getId() + " -Role=" + role.getRole() + " username=" + role.getUser().getUsername() + " enabled=" + role.getUser().isEnabled());
-        User userToUpdate = role.getUser();
-        userToUpdate.setEnabled(role.getUser().isEnabled());
-        userToUpdate.setNom(role.getUser().getNom());
-        userToUpdate.setUsername(role.getUser().getUsername());
-        userToUpdate.setPassword(passwordEncoder.encode(role.getUser().getPassword()));
-        userToUpdate = userDao.save(userToUpdate);
-
+        final Role userConnected = roleDao.retrieveAUser(auth.getName()); // get the current logged user
         final Role roleToUpdate = roleDao.findOne(role.getId());
-        final String vraiRole = getTheRealRoleOf(role.getRole());
-        roleToUpdate.setUser(userToUpdate);
-        roleToUpdate.setRole(vraiRole);
-        System.out.println("in update service user role= " + roleToUpdate.getRole());
-        System.out.println("updating ... ");
-        Role r = roleDao.save(roleToUpdate);
-        System.out.println("update finished");
-        System.out.println("userToUpdate's username is " + r.getUser().getUsername());
-        System.out.println("\n \n \n \n in updateUser service method displaying user updated ");
-        System.out.println("deleteAction of a user =" + role.getId() + " -Role=" + role.getRole() + " username=" + role.getUser().getUsername() + " enabled=" + role.getUser().isEnabled());
+        User userToUpdate;
+        System.out.println("updating user with ID " + role.getId());
+        System.out.println("in updateUser service method ...");
 
-        return r;
+        if (!userConnected.getRole().equals("ROLE_ADMIN")) {
+            System.out.println("userConected is not admin launching his update of password ...");
+            userToUpdate = userDao.findByUsername(userConnected.getUser().getUsername());
+            System.out.println("his username is " + userToUpdate.getUsername());
+            System.out.println("encrypting his password ...");
+            userToUpdate.setPassword(passwordEncoder.encode(role.getUser().getPassword()));
+            System.out.println(" password encrypted  \n Saving new configuration ....");
+            userToUpdate = userDao.save(userToUpdate);
+            System.out.println("configuration saved");
+            roleToUpdate.setUser(userToUpdate);
+            System.out.println("updating cache ....");
+            return roleDao.save(roleToUpdate);
+        }
+        else {
+            userToUpdate = role.getUser();
+            userToUpdate.setEnabled(role.getUser().isEnabled());
+            userToUpdate.setNom(role.getUser().getNom());
+            userToUpdate.setUsername(role.getUser().getUsername());
+            userToUpdate.setPassword(passwordEncoder.encode(role.getUser().getPassword()));
+            userToUpdate = userDao.save(userToUpdate);
+
+            final String vraiRole = getTheRealRoleOf(role.getRole());
+            roleToUpdate.setUser(userToUpdate);
+            roleToUpdate.setRole(vraiRole);
+            System.out.println("in update service user role= " + roleToUpdate.getRole());
+            System.out.println("updating ... ");
+            Role r = roleDao.save(roleToUpdate);
+            System.out.println("update finished");
+            System.out.println("userToUpdate's username is " + r.getUser().getUsername());
+            System.out.println("\n \n \n \n in updateUser service method displaying user updated ");
+            System.out.println("deleteAction of a user =" + role.getId() + " -Role=" + role.getRole() + " username=" + role.getUser().getUsername() + " enabled=" + role.getUser().isEnabled());
+
+            return r;
+        }
+
     }
 
     @Override

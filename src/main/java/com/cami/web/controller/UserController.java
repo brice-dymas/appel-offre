@@ -166,6 +166,38 @@ public class UserController
 
     }
 
+    @RequestMapping(value = "{id}/editSimpleUser", method = RequestMethod.GET)
+    public String editSimpleUser(@PathVariable("id") final Long id, final ModelMap model)
+    {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String name = auth.getName(); //get logged in username
+
+        final Role userConnected = roleService.retrieveAUser(name);
+        final Role role = roleService.findOne(id);
+        if (userConnected.getId() == role.getId() | userConnected.getRole().equals("ROLE_ADMIN")) {
+            model.addAttribute("fonction_user", userConnected.getRole());
+            model.addAttribute("user", role);
+            return "user/sedit";
+        }
+        else {
+            return "redirect:/403";
+        }
+
+    }
+
+    @RequestMapping(value = "/{id}/updateSimpleUser", method = RequestMethod.POST)
+    public String updateSimpleUserAction(final ModelMap model, @PathVariable("id") final Long id,
+            final Role role, final BindingResult result,
+            final RedirectAttributes redirectAttributes)
+    {
+        redirectAttributes.addFlashAttribute("info", "alert.success.new");
+        System.out.println("in controller user role= " + role.getRole());
+        final Role roleUpdated = roleService.updateUser(role);
+        System.out.println("là c sur tout va bien et le role nouveau c " + roleUpdated.getRole());
+        return "redirect:/welcome";
+
+    }
+
     @RequestMapping(value = "/{id}/update", method = RequestMethod.POST)
     public String updateAction(final ModelMap model, @PathVariable("id") final Long id,
             @Valid final Role role, final BindingResult result,

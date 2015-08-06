@@ -56,6 +56,11 @@
                                             <spring:message code="appelOffre.dateDepot" />
                                         </span>
                                     </th>
+                                    <!--                                     <th> -->
+                                    <!--                                         <span class="btn"> -->
+                                    <%--                                         	<spring:message code="appelOffre.maitreDouvrage" /> --%>
+                                    <!--                                         </span> -->
+                                    <!--                                     </th> -->
                                     <th>
                                         <span class="btn">
                                             <spring:message code="action.titre" />
@@ -86,18 +91,18 @@
                                             <td>
                                                 ${appelOffre.getTrueDate(appelOffre.dateDepot)}
                                             </td>
+                                            <!--                                             <td> -->
+                                            <%--                                                 ${appelOffre.maitreDouvrage} --%>
+                                            <!--                                             </td> -->
                                             <td class="text-center">
-                                                <sec:authorize access="hasRole('ROLE_ADMIN')">
-                                                    <spring:url value="/appeloffre/${appelOffre.id}/edit" htmlEscape="true" var="appeloffre_edit" />
-                                                    <a href="${appeloffre_edit}" class="btn btn-primary btn-sm">
-                                                        <span class="glyphicon glyphicon-edit">
-                                                            <spring:message code="action.modifier" />
-                                                        </span>
+                                                <spring:url value="/appeloffre/${appelOffre.id}/edit" htmlEscape="true" var="appeloffre_edit" />
+                                                <a href="${appeloffre_edit}" class="btn btn-primary btn-sm">
+                                                    <span class="glyphicon glyphicon-edit">
+                                                        <spring:message code="action.modifier" />
+                                                    </span>
 
-                                                    </a>
-                                                    &nbsp;&nbsp;
-                                                </sec:authorize>
-
+                                                </a>
+                                                &nbsp;&nbsp;
                                                 <spring:url value="/appeloffre/${appelOffre.id}/show" htmlEscape="true" var="appeloffre_show" />
                                                 <a href="${appeloffre_show}" class="btn btn-primary btn-sm">
                                                     <span class="glyphicon glyphicon-open">
@@ -128,13 +133,18 @@
                         <div class="pull-right">
                             <ul class="pager">
 
-                                <li><a href="?querynumero=${appeloffre.numero}&queryintitule=${appeloffre.intitule}&querymaitredouvrage=${appeloffre.maitreDouvrage}&queryfiliale=${appeloffre.filiale.id}&page=0&size=${size}" <c:if test="${page eq 0}">class ="btn btn-sm disabled"</c:if>>
+                                <li>
+                                    <a href="?querynumero=${appeloffre.numero}&queryintitule=${appeloffre.intitule}&querymaitredouvrage=${appeloffre.maitreDouvrage}&queryfiliale=${appeloffre.filiale.id}&page=0&size=${size}" <c:if test="${page eq 0}">class ="btn btn-sm disabled"</c:if>>
                                             <span class="glyphicon glyphicon-fast-backward"></span>
-                                        </a></li>
-                                    <li><a href="?querynumero=${appeloffre.numero}&queryintitule=${appeloffre.intitule}&querymaitredouvrage=${appeloffre.maitreDouvrage}&queryfiliale=${appeloffre.filiale.id}&page=${page-1}&size=${size}" <c:if test="${page eq 0}">class ="btn btn-sm disabled"</c:if>>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="?querynumero=${appeloffre.numero}&queryintitule=${appeloffre.intitule}&querymaitredouvrage=${appeloffre.maitreDouvrage}&queryfiliale=${appeloffre.filiale.id}&page=${page-1}&size=${size}" <c:if test="${page eq 0}">class ="btn btn-sm disabled"</c:if>>
                                             <span class="glyphicon glyphicon-backward"></span>
-                                        </a></li>
-                                    <li><input type="text" class="pager_detail text-center" readonly
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <input type="text" size="5" class="pager_detail text-center" readonly
                                         <c:choose>
                                             <c:when test="${Totalpage eq 0}">value="${page+1}/${Totalpage+1}"</c:when>
                                             <c:otherwise>value="${page+1}/${Totalpage}"</c:otherwise>
@@ -151,14 +161,16 @@
                                         <span class="glyphicon glyphicon-forward"></span>
                                     </a>
                                 </li>
-                                <li><a href="?querynumero=${appeloffre.numero}&queryintitule=${appeloffre.intitule}&querymaitredouvrage=${appeloffre.maitreDouvrage}&queryfiliale=${appeloffre.filiale.id}&page=${Totalpage-1}&size=${size}"
+                                <li>
+                                    <a href="?querynumero=${appeloffre.numero}&queryintitule=${appeloffre.intitule}&querymaitredouvrage=${appeloffre.maitreDouvrage}&queryfiliale=${appeloffre.filiale.id}&page=${Totalpage-1}&size=${size}"
                                        <c:choose>
                                            <c:when test="${page+1 eq Totalpage}">class ="btn btn-sm disabled"</c:when>
                                            <c:when test="${Totalpage eq 0}">class ="btn btn-sm disabled"</c:when>
                                        </c:choose>
                                        >
                                         <span class="glyphicon glyphicon-fast-forward"></span>
-                                    </a></li>
+                                    </a>
+                                </li>
                             </ul>
                         </div>
                     </div>

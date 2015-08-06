@@ -1,9 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-         pageEncoding="UTF-8"%>
-<%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
 <spring:url value="/materiel/" htmlEscape="true" var="materiel_home" />
 <spring:url value="/appeloffre/" htmlEscape="true" var="fonction_home" />
@@ -81,24 +79,37 @@
                 </c:if>
         </div>
     </div>
-    <div style="overflow: hidden; padding: 0 15px">
-        <ol class="breadcrumb">
-            <c:forEach items="${breadcrumbs}" var="breadcrumb">
-                <li>
-                    <c:choose>
-                        <c:when test="${empty breadcrumb.value}">
-                            <span>
-                                <spring:message code="${breadcrumb.key}" />
-                            </span>
-                        </c:when>
-                        <c:otherwise>
-                            <a href="${breadcrumb.value}">
-                                <spring:message code="${breadcrumb.key}" />
-                            </a>
-                        </c:otherwise>
-                    </c:choose>
-                </li>
-            </c:forEach>
-        </ol>
-    </div>
 </nav>
+<div class="row">
+    <div class="col-lg-12">
+        <c:set var="url" value="${pageContext.request.requestURI}" />
+        <c:set var="urlPart" value="${fn:split(url, '/')}" />
+
+        <div>
+            <ol class="breadcrumb">
+                <li>
+                    <a href="<spring:url value="/" />">
+                        Accueil
+                    </a>
+                </li>
+                <c:forEach var="i" begin="${fn:length(urlPart)-2}" end='${fn:length(urlPart)-1}'>
+                    <li>
+                        <c:choose>
+                            <c:when test="${fn:containsIgnoreCase(urlPart[i], 'jsp')}">
+                                <span>
+                                    ${fn:toLowerCase(fn:substringBefore(urlPart[i], '.'))}
+                                </span>
+                            </c:when>
+                            <c:otherwise>
+                                <spring:url   value="/${urlPart[i]}/" var="path_element"  htmlEscape="true" />
+                                <a href="${path_element}">
+                                    ${fn:toLowerCase((urlPart[i]))}
+                                </a>
+                            </c:otherwise>
+                        </c:choose>
+                    </li>
+                </c:forEach>
+            </ol>
+        </div>
+    </div>
+</div>

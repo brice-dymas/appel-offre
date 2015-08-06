@@ -134,11 +134,13 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <hr/>
-                            <spring:url value="/typecaution/new" htmlEscape="true" var="typecaution_new" />
-                            <a href="${typecaution_new}" class="btn btn-primary btn-sm">
-                                <span class="glyphicon glyphicon-new-window"></span>
-                                <spring:message code="action.nouveau" />
-                            </a>
+                            <sec:authorize access="hasRole('ROLE_ADMIN')" >
+                                <spring:url value="/typecaution/new" htmlEscape="true" var="typecaution_new" />
+                                <a href="${typecaution_new}" class="btn btn-primary btn-sm">
+                                    <span class="glyphicon glyphicon-new-window"></span>
+                                    <spring:message code="action.nouveau" />
+                                </a>
+                            </sec:authorize>
 
                             <div class="pull-right">
                                 <ul class="pager">

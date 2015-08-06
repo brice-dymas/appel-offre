@@ -259,7 +259,7 @@
                         </button>
                     </sec:authorize>
                     <div class="dropdown" style="display: inline-block !important">
-                        <button class="btn btn-default dropdown-toogle btn-warning" id="dropdown-user" data-toggle="dropdown">
+                        <button class="btn btn-default dropdown-toogle btn-success" id="dropdown-user" data-toggle="dropdown">
                             <i class="glyphicon glyphicon-print"></i>
                             <spring:message code="print.message" />
                             <i class="caret"></i>
@@ -267,14 +267,14 @@
                         <ul class="dropdown-menu" role="menu" aria-labeledby="dropdown-user">
                             <li>
                                 <spring:url htmlEscape="true" var="pdf_print" value="/appeloffre/${appelOffre.id}/show.pdf" />
-                                <a href="${pdf_print}" class="btn btn-warning" download="detail_appelOffre.pdf" >
+                                <a href="${pdf_print}" class="btn btn-success" download="detail_appelOffre.pdf" >
                                     <i class="glyphicon glyphicon-book"> </i>
                                     <spring:message code="print.pdf" />
                                 </a>
                             </li>
                             <li>
                                 <spring:url htmlEscape="true" var="xls_print" value="/appeloffre/${appelOffre.id}/show.xls" />
-                                <a href="${xls_print}" class="btn btn-warning" >
+                                <a href="${xls_print}" class="btn btn-success" >
                                     <i class="glyphicon glyphicon-calendar"> </i>
                                     <spring:message code="print.xls" />
                                 </a>

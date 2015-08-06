@@ -6,6 +6,7 @@
 package com.cami.spring.core;
 
 import com.cami.spring.AppConfig;
+import com.cami.spring.web.WebConfig;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 /**
@@ -25,7 +26,7 @@ public class SpringMvcInitializer extends AbstractAnnotationConfigDispatcherServ
     @Override
     protected Class<?>[] getServletConfigClasses()
     {
-        return null;
+        return new Class<?>[]{WebConfig.class};
     }
 
     @Override

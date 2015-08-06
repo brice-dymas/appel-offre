@@ -32,56 +32,17 @@
 
         <div class="row">
             <div class="col-md-6 col-md-offset-3">
-                <spring:url value="/user/${user.id}/update" var="user_update"
+                <spring:url value="/user/${user.id}/updateSimpleUser" var="user_update"
                             htmlEscape="true" />
                 <form:form method="post" commandName="user" action="${user_update}?${_csrf.parameterName}=${_csrf.token}">
                     <div class="panel panel-default">
                         <div class="panel-body">
-                            <sec:authorize access="hasRole('ROLE_ADMIN')" >
-                                <fieldset class="form-group divider">
-                                    <legend>
-                                        <spring:message code="user.infos" />
-
-                                    </legend>
-
-                                    <div class="row">
-                                        <div class="form-group">
-                                            <form:label for="nom" path="">
-                                                <spring:message code="user.nom" /> :
-                                            </form:label>
-                                            <form:input id="nom" path="user.nom" cssClass="form-control"/>
-                                            <form:errors path="user.nom" cssClass="text-danger"/>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <form:label for="role" path="">
-                                                <spring:message code="user.role" /> :
-                                            </form:label>
-                                            <form:select id="role" path="role" cssClass="form-control">
-                                                <form:option value="NONE" label="+++Select+++"/>
-                                                <form:options  items="${roles}" />
-                                            </form:select>
-                                            <form:errors path="role" cssClass="text-danger"/>
-                                        </div>
-                                    </div>
-                                </fieldset>
-                            </sec:authorize>
-
                             <hr/>
                             <fieldset class="form-group divider">
                                 <legend class="ui-widget-shadow ui-accordion-header-icon">
                                     <b><spring:message code="security.infos" /></b>
                                 </legend>
                                 <div class="row">
-                                    <sec:authorize access="hasRole('ROLE_ADMIN')" >
-                                        <div class="form-group">
-                                            <form:label for="username" path="">
-                                                <spring:message code="user.username" /> :
-                                            </form:label>
-                                            <form:input id="username" path="user.username" cssClass="form-control"/>
-                                            <form:errors path="user.username" cssClass="text-danger"/>
-                                        </div>
-                                    </sec:authorize>
                                     <div class="form-group">
                                         <form:label for="password" path="">
                                             <spring:message code="user.password" /> :

@@ -56,10 +56,19 @@
                     <c:if test="${user.id == userConnected.id}">
                         <sec:authorize access="hasAnyRole('ROLE_COMMERCIAL','ROLE_TRESORIER','ROLE_ADMIN') and isAuthenticated()">
                             <spring:url value="/user/${user.id}/edit" var="user_edit"/>
-                            <a href="${user_edit}" class="btn btn-default  btn-danger">
-                                <span class="glyphicon glyphicon-edit"></span>
-                                <spring:message code="action.modifier" />
-                            </a>
+                            <spring:url value="/user/${user.id}/editSimpleUser" var="editSimpleUser"/>
+                            <c:if test="${!userConnected.getRole().equals('ROLE_ADMIN')}" >
+                                <a href="${editSimpleUser}" class="btn btn-default  btn-danger">
+                                    <span class="glyphicon glyphicon-edit"></span>
+                                    <spring:message code="action.modifier" />
+                                </a>
+                            </c:if>
+                            <c:if test="${userConnected.getRole().equals('ROLE_ADMIN')}" >
+                                <a href="${user_edit}" class="btn btn-default  btn-danger">
+                                    <span class="glyphicon glyphicon-edit"></span>
+                                    <spring:message code="action.modifier" />
+                                </a>
+                            </c:if>
                         </sec:authorize>
                     </c:if>
                 </div>
