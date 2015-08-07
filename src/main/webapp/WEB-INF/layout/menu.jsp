@@ -29,11 +29,8 @@
              </c:choose>
              >
             <div class="panel-body">
-                <ul class="list-unstyled"
-
-
-                    >
-                    <li >
+                <ul class="list-unstyled">
+                    <li>
                         <a
                             <c:if test="${fn:containsIgnoreCase(url, 'materiel')}">
                                 class="list-group-item active"
@@ -51,27 +48,45 @@
                             <spring:message code="menu.filiale" />
                         </a>
                     </li>
-                    <li><a
+                    <li>
+                        <a
                             <c:if test="${fn:containsIgnoreCase(url, 'typecaution')}">
                                 class="list-group-item active"
                             </c:if>
                             href="<spring:url value="/typecaution/" />">
                             <spring:message code="menu.typeCaution" />
-                        </a></li>
-                    <li><a
+                        </a>
+                    </li>
+                    <li>
+                        <a
                             <c:if test="${fn:containsIgnoreCase(url, 'typemateriel')}">
                                 class="list-group-item active"
                             </c:if>
                             href="<spring:url value="/typemateriel/" />">
                             <spring:message code="menu.typeMateriel" />
-                        </a></li>
-                    <li><a
+                        </a>
+                    </li>
+                    <li>
+                        <a
                             <c:if test="${fn:containsIgnoreCase(url, 'banque')}">
                                 class="list-group-item active"
                             </c:if>
                             href="<spring:url value="/banque/" />">
                             <spring:message code="banque.liste" />
-                        </a></li>
+                        </a>
+                    </li>
+
+                    <sec:authorize access="hasRole('ROLE_ADMIN')" >
+                        <li>
+                            <a
+                                <c:if test="${fn:containsIgnoreCase(url, 'user')}">
+                                    class="list-group-item active"
+                                </c:if>
+                                href="<spring:url value="/user/"/>" >
+                                <spring:message code="user.title" />
+                            </a>
+                        </li>
+                    </sec:authorize>
                 </ul>
             </div>
         </div>
@@ -115,18 +130,6 @@
                             <spring:message code="menu.appelOffre.liste" />
                         </a>
                     </li>
-                    <sec:authorize access="hasRole('ROLE_ADMIN')" >
-                        <li>
-                            <a
-                                <c:if test="${fn:containsIgnoreCase(url, 'user')}">
-                                    class="list-group-item active"
-                                </c:if>
-                                href="<spring:url value="/user/"/>" >
-                                <spring:message code="user.title" />
-                            </a>
-                        </li>
-                    </sec:authorize>
-
                 </ul>
 
             </div>

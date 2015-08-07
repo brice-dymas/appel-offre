@@ -34,7 +34,7 @@
                     </ul>
                 </div>
                 <table class="table table-condensed table-hover table-bordered">
-                    <thead class="bg-danger" >
+                    <thead class="text-center btn-primary" >
                         <tr>
                             <th>
                                 <spring:message code="banque.code" />

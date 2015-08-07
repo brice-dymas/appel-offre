@@ -160,7 +160,7 @@
                     <legend><spring:message code="appelOffre.listeMateriel" /></legend>
                     <table class="table table-bordered">
                         <thead>
-                            <tr class="danger">
+                            <tr class="btn-primary">
                                 <th><spring:message code="ligneMateriel.materiel" /></th>
                                 <th><spring:message code="ligneMateriel.prixUnitaire" /></th>
                                 <th><spring:message code="ligneMateriel.quantite" /></th>
@@ -185,7 +185,7 @@
                     <legend><spring:message code="appelOffre.cautions" /></legend>
                     <table class="table table-bordered">
                         <thead>
-                            <tr class="danger">
+                            <tr class="btn-primary">
                                 <th><spring:message code="caution.referenceMarche" /></th>
                                 <th><spring:message code="caution.montantMarche" /></th>
                                 <th><spring:message code="caution.commercial" /></th>

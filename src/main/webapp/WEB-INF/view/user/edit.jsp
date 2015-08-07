@@ -39,7 +39,7 @@
                         <div class="panel-body">
                             <sec:authorize access="hasRole('ROLE_ADMIN')" >
                                 <fieldset class="form-group divider">
-                                    <legend>
+                                    <legend class=" text-center btn-primary">
                                         <spring:message code="user.infos" />
 
                                     </legend>
@@ -69,8 +69,8 @@
 
                             <hr/>
                             <fieldset class="form-group divider">
-                                <legend class="ui-widget-shadow ui-accordion-header-icon">
-                                    <b><spring:message code="security.infos" /></b>
+                                <legend class=" text-center btn-primary">
+                                    <b ><spring:message code="security.infos" /></b>
                                 </legend>
                                 <div class="row">
                                     <sec:authorize access="hasRole('ROLE_ADMIN')" >

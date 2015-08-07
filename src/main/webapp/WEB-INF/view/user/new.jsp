@@ -32,7 +32,7 @@
                         <div class="panel-body">
 
                             <fieldset class="form-group divider">
-                                <legend>
+                                <legend class=" text-center btn-primary">
                                     <spring:message code="user.infos" />
 
                                 </legend>
@@ -61,7 +61,7 @@
 
                             <hr/>
                             <fieldset class="form-group divider">
-                                <legend class="ui-widget-shadow label-danger">
+                                <legend class=" text-center btn-primary">
                                     <spring:message code="security.infos" />
                                 </legend>
                                 <div class="row">

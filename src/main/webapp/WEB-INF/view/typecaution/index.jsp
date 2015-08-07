@@ -35,20 +35,28 @@
                     </ul>
                 </div>
                 <table class="table table-condensed table-hover table-bordered">
-                    <thead class="bg-danger" >
+                    <thead class=" text-center btn-primary" >
                         <tr>
                             <th>
-                                <spring:message code="typeCaution.code" />
+                                <span class="btn">
+                                    <spring:message code="typeCaution.code" />
+                                </span>
                             </th>
 
                             <th>
-                                <spring:message code="typeCaution.nom" />
+                                <span class="btn">
+                                    <spring:message code="typeCaution.nom" />
+                                </span>
                             </th>
                             <th>
-                                <spring:message code="typeCaution.pourcentage" />
+                                <span class="btn">
+                                    <spring:message code="typeCaution.pourcentage" />
+                                </span>
                             </th>
                             <th>
-                                <spring:message code="action.titre" />
+                                <span class="btn">
+                                    <spring:message code="action.titre" />
+                                </span>
                             </th>
                         </tr>
                     </thead>

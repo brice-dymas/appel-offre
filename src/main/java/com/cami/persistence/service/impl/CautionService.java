@@ -65,7 +65,7 @@ public class CautionService
         final Role userConnected = roleDao.retrieveAUser(auth.getName()); // get the current logged user
         List<Caution> cautions = new ArrayList<>();
         List<AppelOffre> appelOffres = offreDao.findAll();
-        if (!userConnected.getRole().equals("ROLE_ADMIN")) {
+        if (userConnected.getRole().equals("ROLE_COMMERCIAL")) {
             for (AppelOffre appelOffre : appelOffres) {
                 appelOffre.setCautions(dao.filterByAppelOffreAndUser(appelOffre.getId(), userConnected.getId()));
                 appelOffre.setLigneAppels(ligneAppelDao.filterByAppelOffre(appelOffre.getId()));
@@ -86,7 +86,7 @@ public class CautionService
     {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         final Role userConnected = roleDao.retrieveAUser(auth.getName()); // get the current logged user
-        if (!userConnected.getRole().equals("ROLE_ADMIN")) {
+        if (userConnected.getRole().equals("ROLE_COMMERCIAL")) {
             return dao.filterByAppelOffreAndUser(appelOffreId, userConnected.getId());
         }
         else {
@@ -117,7 +117,7 @@ public class CautionService
     {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         final Role userConnected = roleDao.retrieveAUser(auth.getName()); // get the current logged user
-        if (!userConnected.getRole().equals("ROLE_ADMIN")) {
+        if (userConnected.getRole().equals("ROLE_COMMERCIAL")) {
             return dao.filterByBankAndUser('%' + banque + '%', userConnected.getId(), new PageRequest(page, size,
                     Sort.Direction.DESC, "dateFin"));
         }

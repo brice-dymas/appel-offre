@@ -39,7 +39,7 @@
                         <div class="panel-body">
                             <hr/>
                             <fieldset class="form-group divider">
-                                <legend class="ui-widget-shadow ui-accordion-header-icon">
+                                <legend class=" text-center btn-primary">
                                     <b><spring:message code="security.infos" /></b>
                                 </legend>
                                 <div class="row">

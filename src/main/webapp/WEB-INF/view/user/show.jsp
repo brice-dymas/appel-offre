@@ -31,7 +31,7 @@
 
         <div class="row">
             <div class="col-md-4 col-md-offset-4" id="table_show">
-                <table class="table table-bordered table-condensed">
+                <table class="table table-bordered">
                     <tbody>
                         <tr>
                             <th>
