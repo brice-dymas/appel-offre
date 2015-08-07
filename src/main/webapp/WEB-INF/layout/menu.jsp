@@ -20,7 +20,7 @@
         <div id="collapseAdministration"  role="tabpanel" aria-labelledby="administration"
              <c:choose>
                  <c:when test="${fn:containsIgnoreCase(url, 'materiel') || fn:containsIgnoreCase(url, 'filiale') || fn:containsIgnoreCase(url, 'typecaution')
-                                 || fn:containsIgnoreCase(url, 'typemateriel') || fn:containsIgnoreCase(url, 'banque') }">
+                                 || fn:containsIgnoreCase(url, 'typemateriel') || fn:containsIgnoreCase(url, 'banque')|| fn:containsIgnoreCase(url, 'user') }">
                          class="panel-collapse collapse in"
                  </c:when>
                  <c:otherwise>
@@ -72,6 +72,17 @@
                             href="<spring:url value="/banque/" />">
                             <spring:message code="banque.liste" />
                         </a></li>
+                        <sec:authorize access="hasRole('ROLE_ADMIN')" >
+                        <li>
+                            <a
+                                <c:if test="${fn:containsIgnoreCase(url, 'user')}">
+                                    class="list-group-item active"
+                                </c:if>
+                                href="<spring:url value="/user/"/>" >
+                                <spring:message code="user.title" />
+                            </a>
+                        </li>
+                    </sec:authorize>
                 </ul>
             </div>
         </div>
@@ -115,17 +126,7 @@
                             <spring:message code="menu.appelOffre.liste" />
                         </a>
                     </li>
-                    <sec:authorize access="hasRole('ROLE_ADMIN')" >
-                        <li>
-                            <a
-                                <c:if test="${fn:containsIgnoreCase(url, 'user')}">
-                                    class="list-group-item active"
-                                </c:if>
-                                href="<spring:url value="/user/"/>" >
-                                <spring:message code="user.title" />
-                            </a>
-                        </li>
-                    </sec:authorize>
+                    
 
                 </ul>
 
