@@ -98,7 +98,7 @@
                         <div id="materiel">
                             <table class="table table-bordered">
                                 <thead>
-                                    <tr class="danger">
+                                    <tr class="btn-primary">
                                         <th><spring:message code="ligneMateriel.materiel" /></th>
                                         <th><spring:message code="ligneMateriel.prixUnitaire" /></th>
                                         <th><spring:message code="ligneMateriel.quantite" /></th>
@@ -166,7 +166,7 @@
                         <div id="caution">
                             <table class="table table-bordered">
                                 <thead>
-                                    <tr class="danger">
+                                    <tr class="btn-primary">
                                         <th><spring:message code="caution.referenceMarche" /></th>
                                         <th><spring:message code="caution.montantMarche" /></th>
                                         <th><spring:message code="caution.typeCaution" /></th>
