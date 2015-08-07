@@ -11,7 +11,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -43,13 +42,6 @@ public class CautionController
         return new SimpleDateFormat("dd-MM-yyyy").format(date);
     }
 
-    public TreeMap<String, String> getBreadcrumb()
-    {
-        final TreeMap<String, String> breadcrumb = new TreeMap<String, String>();
-        breadcrumb.put("breadcrumb.caution.index", "/appeloffre/caution/");
-        return breadcrumb;
-    }
-
     @RequestMapping(value = "/{id}/show", method = RequestMethod.GET)
     public String ShowAction(@PathVariable("id") final Long id,
             final ModelMap model)
@@ -58,9 +50,6 @@ public class CautionController
         final AppelOffre appelOffre = appelOffreService.findOne(caution
                 .getAppelOffre().getId());
         caution.setAppelOffre(appelOffre);
-        final TreeMap<String, String> breadcrumb = getBreadcrumb();
-        breadcrumb.put("breadcrumb.caution.show", "");
-        model.addAttribute("breadcrumbs", breadcrumb);
         model.addAttribute("caution", caution);
         return "caution/show";
     }
@@ -94,10 +83,7 @@ public class CautionController
                 page, size);
 
         final Caution caution = new Caution();
-        final TreeMap<String, String> breadcrumb = getBreadcrumb();
-        breadcrumb.put("breadcrumb.caution.index", "");
         model.addAttribute("cautionsReport", appelOffres); //for the report
-        model.addAttribute("breadcrumbs", breadcrumb);
         model.addAttribute("caution", caution);
         model.addAttribute("page", page);
         model.addAttribute("Totalpage", resultPage.getTotalPages());

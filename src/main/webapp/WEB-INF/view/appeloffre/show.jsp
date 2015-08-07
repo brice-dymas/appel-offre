@@ -266,13 +266,6 @@
                         </button>
                         <ul class="dropdown-menu" role="menu" aria-labeledby="dropdown-user">
                             <li>
-                                <spring:url htmlEscape="true" var="pdf_print" value="/appeloffre/${appelOffre.id}/show.pdf" />
-                                <a href="${pdf_print}" class="btn btn-success" download="detail_appelOffre.pdf" >
-                                    <i class="glyphicon glyphicon-book"> </i>
-                                    <spring:message code="print.pdf" />
-                                </a>
-                            </li>
-                            <li>
                                 <spring:url htmlEscape="true" var="xls_print" value="/appeloffre/${appelOffre.id}/show.xls" />
                                 <a href="${xls_print}" class="btn btn-success" >
                                     <i class="glyphicon glyphicon-calendar"> </i>

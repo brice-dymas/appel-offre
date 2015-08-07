@@ -5,7 +5,6 @@ import com.cami.persistence.service.ITypeMaterielService;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -27,24 +26,13 @@ public class TypeMaterielController
     @Autowired
     private ITypeMaterielService typeMaterielService;
 
-    public TreeMap<String, String> getBreadcrumb()
-    {
-        final TreeMap<String, String> breadcrumb = new TreeMap<String, String>();
-        breadcrumb.put("breadcrumb.typeMateriel.index",
-                "/appeloffre/typemateriel/");
-        return breadcrumb;
-    }
-
     // API
     // read - one
     @RequestMapping(value = "/{id}/show", method = RequestMethod.GET)
     public String ShowAction(@PathVariable("id") final Long id, final ModelMap model)
     {
         final TypeMateriel typeMateriel = typeMaterielService.findOne(id);
-        final TreeMap<String, String> breadcrumb = getBreadcrumb();
 
-        breadcrumb.put("breadcrumb.typeMateriel.show", "");
-        model.addAttribute("breadcrumbs", breadcrumb);
         model.addAttribute("typeMateriel", typeMateriel);
         return "typemateriel/show";
     }
@@ -75,9 +63,6 @@ public class TypeMaterielController
         final TypeMateriel typeMateriel = new TypeMateriel();
         typeMateriel.setCode(code);
         typeMateriel.setNom(nom);
-        final TreeMap<String, String> breadcrumb = getBreadcrumb();
-        breadcrumb.put("breadcrumb.typeMateriel.index", "");
-        model.addAttribute("breadcrumbs", breadcrumb);
         model.addAttribute("mesTypeMateriels", mesTypeMateriels);
         model.addAttribute("typeMateriel", typeMateriel);
         model.addAttribute("page", page);
@@ -91,9 +76,6 @@ public class TypeMaterielController
     public String newAction(final ModelMap model)
     {
         final TypeMateriel typeMateriel = new TypeMateriel();
-        final TreeMap<String, String> breadcrumb = getBreadcrumb();
-        breadcrumb.put("breadcrumb.typeMateriel.new", "");
-        model.addAttribute("breadcrumbs", breadcrumb);
         model.addAttribute("typeMateriel", typeMateriel);
         return "typemateriel/new";
     }
@@ -106,9 +88,6 @@ public class TypeMaterielController
         System.out.println("nous somme dans le controlleur et tm= " + typeMateriel.getCode() + "" + typeMateriel.getNom());
         if (result.hasErrors()) {
             System.out.println("il ya ereur");
-            final TreeMap<String, String> breadcrumb = getBreadcrumb();
-            breadcrumb.put("breadcrumb.typeMateriel.create", "");
-            model.addAttribute("breadcrumbs", breadcrumb);
             model.addAttribute("error", "error");
             model.addAttribute("typeMateriel", typeMateriel);
             return "typemateriel/new";
@@ -140,9 +119,6 @@ public class TypeMaterielController
     public String editAction(@PathVariable("id") final Long id, final ModelMap model)
     {
         final TypeMateriel typeMateriel = typeMaterielService.findOne(id);
-        final TreeMap<String, String> breadcrumb = getBreadcrumb();
-        breadcrumb.put("breadcrumb.typeMateriel.edit", "");
-        model.addAttribute("breadcrumbs", breadcrumb);
         model.addAttribute("typeMateriel", typeMateriel);
         return "typemateriel/edit";
     }
@@ -154,9 +130,6 @@ public class TypeMaterielController
     {
         System.out.println("here we are in the controller update method");
         if (result.hasErrors()) {
-            final TreeMap<String, String> breadcrumb = getBreadcrumb();
-            breadcrumb.put("breadcrumb.typeMateriel.create", "");
-            model.addAttribute("breadcrumbs", breadcrumb);
             model.addAttribute("error", "error");
             return "typemateriel/edit";
         }

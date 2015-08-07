@@ -4,7 +4,6 @@ import com.cami.persistence.model.Filiale;
 import com.cami.persistence.service.IFilialeService;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.TreeMap;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -26,23 +25,13 @@ public class FilialeController
     @Autowired
     private IFilialeService filialeService;
 
-    public TreeMap<String, String> getBreadcrumb()
-    {
-        final TreeMap<String, String> breadcrumb = new TreeMap<String, String>();
-        breadcrumb.put("breadcrumb.filiale.index", "/appeloffre/filiale/");
-        return breadcrumb;
-    }
-
-	// API
+    // API
     // read - one
     @RequestMapping(value = "/{id}/show", method = RequestMethod.GET)
     public String ShowAction(@PathVariable("id") final Long id, final ModelMap model)
     {
         System.out.println("filiale");
         final Filiale filiale = filialeService.findOne(id);
-        final TreeMap<String, String> breadcrumb = getBreadcrumb();
-        breadcrumb.put("breadcrumb.filiale.show", "");
-        model.addAttribute("breadcrumbs", breadcrumb);
         model.addAttribute("filiale", filiale);
         return "filiale/show";
     }
@@ -72,9 +61,6 @@ public class FilialeController
         filiale.setCode(code);
         filiale.setAgence(agence);
         filiale.setNom(nom);
-        final TreeMap<String, String> breadcrumb = getBreadcrumb();
-        breadcrumb.put("breadcrumb.filiale.index", "");
-        model.addAttribute("breadcrumbs", breadcrumb);
         model.addAttribute("filiale", filiale);
         model.addAttribute("page", page);
         model.addAttribute("Totalpage", resultPage.getTotalPages());
@@ -87,9 +73,6 @@ public class FilialeController
     public String newAction(final ModelMap model)
     {
         final Filiale filiale = new Filiale();
-        final TreeMap<String, String> breadcrumb = getBreadcrumb();
-        breadcrumb.put("breadcrumb.filiale.new", "");
-        model.addAttribute("breadcrumbs", breadcrumb);
         model.addAttribute("filiale", filiale);
         return "filiale/new";
     }
@@ -101,9 +84,6 @@ public class FilialeController
     {
 
         if (result.hasErrors()) {
-            final TreeMap<String, String> breadcrumb = getBreadcrumb();
-            breadcrumb.put("breadcrumb.filiale.create", "");
-            model.addAttribute("breadcrumbs", breadcrumb);
             model.addAttribute("error", "error");
             model.addAttribute("filiale", filiale);
             return "filiale/new";
@@ -133,9 +113,6 @@ public class FilialeController
     public String editAction(@PathVariable("id") final Long id, final ModelMap model)
     {
         final Filiale filiale = filialeService.findOne(id);
-        final TreeMap<String, String> breadcrumb = getBreadcrumb();
-        breadcrumb.put("breadcrumb.filiale.edit", "");
-        model.addAttribute("breadcrumbs", breadcrumb);
         model.addAttribute("filiale", filiale);
         return "filiale/edit";
     }

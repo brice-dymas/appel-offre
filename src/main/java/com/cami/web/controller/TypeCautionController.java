@@ -4,7 +4,6 @@ import com.cami.persistence.model.TypeCaution;
 import com.cami.persistence.service.ITypeCautionService;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.TreeMap;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -26,23 +25,12 @@ public class TypeCautionController
     @Autowired
     private ITypeCautionService typeCautionService;
 
-    public TreeMap<String, String> getBreadcrumb()
-    {
-        final TreeMap<String, String> breadcrumb = new TreeMap<String, String>();
-        breadcrumb.put("breadcrumb.typeCaution.index",
-                "/appeloffre/typecaution/");
-        return breadcrumb;
-    }
-
     // API
     // read - one
     @RequestMapping(value = "/{id}/show", method = RequestMethod.GET)
     public String ShowAction(@PathVariable("id") final Long id, final ModelMap model)
     {
         final TypeCaution typeCaution = typeCautionService.findOne(id);
-        final TreeMap<String, String> breadcrumb = getBreadcrumb();
-        breadcrumb.put("breadcrumb.typeCaution.show", "");
-        model.addAttribute("breadcrumbs", breadcrumb);
         model.addAttribute("typeCaution", typeCaution);
         return "typecaution/show";
     }
@@ -52,7 +40,7 @@ public class TypeCautionController
      *
      * @param model
      * @param webRequest
-     *                   <p>
+     * <p>
      * @return
      */
     @RequestMapping(method = RequestMethod.GET)
@@ -60,17 +48,17 @@ public class TypeCautionController
     {
 
         final String code = webRequest.getParameter("querycode") != null
-                            ? webRequest.getParameter("querycode")
-                            : "";
+                ? webRequest.getParameter("querycode")
+                : "";
         final String nom = webRequest.getParameter("querynom") != null
-                           ? webRequest.getParameter("querynom")
-                           : "";
+                ? webRequest.getParameter("querynom")
+                : "";
         final Integer page = webRequest.getParameter("page") != null
-                             ? Integer.valueOf(webRequest.getParameter("page"))
-                             : 0;
+                ? Integer.valueOf(webRequest.getParameter("page"))
+                : 0;
         final Integer size = webRequest.getParameter("size") != null
-                             ? Integer.valueOf(webRequest.getParameter("size"))
-                             : 5;
+                ? Integer.valueOf(webRequest.getParameter("size"))
+                : 5;
 
         System.out.println("querynom = " + nom);
         System.out.println("querycode = " + code);
@@ -80,9 +68,6 @@ public class TypeCautionController
         final TypeCaution typeCaution = new TypeCaution();
         typeCaution.setCode(code);
         typeCaution.setNom(nom);
-        final TreeMap<String, String> breadcrumb = getBreadcrumb();
-        breadcrumb.put("breadcrumb.typeCaution.index", "");
-        model.addAttribute("breadcrumbs", breadcrumb);
         model.addAttribute("typeCaution", typeCaution);
         model.addAttribute("page", page);
         model.addAttribute("Totalpage", resultPage.getTotalPages());
@@ -95,9 +80,6 @@ public class TypeCautionController
     public String newAction(final ModelMap model)
     {
         final TypeCaution typeCaution = new TypeCaution();
-        final TreeMap<String, String> breadcrumb = getBreadcrumb();
-        breadcrumb.put("breadcrumb.typeCaution.new", "");
-        model.addAttribute("breadcrumbs", breadcrumb);
         model.addAttribute("typeCaution", typeCaution);
         return "typecaution/new";
     }
@@ -108,17 +90,12 @@ public class TypeCautionController
             final RedirectAttributes redirectAttributes)
     {
 
-        if (result.hasErrors())
-        {
-            final TreeMap<String, String> breadcrumb = getBreadcrumb();
-            breadcrumb.put("breadcrumb.typeCaution.create", "");
-            model.addAttribute("breadcrumbs", breadcrumb);
+        if (result.hasErrors()) {
             model.addAttribute("error", "error");
             model.addAttribute("typeCaution", typeCaution);
             return "typecaution/new";
         }
-        else
-        {
+        else {
             redirectAttributes.addFlashAttribute("info", "alert.success.new");
             typeCautionService.create(typeCaution);
             return "redirect:/typecaution/" + typeCaution.getId() + "/show";
@@ -145,9 +122,6 @@ public class TypeCautionController
     public String editAction(@PathVariable("id") final Long id, final ModelMap model)
     {
         final TypeCaution typeCaution = typeCautionService.findOne(id);
-        final TreeMap<String, String> breadcrumb = getBreadcrumb();
-        breadcrumb.put("breadcrumb.typeCaution.edit", "");
-        model.addAttribute("breadcrumbs", breadcrumb);
         model.addAttribute("typeCaution", typeCaution);
         return "typecaution/edit";
     }
@@ -159,18 +133,13 @@ public class TypeCautionController
             final RedirectAttributes redirectAttributes)
     {
         System.out.println("in type caution controller ");
-        if (result.hasErrors())
-        {
+        if (result.hasErrors()) {
             System.out.println("errors detected ");
-            final TreeMap<String, String> breadcrumb = getBreadcrumb();
-            breadcrumb.put("breadcrumb.typeCaution.create", "");
-            model.addAttribute("breadcrumbs", breadcrumb);
             model.addAttribute("error", "error");
 //            model.addAttribute("typeCaution", typeCaution);
             return "typecaution/edit";
         }
-        else
-        {
+        else {
             System.out.println("no error detected");
             redirectAttributes.addFlashAttribute("info", "alert.success.new");
             System.out.println("launching update method from controller ..");

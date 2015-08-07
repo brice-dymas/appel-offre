@@ -23,7 +23,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
 import javax.servlet.ServletContext;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,14 +70,6 @@ public class AppelOffreController
     @Autowired
     private IFilialeService filialeService;
 
-    public TreeMap<String, String> getBreadcrumb()
-    {
-        final TreeMap<String, String> breadcrumb = new TreeMap<String, String>();
-        breadcrumb
-                .put("breadcrumb.appeloffre.index", "/appeloffre/appeloffre/");
-        return breadcrumb;
-    }
-
     // API
     // read - one
     @RequestMapping(value = "/{id}/show", method = RequestMethod.GET)
@@ -94,9 +85,6 @@ public class AppelOffreController
         appelOffre.setCautions(cautions);
         appelOffre.setLigneAppels(ligneAppels);
         appelOffre.setUser(role);
-        final TreeMap<String, String> breadcrumb = getBreadcrumb();
-        breadcrumb.put("breadcrumb.appeloffre.show", "");
-        model.addAttribute("breadcrumbs", breadcrumb);
         model.addAttribute("appelOffre", appelOffre);
         model.addAttribute("user", role);
         model.addAttribute("ligneAppels", ligneAppels);
@@ -113,9 +101,6 @@ public class AppelOffreController
         final List<LigneAppel> ligneAppels = ligneAppelService.filterByAppelOffre(appelOffre.getId());
         final List<Caution> cautions = cautionService.filterByAppelOffre(appelOffre.getId());
         final AppelOffreForm appelOffreForm = new AppelOffreForm();
-        final TreeMap<String, String> breadcrumb = getBreadcrumb();
-        breadcrumb.put("breadcrumb.appeloffre.edit", "");
-        model.addAttribute("breadcrumbs", breadcrumb);
         appelOffreForm.setAppelOffre(appelOffre);
         appelOffreForm.setCautions(cautions);
         appelOffreForm.setLigneAppels(ligneAppels);
@@ -161,9 +146,6 @@ public class AppelOffreController
         appelOffre.setMaitreDouvrage(maitreDouvrage);
         appelOffre.setNumero(numero);
         appelOffre.setFiliale(new Filiale(filialeId));
-        final TreeMap<String, String> breadcrumb = getBreadcrumb();
-        breadcrumb.put("breadcrumb.appeloffre.index", "");
-        model.addAttribute("breadcrumbs", breadcrumb);
         model.addAttribute("appelOffre", appelOffre);
         model.addAttribute("page", page);
         model.addAttribute("Totalpage", resultPage.getTotalPages());
@@ -175,13 +157,10 @@ public class AppelOffreController
     @RequestMapping(value = "/new", method = RequestMethod.GET)
     public String newAction(final ModelMap model)
     {
-        final TreeMap<String, String> breadcrumb = getBreadcrumb();
         AppelOffreForm appelOffreForm = new AppelOffreForm();
         AppelOffre appelOffre = new AppelOffre();
         appelOffreForm.setAppelOffre(appelOffre);
-        breadcrumb.put("breadcrumb.appeloffre.new", "");
         model.addAttribute("appelOffreForm", appelOffreForm);
-        model.addAttribute("breadcrumbs", breadcrumb);
         return "appeloffre/new";
     }
 
@@ -195,11 +174,6 @@ public class AppelOffreController
             System.out.println("nul ou erreur");
             model.addAttribute("error", "error");
             model.addAttribute("appelOffreForm", appelOffreForm);
-//            AppelOffre pp = appelOffreForm.getAppelOffre();
-//            System.out.println(pp.getNumero() + "-" + pp.getDelaiDeValidite() + "-" + pp.getIntitule() + "-" + pp.getMaitreDouvrage() + "-" + pp.getDateDepot());
-            final TreeMap<String, String> breadcrumb = getBreadcrumb();
-            breadcrumb.put("breadcrumb.appeloffre.create", "");
-            model.addAttribute("breadcrumbs", breadcrumb);
             return "appeloffre/new";
         }
         else {
@@ -228,9 +202,6 @@ public class AppelOffreController
         System.out.println("enter");
         if (result.hasErrors()) {
             System.out.println("il ya eu erreur de modification");
-            final TreeMap<String, String> breadcrumb = getBreadcrumb();
-            breadcrumb.put("breadcrumb.appeloffre.create", "");
-            model.addAttribute("breadcrumbs", breadcrumb);
             model.addAttribute("appelOffre", appelOffreForm);
             model.addAttribute("error", "error");
             return "appeloffre/edit";

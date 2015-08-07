@@ -11,7 +11,6 @@ import com.cami.persistence.service.ITypeMaterielService;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -30,13 +29,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class MaterielController
 {
 
-    public TreeMap<String, String> getBreadcrumb()
-    {
-        final TreeMap<String, String> breadcrumb = new TreeMap<String, String>();
-        breadcrumb.put("materiel.breacrumb.index", "/appeloffre/materiel/");
-        return breadcrumb;
-    }
-
     @Autowired
     private IMaterielService materielService;
 
@@ -50,9 +42,6 @@ public class MaterielController
     {
         final Materiel materiel = materielService.findOne(id);
         model.addAttribute("materiel", materiel);
-        final TreeMap<String, String> breadcrumb = getBreadcrumb();
-        breadcrumb.put("materiel.breacrumb.show", "");
-        model.addAttribute("breadcrumbs", breadcrumb);
         return "materiel/show";
     }
 
@@ -64,7 +53,7 @@ public class MaterielController
      * @param page
      * @param size
      * @param model
-     *                   <p>
+     * <p>
      * @return
      */
     @RequestMapping(method = RequestMethod.GET)
@@ -72,20 +61,20 @@ public class MaterielController
     {
 
         final Long typeMaterielId = (webRequest.getParameter("querytype") != null && !webRequest.getParameter("querytype").equals(""))
-                                    ? Long.valueOf(webRequest.getParameter("querytype"))
-                                    : -1;
+                ? Long.valueOf(webRequest.getParameter("querytype"))
+                : -1;
         final String code = webRequest.getParameter("querycode") != null
-                            ? webRequest.getParameter("querycode")
-                            : "";
+                ? webRequest.getParameter("querycode")
+                : "";
         final String nom = webRequest.getParameter("querynom") != null
-                           ? webRequest.getParameter("querynom")
-                           : "";
+                ? webRequest.getParameter("querynom")
+                : "";
         final Integer page = webRequest.getParameter("page") != null
-                             ? Integer.valueOf(webRequest.getParameter("page"))
-                             : 0;
+                ? Integer.valueOf(webRequest.getParameter("page"))
+                : 0;
         final Integer size = webRequest.getParameter("size") != null
-                             ? Integer.valueOf(webRequest.getParameter("size"))
-                             : 5;
+                ? Integer.valueOf(webRequest.getParameter("size"))
+                : 5;
 
         final Page<Materiel> resultPage = materielService.findPaginated(typeMaterielId, code, nom, page, size);
         final Materiel materiel = new Materiel();
@@ -94,9 +83,6 @@ public class MaterielController
         final TypeMateriel typeMateriel = new TypeMateriel();
         typeMateriel.setId(typeMaterielId);
         materiel.setTypeMateriel(typeMateriel);
-        final TreeMap<String, String> breadcrumb = getBreadcrumb();
-        breadcrumb.put("materiel.breacrumb.index", "");
-        model.addAttribute("breadcrumbs", breadcrumb);
 
         model.addAttribute("materiel", materiel);
         model.addAttribute("page", page);
@@ -111,9 +97,6 @@ public class MaterielController
     public String newAction(final ModelMap model)
     {
         model.addAttribute("materiel", new Materiel());
-        final TreeMap<String, String> breadcrumb = getBreadcrumb();
-        breadcrumb.put("materiel.breacrumb.new", "");
-        model.addAttribute("breadcrumbs", breadcrumb);
         return "materiel/new";
     }
 
@@ -123,14 +106,12 @@ public class MaterielController
             final RedirectAttributes redirectAttributes)
     {
 
-        if (result.hasErrors())
-        {
+        if (result.hasErrors()) {
             model.addAttribute("error", "error");
             model.addAttribute("Materiel", materiel);
             return "materiel/new";
         }
-        else
-        {
+        else {
             redirectAttributes.addFlashAttribute("info", "alert.success.new");
             materielService.create(materiel);
             return "redirect:/materiel/" + materiel.getId() + "/show";
@@ -150,9 +131,6 @@ public class MaterielController
     public String editAction(@PathVariable("id") final Long id, final ModelMap model)
     {
         final Materiel materiel = materielService.findOne(id);
-        final TreeMap<String, String> breadcrumb = getBreadcrumb();
-        breadcrumb.put("materiel.breacrumb.edit", "");
-        model.addAttribute("breadcrumbs", breadcrumb);
         model.addAttribute("materiel", materiel);
         return "materiel/edit";
     }
@@ -162,15 +140,13 @@ public class MaterielController
             final ModelMap model, final RedirectAttributes redirectAttributes)
     {
         System.out.println("in materiel controller");
-        if (result.hasErrors())
-        {
+        if (result.hasErrors()) {
             System.out.println("in materiel controller: Error occured");
             model.addAttribute("error", "error");
             model.addAttribute("materiel", materiel);
             return "materiel/edit";
         }
-        else
-        {
+        else {
             System.out.println("in materiel controller: no error");
             redirectAttributes.addFlashAttribute("info", "alert.success.new");
             materielService.update(materiel);
@@ -191,8 +167,7 @@ public class MaterielController
     {
         final Map<Long, String> results = new HashMap<>();
         final List<TypeMateriel> typeMateriels = typeMaterielService.findAll();
-        for (final TypeMateriel typeMateriel : typeMateriels)
-        {
+        for (final TypeMateriel typeMateriel : typeMateriels) {
             results.put(typeMateriel.getId(), typeMateriel.getNom());
         }
 

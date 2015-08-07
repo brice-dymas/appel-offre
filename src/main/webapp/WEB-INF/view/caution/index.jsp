@@ -138,12 +138,7 @@
                                             <i class="caret"></i>
                                         </button>
                                         <ul class="dropdown-menu" role="menu" aria-labeledby="dropdown-user">
-                                            <li>
-                                                <spring:url htmlEscape="true" var="pdf_print" value="/caution.pdf" />
-                                                <a href="${pdf_print}">
-                                                    <spring:message code="print.pdf" />
-                                                </a>
-                                            </li>
+
                                             <li>
                                                 <spring:url htmlEscape="true" var="xls_print" value="/caution.xls" />
                                                 <a href="${xls_print}">
