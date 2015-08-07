@@ -20,6 +20,7 @@
         <link href="<c:url value="/resources/css/jquery-ui.css" />" rel="stylesheet">
         <link href="<c:url value="/resources/css/jquery-ui.structure.css" />" rel="stylesheet">
         <link href="<c:url value="/resources/css/jquery-ui.theme.css" />" rel="stylesheet">
+        <link href="<c:url value="/resources/css/jquery.jqplot.min.css.css" />" rel="stylesheet">
         <link href="<c:url value="/resources/img/cami.png" />" rel="shortcut icon"  type="image/png">
 
         <script src="<c:url value="/resources/js/jquery.min.js" />"></script>
