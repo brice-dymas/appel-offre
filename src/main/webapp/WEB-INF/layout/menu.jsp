@@ -20,7 +20,7 @@
         <div id="collapseAdministration"  role="tabpanel" aria-labelledby="administration"
              <c:choose>
                  <c:when test="${fn:containsIgnoreCase(url, 'materiel') || fn:containsIgnoreCase(url, 'filiale') || fn:containsIgnoreCase(url, 'typecaution')
-                                 || fn:containsIgnoreCase(url, 'typemateriel') || fn:containsIgnoreCase(url, 'banque') }">
+                                 || fn:containsIgnoreCase(url, 'typemateriel') || fn:containsIgnoreCase(url, 'banque')|| fn:containsIgnoreCase(url, 'user') }">
                          class="panel-collapse collapse in"
                  </c:when>
                  <c:otherwise>
@@ -130,6 +130,7 @@
                             <spring:message code="menu.appelOffre.liste" />
                         </a>
                     </li>
+
                 </ul>
 
             </div>
