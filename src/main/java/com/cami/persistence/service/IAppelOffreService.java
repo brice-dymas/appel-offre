@@ -15,7 +15,7 @@ public interface IAppelOffreService extends IOperations<AppelOffre>
     public Page<AppelOffre> findPaginated(String query, int page, Integer size);
 
     public Page<AppelOffre> findPaginated(Long filialeId,
-            String numero, String intitule, String maitreDouvrage, int page,
+            String numero, String intitule, String maitreDouvrage, final boolean deleted, int page,
             Integer size);
 
 }

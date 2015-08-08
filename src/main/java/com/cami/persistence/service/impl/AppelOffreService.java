@@ -99,6 +99,7 @@ public class AppelOffreService
         appelOffre.setFiliale(filialeDao.findOne(appelOffre.getFiliale().getId()));
         appelOffre.setDateModification(new Date());
         appelOffre.setUser(userConnected);
+        appelOffre.setDeleted(false);
         appelOffre = dao.save(appelOffre);
 
         System.out.println("Debut Caution - size : " + appelOffre.getCautions().size());
@@ -142,6 +143,7 @@ public class AppelOffreService
         editAppelOffre.setIntitule(appelOffre.getIntitule());
         editAppelOffre.setEtat("En cours");
         editAppelOffre.setDateModification(new Date());
+        editAppelOffre.setDeleted(appelOffre.isDeleted());
         editAppelOffre.setDelaiDeValidite(appelOffre.getDelaiDeValidite());
         editAppelOffre.setNumero(appelOffre.getNumero());
         editAppelOffre.setMaitreDouvrage(appelOffre.getMaitreDouvrage());
@@ -205,15 +207,15 @@ public class AppelOffreService
     @Override
     public Page<AppelOffre> findPaginated(final Long filialeId,
             final String numero, final String intitule,
-            final String maitreDouvrage, final int page, final Integer size)
+            final String maitreDouvrage, final boolean deleted, final int page, final Integer size)
     {
         if (-1 == filialeId) {
-            System.out.println("find-1");
-            return dao.searchLike('%' + numero + '%', '%' + maitreDouvrage + '%', '%' + intitule + '%', new PageRequest(page, size, Sort.Direction.ASC, "numero"));
+            System.out.println("find-1 et deleted=" + deleted);
+            return dao.searchLike('%' + numero + '%', '%' + maitreDouvrage + '%', '%' + intitule + '%', deleted, new PageRequest(page, size, Sort.Direction.ASC, "numero"));
         }
         else {
-            System.out.println("find-2");
-            return dao.searchLikeWithFiliale(filialeId, '%' + numero + '%', '%' + maitreDouvrage + '%', '%' + intitule + '%', new PageRequest(page, size, Sort.Direction.ASC, "numero"));
+            System.out.println("find-2 et deleted=" + deleted);
+            return dao.searchLikeWithFiliale(filialeId, '%' + numero + '%', '%' + maitreDouvrage + '%', '%' + intitule + '%', deleted, new PageRequest(page, size, Sort.Direction.ASC, "numero"));
         }
     }
 

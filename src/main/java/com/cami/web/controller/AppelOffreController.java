@@ -119,7 +119,8 @@ public class AppelOffreController
     @RequestMapping(method = RequestMethod.GET)
     public String indexAction(final ModelMap model, final WebRequest webRequest)
     {
-
+        boolean deleted = false;
+        System.out.println(" \n \n dans le controller juste apres declaration deleted=" + deleted);
         final Long filialeId = (webRequest.getParameter("queryfiliale") != null && !webRequest.getParameter("queryfiliale").equals(""))
                 ? Long.valueOf(webRequest.getParameter("queryfiliale"))
                 : -1;
@@ -132,15 +133,21 @@ public class AppelOffreController
         final String maitreDouvrage = webRequest.getParameter("querymaitredouvrage") != null
                 ? webRequest.getParameter("querymaitredouvrage")
                 : "";
+        if (webRequest.getParameter("querydeleted") != null) {
+            if (webRequest.getParameter("querydeleted").equals("true")) {
+                deleted = true;
+            }
+        }
+
         final Integer page = webRequest.getParameter("page") != null
                 ? Integer.valueOf(webRequest.getParameter("page"))
                 : 0;
         final Integer size = webRequest.getParameter("size") != null
                 ? Integer.valueOf(webRequest.getParameter("size"))
                 : 5;
-
-        final Page<AppelOffre> resultPage = appelOffreService.findPaginated(filialeId, numero, intitule, maitreDouvrage, page, size);
-
+        System.out.println("dans le controller juste avant le findPaginated où deleted=" + deleted);
+        final Page<AppelOffre> resultPage = appelOffreService.findPaginated(filialeId, numero, intitule, maitreDouvrage, deleted, page, size);
+        System.out.println("dans le controller juste après le findPaginated où deleted=" + deleted);
         final AppelOffre appelOffre = new AppelOffre();
         appelOffre.setIntitule(intitule);
         appelOffre.setMaitreDouvrage(maitreDouvrage);
@@ -213,16 +220,6 @@ public class AppelOffreController
         }
     }
 
-//    @ModelAttribute("appelOffreForm")
-//    public AppelOffreForm getAppelOffreForm()
-//    {
-//        AppelOffre appelOffre = new AppelOffre();
-////        appelOffre.setIntitule("voyons");
-//
-//        AppelOffreForm appelOffreForm = new AppelOffreForm();
-//        appelOffreForm.setAppelOffre(appelOffre);
-//        return appelOffreForm;
-//    }
     @ModelAttribute("todayDate")
     public Date getDate()
     {
@@ -271,6 +268,15 @@ public class AppelOffreController
         for (Role role : roles) {
             results.put(role.getId(), role.getUser().getNom());
         }
+        return results;
+    }
+
+    @ModelAttribute("etats")
+    public Map<Boolean, String> populateEtatFields()
+    {
+        final Map<Boolean, String> results = new HashMap<>();
+        results.put(false, "Actif");
+        results.put(true, "Inactif");
         return results;
     }
 

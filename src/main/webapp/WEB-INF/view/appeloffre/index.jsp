@@ -25,12 +25,12 @@
                                 <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-                                <li role="presentation"><a role="menuitem" tabindex="-1" href="?querynumero=${appeloffre.numero}&queryintitule=${appeloffre.intitule}&querymaitredouvrage=${appeloffre.maitreDouvrage}&queryfiliale=${appeloffre.filiale.id}&size=5">5</a></li>
-                                <li role="presentation"><a role="menuitem" tabindex="-1" href="?querynumero=${appeloffre.numero}&queryintitule=${appeloffre.intitule}&querymaitredouvrage=${appeloffre.maitreDouvrage}&queryfiliale=${appeloffre.filiale.id}&size=10">10</a></li>
-                                <li role="presentation"><a role="menuitem" tabindex="-1" href="?querynumero=${appeloffre.numero}&queryintitule=${appeloffre.intitule}&querymaitredouvrage=${appeloffre.maitreDouvrage}&queryfiliale=${appeloffre.filiale.id}&size=20">20</a></li>
-                                <li role="presentation"><a role="menuitem" tabindex="-1" href="?querynumero=${appeloffre.numero}&queryintitule=${appeloffre.intitule}&querymaitredouvrage=${appeloffre.maitreDouvrage}&queryfiliale=${appeloffre.filiale.id}&size=30">30</a></li>
-                                <li role="presentation"><a role="menuitem" tabindex="-1" href="?querynumero=${appeloffre.numero}&queryintitule=${appeloffre.intitule}&querymaitredouvrage=${appeloffre.maitreDouvrage}&queryfiliale=${appeloffre.filiale.id}&size=40">40</a></li>
-                                <li role="presentation"><a role="menuitem" tabindex="-1" href="?querynumero=${appeloffre.numero}&queryintitule=${appeloffre.intitule}&querymaitredouvrage=${appeloffre.maitreDouvrage}&queryfiliale=${appeloffre.filiale.id}&size=50">50</a></li>
+                                <li role="presentation"><a role="menuitem" tabindex="-1" href="?querynumero=${appeloffre.numero}&queryintitule=${appeloffre.intitule}&querymaitredouvrage=${appeloffre.maitreDouvrage}&queryfiliale=${appeloffre.filiale.id}&querydeleted=${appeloffre.deleted}&size=5">5</a></li>
+                                <li role="presentation"><a role="menuitem" tabindex="-1" href="?querynumero=${appeloffre.numero}&queryintitule=${appeloffre.intitule}&querymaitredouvrage=${appeloffre.maitreDouvrage}&queryfiliale=${appeloffre.filiale.id}&querydeleted=${appeloffre.deleted}&size=10">10</a></li>
+                                <li role="presentation"><a role="menuitem" tabindex="-1" href="?querynumero=${appeloffre.numero}&queryintitule=${appeloffre.intitule}&querymaitredouvrage=${appeloffre.maitreDouvrage}&queryfiliale=${appeloffre.filiale.id}&querydeleted=${appeloffre.deleted}&size=20">20</a></li>
+                                <li role="presentation"><a role="menuitem" tabindex="-1" href="?querynumero=${appeloffre.numero}&queryintitule=${appeloffre.intitule}&querymaitredouvrage=${appeloffre.maitreDouvrage}&queryfiliale=${appeloffre.filiale.id}&querydeleted=${appeloffre.deleted}&size=30">30</a></li>
+                                <li role="presentation"><a role="menuitem" tabindex="-1" href="?querynumero=${appeloffre.numero}&queryintitule=${appeloffre.intitule}&querymaitredouvrage=${appeloffre.maitreDouvrage}&queryfiliale=${appeloffre.filiale.id}&querydeleted=${appeloffre.deleted}&size=40">40</a></li>
+                                <li role="presentation"><a role="menuitem" tabindex="-1" href="?querynumero=${appeloffre.numero}&queryintitule=${appeloffre.intitule}&querymaitredouvrage=${appeloffre.maitreDouvrage}&queryfiliale=${appeloffre.filiale.id}&querydeleted=${appeloffre.deleted}&size=50">50</a></li>
                             </ul>
                         </div>
                         <table class="table table-condensed table-hover table-bordered">
@@ -56,11 +56,6 @@
                                             <spring:message code="appelOffre.dateDepot" />
                                         </span>
                                     </th>
-                                    <!--                                     <th> -->
-                                    <!--                                         <span class="btn"> -->
-                                    <%--                                         	<spring:message code="appelOffre.maitreDouvrage" /> --%>
-                                    <!--                                         </span> -->
-                                    <!--                                     </th> -->
                                     <th>
                                         <span class="btn">
                                             <spring:message code="action.titre" />
@@ -71,46 +66,78 @@
                             <tbody>
                                 <c:if test="${empty appelOffres}">
                                     <tr>
-                                        <td colspan="7">
+                                        <td colspan="7" class="label-danger text-center" >
                                             <spring:message code="empty.data" />
                                         </td>
                                     </tr>
                                 </c:if>
                                 <c:if test="${not empty appelOffres }">
                                     <c:forEach items="${appelOffres}" var="appelOffre">
-                                        <tr>
-                                            <td>
-                                                ${appelOffre.numero}
-                                            </td>
-                                            <td>
-                                                ${appelOffre.intitule}
-                                            </td>
-                                            <td>
-                                                ${appelOffre.filiale.nom}
-                                            </td>
-                                            <td>
-                                                ${appelOffre.getTrueDate(appelOffre.dateDepot)}
-                                            </td>
-                                            <!--                                             <td> -->
-                                            <%--                                                 ${appelOffre.maitreDouvrage} --%>
-                                            <!--                                             </td> -->
-                                            <td class="text-center">
-                                                <spring:url value="/appeloffre/${appelOffre.id}/edit" htmlEscape="true" var="appeloffre_edit" />
-                                                <a href="${appeloffre_edit}" class="btn btn-primary btn-sm">
-                                                    <span class="glyphicon glyphicon-edit">
-                                                        <spring:message code="action.modifier" />
-                                                    </span>
+                                        <c:if test="${not appelOffre.deleted}" >
+                                            <tr>
+                                                <td>
+                                                    ${appelOffre.numero}
+                                                </td>
+                                                <td>
+                                                    ${appelOffre.intitule}
+                                                </td>
+                                                <td>
+                                                    ${appelOffre.filiale.nom}
+                                                </td>
+                                                <td>
+                                                    ${appelOffre.getTrueDate(appelOffre.dateDepot)}
+                                                </td>
+                                                <td class="text-center">
+                                                    <spring:url value="/appeloffre/${appelOffre.id}/edit" htmlEscape="true" var="appeloffre_edit" />
+                                                    <a href="${appeloffre_edit}" class="btn btn-primary btn-sm">
+                                                        <span class="glyphicon glyphicon-edit">
+                                                            <spring:message code="action.modifier" />
+                                                        </span>
 
-                                                </a>
-                                                &nbsp;&nbsp;
-                                                <spring:url value="/appeloffre/${appelOffre.id}/show" htmlEscape="true" var="appeloffre_show" />
-                                                <a href="${appeloffre_show}" class="btn btn-primary btn-sm">
-                                                    <span class="glyphicon glyphicon-open">
-                                                        <spring:message code="action.detail" />
-                                                    </span>
-                                                </a>
-                                            </td>
-                                        </tr>
+                                                    </a>
+                                                    &nbsp;&nbsp;
+                                                    <spring:url value="/appeloffre/${appelOffre.id}/show" htmlEscape="true" var="appeloffre_show" />
+                                                    <a href="${appeloffre_show}" class="btn btn-primary btn-sm">
+                                                        <span class="glyphicon glyphicon-open">
+                                                            <spring:message code="action.detail" />
+                                                        </span>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        </c:if>
+                                        <c:if test="${appelOffre.deleted}" >
+                                            <tr class="text-danger">
+                                                <td>
+                                                    ${appelOffre.numero}
+                                                </td>
+                                                <td>
+                                                    ${appelOffre.intitule}
+                                                </td>
+                                                <td>
+                                                    ${appelOffre.filiale.nom}
+                                                </td>
+                                                <td>
+                                                    ${appelOffre.getTrueDate(appelOffre.dateDepot)}
+                                                </td>
+                                                <td class="text-center">
+                                                    <spring:url value="/appeloffre/${appelOffre.id}/edit" htmlEscape="true" var="appeloffre_edit" />
+                                                    <a href="${appeloffre_edit}" class="btn btn-primary btn-sm">
+                                                        <span class="glyphicon glyphicon-edit">
+                                                            <spring:message code="action.modifier" />
+                                                        </span>
+
+                                                    </a>
+                                                    &nbsp;&nbsp;
+                                                    <spring:url value="/appeloffre/${appelOffre.id}/show" htmlEscape="true" var="appeloffre_show" />
+                                                    <a href="${appeloffre_show}" class="btn btn-primary btn-sm">
+                                                        <span class="glyphicon glyphicon-open">
+                                                            <spring:message code="action.detail" />
+                                                        </span>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        </c:if>
+
                                     </c:forEach>
                                 </c:if>
                             </tbody>
@@ -186,6 +213,22 @@
                 <spring:url value="/appeloffre/" var="appeloffre_home"
                             htmlEscape="true" />
                 <form:form method="get" commandName="appelOffre" action="${appeloffre_home}">
+                    <div class="form-group">
+                        <label>
+                            <spring:message code="appelOffre.statut" />
+                        </label>
+
+                        <select name="querydeleted" class="form-control input-sm">
+                            <option value="">---</option>
+                            <c:forEach var="deleted" items="${etats}">
+
+                                <option value="${deleted.key}" >
+                                    ${deleted.value}
+                                </option>
+                            </c:forEach>
+                        </select>
+                    </div>
+
                     <div class="form-group">
                         <label>
                             <spring:message code="appelOffre.numero" />
