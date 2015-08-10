@@ -18,6 +18,13 @@
                 <h4>
                     <spring:message code="appelOffre.afficher" />
                 </h4>
+                <div class="text text-danger">
+                    <h4>
+                        <c:if test="${appelOffre.deleted}" >
+                            <spring:message code="appelOffre.disabled" />
+                        </c:if>
+                    </h4>
+                </div>
                 <hr/>
             </div>
         </div>
@@ -253,10 +260,19 @@
                             <spring:message code="action.modifier" />
                         </a>
                         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                        <button type="submit" class="btn btn-default  btn-danger">
-                            <span class="glyphicon glyphicon-remove-sign"></span>
-                            <spring:message code="action.effacer" />
-                        </button>
+
+                        <c:if test="${appelOffre.deleted}" >
+                            <button type="submit" class="btn btn-default  btn-success">
+                                <span class="glyphicon glyphicon-thumbs-up"></span>
+                                <spring:message code="action.activer" />
+                            </button>
+                        </c:if>
+                        <c:if test="${not appelOffre.deleted}" >
+                            <button type="submit" class="btn btn-default  btn-danger">
+                                <span class="glyphicon glyphicon-remove-sign"></span>
+                                <spring:message code="action.effacer" />
+                            </button>
+                        </c:if>
                     </sec:authorize>
                     <div class="dropdown" style="display: inline-block !important">
                         <button class="btn btn-default dropdown-toogle btn-success" id="dropdown-user" data-toggle="dropdown">

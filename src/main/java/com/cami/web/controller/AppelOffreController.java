@@ -76,7 +76,7 @@ public class AppelOffreController
     public String ShowAction(@PathVariable("id") final Long id,
             final ModelMap model)
     {
-        AppelOffre appelOffre = new AppelOffre();
+        final AppelOffre appelOffre;
         final List<Caution> cautions;
         appelOffre = appelOffreService.findOne(id);
         final List<LigneAppel> ligneAppels = ligneAppelService.filterByAppelOffre(appelOffre.getId());
@@ -89,6 +89,8 @@ public class AppelOffreController
         model.addAttribute("user", role);
         model.addAttribute("ligneAppels", ligneAppels);
         model.addAttribute("cautions", cautions);
+
+        System.out.println("this appelOffre is deleted ? " + appelOffre.isDeleted());
         return "appeloffre/show";
     }
 
@@ -120,7 +122,6 @@ public class AppelOffreController
     public String indexAction(final ModelMap model, final WebRequest webRequest)
     {
         boolean deleted = false;
-        System.out.println(" \n \n dans le controller juste apres declaration deleted=" + deleted);
         final Long filialeId = (webRequest.getParameter("queryfiliale") != null && !webRequest.getParameter("queryfiliale").equals(""))
                 ? Long.valueOf(webRequest.getParameter("queryfiliale"))
                 : -1;
@@ -145,9 +146,8 @@ public class AppelOffreController
         final Integer size = webRequest.getParameter("size") != null
                 ? Integer.valueOf(webRequest.getParameter("size"))
                 : 5;
-        System.out.println("dans le controller juste avant le findPaginated où deleted=" + deleted);
+
         final Page<AppelOffre> resultPage = appelOffreService.findPaginated(filialeId, numero, intitule, maitreDouvrage, deleted, page, size);
-        System.out.println("dans le controller juste après le findPaginated où deleted=" + deleted);
         final AppelOffre appelOffre = new AppelOffre();
         appelOffre.setIntitule(intitule);
         appelOffre.setMaitreDouvrage(maitreDouvrage);
@@ -198,6 +198,29 @@ public class AppelOffreController
 
         }
 
+    }
+
+    @RequestMapping(value = "/delete", method = RequestMethod.POST)
+    public String deleteAction(final AppelOffre appelOffre, final ModelMap model)
+    {
+        AppelOffre appelOffreToDelete = appelOffreService.findOne(appelOffre.getId());
+        System.out.println("deleteAction of a appelOffre =" + appelOffreToDelete.getId() + " -intitulé=" + appelOffreToDelete.getIntitule() + " deleted ?= " + appelOffreToDelete.isDeleted());
+        System.out.println("deletion beginning deleted = " + appelOffreToDelete.isDeleted());
+        if (appelOffreToDelete.isDeleted() == true) {
+            System.out.println("(suppose to be true) deleted= " + appelOffreToDelete.isDeleted());
+            appelOffreToDelete.setDeleted(false);
+            appelOffreToDelete = appelOffreService.SimpleUpdate(appelOffreToDelete);
+            System.out.println("(suppose to be false) after calling service  deleted= " + appelOffreToDelete.isDeleted());
+        }
+        else {
+            System.out.println("(suppose to be false) deleted= " + appelOffreToDelete.isDeleted());
+            appelOffreToDelete.setDeleted(true);
+            appelOffreToDelete = appelOffreService.SimpleUpdate(appelOffreToDelete);
+            System.out.println("(suppose to be true) after calling service deleted= " + appelOffreToDelete.isDeleted());
+        }
+
+        System.out.println("deletion successfully ended deleted = " + appelOffreToDelete.isDeleted());
+        return "redirect:/appeloffre/";
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.POST)
