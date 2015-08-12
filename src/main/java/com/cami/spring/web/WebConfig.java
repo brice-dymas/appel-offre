@@ -1,6 +1,7 @@
 package com.cami.spring.web;
 
 import com.cami.view.resolver.ExcelViewResolver;
+import com.cami.view.resolver.JsonViewResolver;
 import com.cami.view.resolver.PDFViewResolver;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,28 +34,29 @@ import org.springframework.web.servlet.view.tiles3.TilesConfigurer;
 @Configuration
 @EnableWebMvc
 @ComponentScan(basePackages = {"com.cami"})
-public class WebConfig extends WebMvcConfigurerAdapter
-{
+public class WebConfig extends WebMvcConfigurerAdapter {
 
     /*
      * Configure View resolver to provide PDF output using lowagie pdf library
      * to generate PDF output for an object content
      */
     @Bean
-    public ViewResolver pdfViewResolver()
-    {
+    public ViewResolver pdfViewResolver() {
         return new PDFViewResolver();
     }
 
     @Bean
-    public ViewResolver excelViewResolver()
-    {
+    public ViewResolver excelViewResolver() {
         return new ExcelViewResolver();
     }
 
     @Bean
-    public InternalResourceViewResolver getInternalResourceViewResolver()
-    {
+    public ViewResolver jsonViewResolver() {
+        return new JsonViewResolver();
+    }
+
+    @Bean
+    public InternalResourceViewResolver getInternalResourceViewResolver() {
         final InternalResourceViewResolver resolver = new InternalResourceViewResolver();
         resolver.setPrefix("/WEB-INF/view/");
         resolver.setSuffix(".jsp");
@@ -63,8 +65,7 @@ public class WebConfig extends WebMvcConfigurerAdapter
 
     @Override
     public void configureContentNegotiation(
-            final ContentNegotiationConfigurer configurer)
-    {
+            final ContentNegotiationConfigurer configurer) {
 
         configurer.ignoreAcceptHeader(true).defaultContentType(MediaType.TEXT_HTML);
 
@@ -79,28 +80,26 @@ public class WebConfig extends WebMvcConfigurerAdapter
      */
     @Bean
     public ViewResolver contentNegotiatingViewResolver(
-            final ContentNegotiationManager manager)
-    {
+            final ContentNegotiationManager manager) {
         final ContentNegotiatingViewResolver resolver = new ContentNegotiatingViewResolver();
         resolver.setContentNegotiationManager(manager);
         final List<ViewResolver> resolvers = new ArrayList<ViewResolver>();
         resolvers.add(getInternalResourceViewResolver());
         resolvers.add(pdfViewResolver());
         resolvers.add(excelViewResolver());
+        resolvers.add(jsonViewResolver());
         resolver.setViewResolvers(resolvers);
         return resolver;
     }
 
     @Override
-    public void addResourceHandlers(final ResourceHandlerRegistry registry)
-    {
+    public void addResourceHandlers(final ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/resources/**").addResourceLocations(
                 "resources/bootstrap/");
     }
 
     @Bean
-    public TilesConfigurer tilesConfigurer()
-    {
+    public TilesConfigurer tilesConfigurer() {
         final TilesConfigurer tilesConfigurer = new TilesConfigurer();
         tilesConfigurer
                 .setDefinitions(new String[]{"/WEB-INF/tiles/tiles-definitions.xml"});
@@ -109,16 +108,14 @@ public class WebConfig extends WebMvcConfigurerAdapter
     }
 
     @Bean
-    public LocaleChangeInterceptor localeChangeInterceptor()
-    {
+    public LocaleChangeInterceptor localeChangeInterceptor() {
         final LocaleChangeInterceptor localeChangeInterceptor = new LocaleChangeInterceptor();
         localeChangeInterceptor.setParamName("language");
         return localeChangeInterceptor;
     }
 
     @Bean(name = "localeResolver")
-    public LocaleResolver sessionLocaleResolver()
-    {
+    public LocaleResolver sessionLocaleResolver() {
         final SessionLocaleResolver localeResolver = new SessionLocaleResolver();
         localeResolver.setDefaultLocale(new Locale("en"));
 
@@ -126,22 +123,19 @@ public class WebConfig extends WebMvcConfigurerAdapter
     }
 
     @Bean
-    public MultipartResolver multipartResolver()
-    {
+    public MultipartResolver multipartResolver() {
         CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();
         multipartResolver.setMaxUploadSize(5 * 1024 * 1024);
         return multipartResolver;
     }
 
     @Override
-    public void addInterceptors(final InterceptorRegistry registry)
-    {
+    public void addInterceptors(final InterceptorRegistry registry) {
         registry.addInterceptor(localeChangeInterceptor());
     }
 
     @Bean
-    public ReloadableResourceBundleMessageSource messageSource()
-    {
+    public ReloadableResourceBundleMessageSource messageSource() {
         final ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
         messageSource.setBasenames(new String[]{"classpath:messages",
             "classpath:ValidationMessages",

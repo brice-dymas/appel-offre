@@ -139,4 +139,10 @@ public class CautionService
         return dao.findAll();
     }
 
+    @Override
+    public List<Object[]> totalCautionParBanqueParMois(int year) {
+        System.out.println("HomeController Service "+year);
+        return dao.totalCautionParBanqueParMois(year);
+    }
+
 }

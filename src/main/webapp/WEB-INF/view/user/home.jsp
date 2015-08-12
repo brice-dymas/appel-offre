@@ -12,21 +12,50 @@
 
 <tiles:insertDefinition name="layout">
     <tiles:putAttribute name="body">
-        
+
         <div class="row">
+
             <div class="col-lg-4 col-lg-offset-4">
                 <div id="chartdiv" style="height:400px;width:300px; "></div>
             </div>
+            <div class="col-lg-4">
+                <c:forEach items="${results}" var="result">
+                    ${result[0]} - ${result[1]} - ${result[2]}
+
+                </c:forEach>
+            </div>
         </div>
-        
-        
-        <!--[if lt IE 9]><script language="javascript" type="text/javascript" src="<c:url value="/resources/js/excanvas.js" />"></script><![endif]-->
+
+
+<!--[if lt IE 9]><script language="javascript" type="text/javascript" src="<c:url value="/resources/js/excanvas.js" />"></script><![endif]-->
         <script src="<c:url value="/resources/js/jquery.jqplot.min.js" />"></script>
-        
+
         <script>
-            $(function (){
-               $.jqplot('chartdiv',  [[[1, 2],[3,5.12],[5,13.1],[7,33.6],[9,85.9],[11,219.9]]]); 
-               $.jqplot('chartdiv2',  [[[1, 2],[3,5.12],[5,13.1],[7,33.6],[9,85.9],[11,219.9]]]); 
+            $(function () {
+
+
+                var element = {};
+
+            <c:forEach items="${results}" var="result">
+                if (element['${result[1]}']) {
+                    element['${result[1]}'].push([${result[2]},${result[0]}]);
+                } else {
+                    element['${result[1]}'] = [[${result[2]},${result[0]}]];
+                }
+            </c:forEach>
+                console.log(element);
+                console.log("Hello");
+
+                //$.jqplot('chartdiv',  [[[1, 2],[3,5.12],[5,13.1],[7,33.6],[9,85.9],[11,219.9]]]); 
+                
+
+                Object.keys(element).forEach(function (key) {
+                    $.jqplot('chartdiv', [element[key]]);
+                });
+
+
+
+
             });
         </script>
     </tiles:putAttribute>

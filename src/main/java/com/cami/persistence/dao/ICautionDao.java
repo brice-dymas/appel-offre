@@ -32,4 +32,9 @@ public interface ICautionDao extends JpaRepository<Caution, Long>, JpaSpecificat
 
     @Query("SELECT c FROM Caution c WHERE c.commercial.user.username LIKE :username")
     Page<Caution> filterByUsername(@Param("username") String username, Pageable pageable);
+    
+    
+    @Query("SELECT SUM(c.montant), b.libelle, MONTH(c.dateDebut) FROM Caution c join c.banque b WHERE YEAR(c.dateDebut) = :year"
+            + " GROUP BY b.libelle, MONTH(c.dateDebut) ORDER BY b.libelle, MONTH(c.dateDebut) ASC")
+    List<Object[]> totalCautionParBanqueParMois(@Param("year") int year);
 }

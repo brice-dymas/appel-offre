@@ -22,6 +22,8 @@ public interface ICautionService
             final Integer size);
 
     public List<AppelOffre> getThemComplete();
+    
+    List<Object[]> totalCautionParBanqueParMois(int year);
 
 	// public Page<Caution> findPaginated(Date dateDebut, Date dateFin,
     // String banque, int page, Integer size);
