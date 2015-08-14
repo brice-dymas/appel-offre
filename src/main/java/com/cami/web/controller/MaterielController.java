@@ -158,7 +158,9 @@ public class MaterielController
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
     public String deleteAction(final Materiel materiel, final ModelMap model)
     {
-        materielService.deleteById(materiel.getId());
+//        materielService.deleteById(materiel.getId());
+        Materiel toDelete = materielService.findOne(materiel.getId());
+        materielService.disableEntity(toDelete);
         return "redirect:/materiel/";
     }
 

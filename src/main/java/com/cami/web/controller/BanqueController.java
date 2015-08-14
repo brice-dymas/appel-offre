@@ -105,7 +105,8 @@ public class BanqueController
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
     public String deleteAction(final Banque banque, final ModelMap model)
     {
-        banqueService.deleteById(banque.getId());
+        Banque banqueToDisable = banqueService.findOne(banque.getId());
+        banqueService.disableEntity(banqueToDisable);
         return "redirect:/banque/";
     }
 

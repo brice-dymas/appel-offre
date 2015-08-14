@@ -97,8 +97,6 @@ public class AppelOffre
 
     private String etat;
 
-    private boolean deleted;
-
     public AppelOffre()
     {
     }
@@ -106,16 +104,6 @@ public class AppelOffre
     public Date getDateModification()
     {
         return dateModification;
-    }
-
-    public boolean isDeleted()
-    {
-        return deleted;
-    }
-
-    public void setDeleted(boolean deleted)
-    {
-        this.deleted = deleted;
     }
 
     public void setDateModification(Date dateModification)

@@ -99,7 +99,9 @@ public class FilialeController
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
     public String deleteAction(final Filiale filiale, final ModelMap model)
     {
-        filialeService.deleteById(filiale.getId());
+//        filialeService.deleteById(filiale.getId());
+        Filiale toDelete = filialeService.findOne(filiale.getId());
+        filialeService.disableEntity(toDelete);
         return "redirect:/filiale/";
     }
 

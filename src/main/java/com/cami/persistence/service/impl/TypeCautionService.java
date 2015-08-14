@@ -73,13 +73,11 @@ public class TypeCautionService
     @Override
     public Page<TypeCaution> findPaginated(String query, int i, Integer size)
     {
-        if (query == null)
-        {
+        if (query == null) {
             System.out.println("Query = " + query);
             return super.findPaginated(i, size);
         }
-        else
-        {
+        else {
             System.out.println("Not null Query = " + query);
             return dao.findByNomLike('%' + query + '%', new PageRequest(i, size));
         }
@@ -89,6 +87,19 @@ public class TypeCautionService
     public Page<TypeCaution> findPaginated(String query_code, String query_nom, int i, Integer size)
     {
         return dao.searchLike('%' + query_code + '%', '%' + query_nom + '%', new PageRequest(i, size, Sort.Direction.ASC, "code"));
+    }
+
+    @Override
+    public void disableEntity(final TypeCaution entity)
+    {
+        final TypeCaution tcToDisable = dao.findOne(entity.getId());
+        if (tcToDisable.isDeleted() == true) {
+            tcToDisable.setDeleted(false);
+        }
+        else {
+            tcToDisable.setDeleted(true);
+        }
+        dao.save(tcToDisable);
     }
 
 }

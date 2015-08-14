@@ -21,21 +21,35 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service("ligneAppelService")
 @Transactional
-public class LigneAppelService extends AbstractService<LigneAppel> implements ILigneAppelService{
+public class LigneAppelService extends AbstractService<LigneAppel> implements ILigneAppelService
+{
 
     @Autowired
     private ILigneAppelDao dao;
-    
+
     @Override
-    protected PagingAndSortingRepository<LigneAppel, Long> getDao() {
-       return dao;
+    protected PagingAndSortingRepository<LigneAppel, Long> getDao()
+    {
+        return dao;
     }
 
     @Override
-    public List<LigneAppel> filterByAppelOffre(Long appelOffreId) {
+    public List<LigneAppel> filterByAppelOffre(Long appelOffreId)
+    {
         return dao.filterByAppelOffre(appelOffreId);
     }
 
-  
-    
+    @Override
+    public void disableEntity(final LigneAppel entity)
+    {
+        final LigneAppel ligneAppelToDisable = dao.findOne(entity.getId());
+        if (ligneAppelToDisable.isDeleted() == true) {
+            ligneAppelToDisable.setDeleted(false);
+        }
+        else {
+            ligneAppelToDisable.setDeleted(true);
+        }
+        dao.save(ligneAppelToDisable);
+    }
+
 }

@@ -209,14 +209,14 @@ public class AppelOffreController
         if (appelOffreToDelete.isDeleted() == true) {
             System.out.println("(suppose to be true) deleted= " + appelOffreToDelete.isDeleted());
             appelOffreToDelete.setDeleted(false);
-            appelOffreToDelete = appelOffreService.SimpleUpdate(appelOffreToDelete);
-            System.out.println("(suppose to be false) after calling service  deleted= " + appelOffreToDelete.isDeleted());
+            appelOffreService.disableEntity(appelOffreToDelete);
+//            System.out.println("(suppose to be false) after calling service  deleted= " + appelOffreToDelete.isDeleted());
         }
         else {
             System.out.println("(suppose to be false) deleted= " + appelOffreToDelete.isDeleted());
             appelOffreToDelete.setDeleted(true);
-            appelOffreToDelete = appelOffreService.SimpleUpdate(appelOffreToDelete);
-            System.out.println("(suppose to be true) after calling service deleted= " + appelOffreToDelete.isDeleted());
+            appelOffreService.disableEntity(appelOffreToDelete);
+//            System.out.println("(suppose to be true) after calling service deleted= " + appelOffreToDelete.isDeleted());
         }
 
         System.out.println("deletion successfully ended deleted = " + appelOffreToDelete.isDeleted());

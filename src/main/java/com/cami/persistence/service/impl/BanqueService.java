@@ -73,4 +73,20 @@ public class BanqueService extends AbstractService<Banque> implements IBanqueSer
         return banqueDao.save(toUpdate);
     }
 
+    @Override
+    public void disableEntity(final Banque entity)
+    {
+        final Banque banqueToDisable = banqueDao.findOne(entity.getId());
+        System.out.println("before saving banqueID=" + banqueToDisable.getId()
+                + " deleted =" + banqueToDisable.isDeleted());
+        if (banqueToDisable.isDeleted() == true) {
+            banqueToDisable.setDeleted(false);
+        }
+        else {
+            banqueToDisable.setDeleted(true);
+        }
+        banqueDao.save(banqueToDisable);
+        System.out.println("after saving banqueID=" + banqueToDisable.getId()
+                + " deleted =" + banqueToDisable.isDeleted());
+    }
 }

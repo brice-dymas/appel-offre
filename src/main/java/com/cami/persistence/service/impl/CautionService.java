@@ -139,4 +139,17 @@ public class CautionService
         return dao.findAll();
     }
 
+    @Override
+    public void disableEntity(final Caution entity)
+    {
+        final Caution cautionToDisable = dao.findOne(entity.getId());
+        if (cautionToDisable.isDeleted() == true) {
+            cautionToDisable.setDeleted(false);
+        }
+        else {
+            cautionToDisable.setDeleted(false);
+        }
+        dao.save(cautionToDisable);
+    }
+
 }

@@ -103,7 +103,9 @@ public class TypeMaterielController
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
     public String deleteAction(final TypeMateriel typeMateriel, final ModelMap model)
     {
-        typeMaterielService.deleteById(typeMateriel.getId());
+//        typeMaterielService.deleteById(typeMateriel.getId());
+        TypeMateriel toDelete = typeMaterielService.findOne(typeMateriel.getId());
+        typeMaterielService.disableEntity(toDelete);
         return "redirect:/typemateriel/";
     }
 

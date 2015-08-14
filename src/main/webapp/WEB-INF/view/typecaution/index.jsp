@@ -104,32 +104,63 @@
 
                 <c:if test="${typeCautions.size() ne 0}">
                     <c:forEach items="${typeCautions}" var="typeCaution">
-                        <tr>
-                            <td>
-                                ${typeCaution.code}
-                            </td>
-                            <td>
-                                ${typeCaution.nom}
-                            </td>
-                            <td>
-                                ${typeCaution.pourcentage}
-                            </td>
-                            <td class="text-center">
-                                <sec:authorize access="hasRole('ROLE_ADMIN')" >
-                                    <spring:url value="/typecaution/${typeCaution.id}/edit" htmlEscape="true" var="typecaution_edit" />
-                                    <a href="${typecaution_edit}" class="btn btn-primary btn-sm">
-                                        <span class="glyphicon glyphicon-edit"></span>
-                                        <spring:message code="action.modifier" />
+                        <c:if test="${typeCaution.deleted}" >
+                            <tr class="text-danger">
+                                <td>
+                                    ${typeCaution.code}
+                                </td>
+                                <td>
+                                    ${typeCaution.nom}
+                                </td>
+                                <td>
+                                    ${typeCaution.pourcentage}
+                                </td>
+                                <td class="text-center">
+                                    <sec:authorize access="hasRole('ROLE_ADMIN')" >
+                                        <spring:url value="/typecaution/${typeCaution.id}/edit" htmlEscape="true" var="typecaution_edit" />
+                                        <a href="${typecaution_edit}" class="btn btn-primary btn-sm">
+                                            <span class="glyphicon glyphicon-edit"></span>
+                                            <spring:message code="action.modifier" />
+                                        </a>
+                                        &nbsp;&nbsp;
+                                    </sec:authorize>
+                                    <spring:url value="/typecaution/${typeCaution.id}/show" htmlEscape="true" var="typecaution_show" />
+                                    <a href="${typecaution_show}" class="btn btn-primary btn-sm">
+                                        <span class="glyphicon glyphicon-open"></span>
+                                        <spring:message code="action.detail" />
                                     </a>
-                                    &nbsp;&nbsp;
-                                </sec:authorize>
-                                <spring:url value="/typecaution/${typeCaution.id}/show" htmlEscape="true" var="typecaution_show" />
-                                <a href="${typecaution_show}" class="btn btn-primary btn-sm">
-                                    <span class="glyphicon glyphicon-open"></span>
-                                    <spring:message code="action.detail" />
-                                </a>
-                            </td>
-                        </tr>
+                                </td>
+                            </tr>
+                        </c:if>
+                        <c:if test="${not typeCaution.deleted}" >
+                            <tr>
+                                <td>
+                                    ${typeCaution.code}
+                                </td>
+                                <td>
+                                    ${typeCaution.nom}
+                                </td>
+                                <td>
+                                    ${typeCaution.pourcentage}
+                                </td>
+                                <td class="text-center">
+                                    <sec:authorize access="hasRole('ROLE_ADMIN')" >
+                                        <spring:url value="/typecaution/${typeCaution.id}/edit" htmlEscape="true" var="typecaution_edit" />
+                                        <a href="${typecaution_edit}" class="btn btn-primary btn-sm">
+                                            <span class="glyphicon glyphicon-edit"></span>
+                                            <spring:message code="action.modifier" />
+                                        </a>
+                                        &nbsp;&nbsp;
+                                    </sec:authorize>
+                                    <spring:url value="/typecaution/${typeCaution.id}/show" htmlEscape="true" var="typecaution_show" />
+                                    <a href="${typecaution_show}" class="btn btn-primary btn-sm">
+                                        <span class="glyphicon glyphicon-open"></span>
+                                        <spring:message code="action.detail" />
+                                    </a>
+                                </td>
+                            </tr>
+                        </c:if>
+
                     </c:forEach>
 
                     </tbody>

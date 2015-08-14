@@ -106,7 +106,9 @@ public class TypeCautionController
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
     public String deleteAction(final TypeCaution typeCaution, final ModelMap model)
     {
-        typeCautionService.deleteById(typeCaution.getId());
+//        typeCautionService.deleteById(typeCaution.getId());
+        TypeCaution toDelete = typeCautionService.findOne(typeCaution.getId());
+        typeCautionService.disableEntity(toDelete);
         return "redirect:/typecaution/";
     }
 

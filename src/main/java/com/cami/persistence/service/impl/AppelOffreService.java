@@ -131,31 +131,6 @@ public class AppelOffreService
 
     @Override
     @Transactional
-    public AppelOffre SimpleUpdate(final AppelOffre appelOffre)
-    {
-        System.out.println("DEBUT UPDATE SIMPLE service  where deleted=" + appelOffre.isDeleted());
-        AppelOffre editAppelOffre = dao.findOne(appelOffre.getId());
-        System.out.println("after findOne method service  where deleted=" + appelOffre.isDeleted());
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        final Role userConnected = roleDao.retrieveAUser(auth.getName()); // get the current logged user
-
-//        editAppelOffre.setFiliale(filialeDao.findOne(appelOffre.getFiliale().getId()));
-//        editAppelOffre.setIntitule(appelOffre.getIntitule());
-//        editAppelOffre.setEtat("En cours");
-        editAppelOffre.setDateModification(new Date());
-        editAppelOffre.setDeleted(appelOffre.isDeleted());
-//        editAppelOffre.setDelaiDeValidite(appelOffre.getDelaiDeValidite());
-//        editAppelOffre.setNumero(appelOffre.getNumero());
-//        editAppelOffre.setMaitreDouvrage(appelOffre.getMaitreDouvrage());
-//        editAppelOffre.setDateDepot(appelOffre.getDateDepot());
-        editAppelOffre.setUser(userConnected);
-        editAppelOffre = dao.save(editAppelOffre);
-        System.out.println("update simple appeloffre finished and delketed=" + editAppelOffre.isDeleted());
-        return editAppelOffre;
-    }
-
-    @Override
-    @Transactional
     public AppelOffre update(final AppelOffre appelOffre)
     {
 
@@ -243,6 +218,22 @@ public class AppelOffreService
             System.out.println("find-2 et deleted=" + deleted);
             return dao.searchLikeWithFiliale(filialeId, '%' + numero + '%', '%' + maitreDouvrage + '%', '%' + intitule + '%', deleted, new PageRequest(page, size, Sort.Direction.ASC, "numero"));
         }
+    }
+
+    @Override
+    public void disableEntity(AppelOffre entity)
+    {
+        System.out.println("DEBUT UPDATE SIMPLE service  where deleted=" + entity.isDeleted());
+        AppelOffre editAppelOffre = dao.findOne(entity.getId());
+        System.out.println("after findOne method service  where deleted=" + entity.isDeleted());
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        final Role userConnected = roleDao.retrieveAUser(auth.getName()); // get the current logged user
+        editAppelOffre.setDateModification(new Date());
+        editAppelOffre.setDeleted(entity.isDeleted());
+        editAppelOffre.setUser(userConnected);
+        dao.save(editAppelOffre);
+        System.out.println("update simple appeloffre finished and delketed=" + editAppelOffre.isDeleted());
+
     }
 
 }

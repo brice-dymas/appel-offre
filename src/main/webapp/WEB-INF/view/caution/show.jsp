@@ -18,6 +18,11 @@
                 <h4>
                     <spring:message code="caution.afficher" />
                 </h4>
+                <c:if test="${caution.deleted}" >
+                    <div class="text-danger">
+                        <spring:message code="element.desactive" />
+                    </div>
+                </c:if>
                 <hr/>
             </div>
         </div>

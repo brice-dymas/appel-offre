@@ -10,8 +10,6 @@ public interface IAppelOffreService extends IOperations<AppelOffre>
 
     AppelOffre retrieveByName(String name);
 
-    public AppelOffre SimpleUpdate(final AppelOffre appelOffre);
-
     public List<AppelOffre> filterByNom(String nom);
 
     public Page<AppelOffre> findPaginated(String query, int page, Integer size);

@@ -67,7 +67,7 @@
                     <tbody>
                         <c:if test="${materiels.size() eq 0}">
                             <tr>
-                                <td class="text-center" colspan="4">
+                                <td class="text-center label-danger" colspan="4">
                                     <spring:message code="empty.data" />
                                 </td>
                             </tr>
@@ -108,32 +108,63 @@
                 </c:if>
                 <c:if test="${materiels.size() ne 0}">
                     <c:forEach items="${materiels}" var="materiel">
-                        <tr>
-                            <td>
-                                ${materiel.code}
-                            </td>
-                            <td>
-                                ${materiel.nom}
-                            </td>
-                            <td>
-                                ${materiel.typeMateriel.nom}
-                            </td>
-                            <td class="text-center">
-                                <sec:authorize access="hasRole('ROLE_ADMIN')" >
-                                    <spring:url value="/materiel/${materiel.id}/edit" htmlEscape="true" var="materiel_edit" />
-                                    <a href="${materiel_edit}" class="btn btn-primary btn-sm">
-                                        <span class="glyphicon glyphicon-edit"></span>
-                                        <spring:message code="action.modifier" />
+                        <c:if test="${materiel.deleted}" >
+                            <tr class="text-danger">
+                                <td>
+                                    ${materiel.code}
+                                </td>
+                                <td>
+                                    ${materiel.nom}
+                                </td>
+                                <td>
+                                    ${materiel.typeMateriel.nom}
+                                </td>
+                                <td class="text-center">
+                                    <sec:authorize access="hasRole('ROLE_ADMIN')" >
+                                        <spring:url value="/materiel/${materiel.id}/edit" htmlEscape="true" var="materiel_edit" />
+                                        <a href="${materiel_edit}" class="btn btn-primary btn-sm">
+                                            <span class="glyphicon glyphicon-edit"></span>
+                                            <spring:message code="action.modifier" />
+                                        </a>
+                                        &nbsp;&nbsp;
+                                    </sec:authorize>
+                                    <spring:url value="/materiel/${materiel.id}/show" htmlEscape="true" var="materiel_show" />
+                                    <a href="${materiel_show}" class="btn btn-primary btn-sm">
+                                        <span class="glyphicon glyphicon-open"></span>
+                                        <spring:message code="action.detail" />
                                     </a>
-                                    &nbsp;&nbsp;
-                                </sec:authorize>
-                                <spring:url value="/materiel/${materiel.id}/show" htmlEscape="true" var="materiel_show" />
-                                <a href="${materiel_show}" class="btn btn-primary btn-sm">
-                                    <span class="glyphicon glyphicon-open"></span>
-                                    <spring:message code="action.detail" />
-                                </a>
-                            </td>
-                        </tr>
+                                </td>
+                            </tr>
+                        </c:if>
+                        <c:if test="${not materiel.deleted}" >
+                            <tr>
+                                <td>
+                                    ${materiel.code}
+                                </td>
+                                <td>
+                                    ${materiel.nom}
+                                </td>
+                                <td>
+                                    ${materiel.typeMateriel.nom}
+                                </td>
+                                <td class="text-center">
+                                    <sec:authorize access="hasRole('ROLE_ADMIN')" >
+                                        <spring:url value="/materiel/${materiel.id}/edit" htmlEscape="true" var="materiel_edit" />
+                                        <a href="${materiel_edit}" class="btn btn-primary btn-sm">
+                                            <span class="glyphicon glyphicon-edit"></span>
+                                            <spring:message code="action.modifier" />
+                                        </a>
+                                        &nbsp;&nbsp;
+                                    </sec:authorize>
+                                    <spring:url value="/materiel/${materiel.id}/show" htmlEscape="true" var="materiel_show" />
+                                    <a href="${materiel_show}" class="btn btn-primary btn-sm">
+                                        <span class="glyphicon glyphicon-open"></span>
+                                        <spring:message code="action.detail" />
+                                    </a>
+                                </td>
+                            </tr>
+                        </c:if>
+
                     </c:forEach>
                     </tbody>
                     </table>

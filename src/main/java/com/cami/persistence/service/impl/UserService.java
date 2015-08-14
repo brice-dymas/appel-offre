@@ -41,4 +41,10 @@ public class UserService extends AbstractService<User> implements IUserService
     {
         return userDao.findByUsernameAndPassword(username, password);
     }
+
+    @Override
+    public void disableEntity(User entity)
+    {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

@@ -69,7 +69,7 @@
                     <tbody>
                         <c:if test="${filiales.size() eq 0}">
                             <tr>
-                                <td class="text-center" colspan="4">
+                                <td class="text-center label-danger" colspan="4">
                                     <spring:message code="empty.data" />
                                 </td>
                             </tr>
@@ -109,32 +109,63 @@
                 </c:if>
                 <c:if test="${filiales.size() ne 0}">
                     <c:forEach items="${filiales}" var="filiale">
-                        <tr>
-                            <td>
-                                ${filiale.code}
-                            </td>
-                            <td>
-                                ${filiale.nom}
-                            </td>
-                            <td>
-                                ${filiale.agence}
-                            </td>
-                            <td class="text-center">
-                                <sec:authorize access="hasRole('ROLE_ADMIN')" >
-                                    <spring:url value="/filiale/${filiale.id}/edit" htmlEscape="true" var="filiale_edit" />
-                                    <a href="${filiale_edit}" class="btn btn-primary btn-sm">
-                                        <span class="glyphicon glyphicon-edit"></span>
-                                        <spring:message code="action.modifier" />
+                        <c:if test="${filiale.deleted}" >
+                            <tr class="text-danger">
+                                <td>
+                                    ${filiale.code}
+                                </td>
+                                <td>
+                                    ${filiale.nom}
+                                </td>
+                                <td>
+                                    ${filiale.agence}
+                                </td>
+                                <td class="text-center">
+                                    <sec:authorize access="hasRole('ROLE_ADMIN')" >
+                                        <spring:url value="/filiale/${filiale.id}/edit" htmlEscape="true" var="filiale_edit" />
+                                        <a href="${filiale_edit}" class="btn btn-primary btn-sm">
+                                            <span class="glyphicon glyphicon-edit"></span>
+                                            <spring:message code="action.modifier" />
+                                        </a>
+                                        &nbsp;&nbsp;
+                                    </sec:authorize>
+                                    <spring:url value="/filiale/${filiale.id}/show" htmlEscape="true" var="filiale_show" />
+                                    <a href="${filiale_show}" class="btn btn-primary btn-sm">
+                                        <span class="glyphicon glyphicon-open"></span>
+                                        <spring:message code="action.detail" />
                                     </a>
-                                    &nbsp;&nbsp;
-                                </sec:authorize>
-                                <spring:url value="/filiale/${filiale.id}/show" htmlEscape="true" var="filiale_show" />
-                                <a href="${filiale_show}" class="btn btn-primary btn-sm">
-                                    <span class="glyphicon glyphicon-open"></span>
-                                    <spring:message code="action.detail" />
-                                </a>
-                            </td>
-                        </tr>
+                                </td>
+                            </tr>
+                        </c:if>
+                        <c:if test="${not filiale.deleted}" >
+                            <tr>
+                                <td>
+                                    ${filiale.code}
+                                </td>
+                                <td>
+                                    ${filiale.nom}
+                                </td>
+                                <td>
+                                    ${filiale.agence}
+                                </td>
+                                <td class="text-center">
+                                    <sec:authorize access="hasRole('ROLE_ADMIN')" >
+                                        <spring:url value="/filiale/${filiale.id}/edit" htmlEscape="true" var="filiale_edit" />
+                                        <a href="${filiale_edit}" class="btn btn-primary btn-sm">
+                                            <span class="glyphicon glyphicon-edit"></span>
+                                            <spring:message code="action.modifier" />
+                                        </a>
+                                        &nbsp;&nbsp;
+                                    </sec:authorize>
+                                    <spring:url value="/filiale/${filiale.id}/show" htmlEscape="true" var="filiale_show" />
+                                    <a href="${filiale_show}" class="btn btn-primary btn-sm">
+                                        <span class="glyphicon glyphicon-open"></span>
+                                        <spring:message code="action.detail" />
+                                    </a>
+                                </td>
+                            </tr>
+                        </c:if>
+
                     </c:forEach>
                     </tbody>
 

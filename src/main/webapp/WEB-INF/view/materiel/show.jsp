@@ -19,6 +19,11 @@
                 <h4>
                     <spring:message code="materiel.afficher" /> : ${materiel.nom}
                 </h4>
+                <c:if test="${materiel.deleted}" >
+                    <div class="text-danger">
+                        <spring:message code="element.desactive" />
+                    </div>
+                </c:if>
                 <hr/>
             </div>
         </div>
@@ -76,10 +81,19 @@
                             <spring:message code="action.modifier" />
                         </a>
                         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                        <button type="submit" class="btn btn-default  btn-danger">
-                            <span class="glyphicon glyphicon-remove-sign"></span>
-                            <spring:message code="action.effacer" />
-                        </button>
+                        <c:if test="${not materiel.deleted}" >
+                            <button type="submit" class="btn btn-default  btn-danger">
+                                <span class="glyphicon glyphicon-trash"></span>
+                                <spring:message code="action.effacer" />
+                            </button>
+                        </c:if>
+                        <c:if test="${materiel.deleted}" >
+                            <button type="submit" class="btn btn-default  btn-success">
+                                <span class="glyphicon glyphicon-trash"></span>
+                                <spring:message code="action.activer" />
+                            </button>
+                        </c:if>
+
                     </sec:authorize>
                 </form:form>
 

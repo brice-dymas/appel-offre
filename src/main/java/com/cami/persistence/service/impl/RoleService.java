@@ -198,4 +198,9 @@ public class RoleService extends AbstractService<Role> implements IRoleService
 //    {
 //        return roleDao.retrieveAUser(user.getUsername()) instanceof Role;
 //    }
+    @Override
+    public void disableEntity(Role entity)
+    {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

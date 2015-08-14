@@ -62,12 +62,9 @@ public class WebConfig extends WebMvcConfigurerAdapter
     }
 
     @Override
-    public void configureContentNegotiation(
-            final ContentNegotiationConfigurer configurer)
+    public void configureContentNegotiation(final ContentNegotiationConfigurer configurer)
     {
-
         configurer.ignoreAcceptHeader(true).defaultContentType(MediaType.TEXT_HTML);
-
     }
 
     /**
@@ -78,8 +75,7 @@ public class WebConfig extends WebMvcConfigurerAdapter
      * @return A CNVR instance.
      */
     @Bean
-    public ViewResolver contentNegotiatingViewResolver(
-            final ContentNegotiationManager manager)
+    public ViewResolver contentNegotiatingViewResolver(final ContentNegotiationManager manager)
     {
         final ContentNegotiatingViewResolver resolver = new ContentNegotiatingViewResolver();
         resolver.setContentNegotiationManager(manager);

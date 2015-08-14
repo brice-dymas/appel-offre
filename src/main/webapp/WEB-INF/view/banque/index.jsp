@@ -88,29 +88,57 @@
                 </c:if>
                 <c:if test="${banques.size() ne 0}">
                     <c:forEach items="${banques}" var="banque">
-                        <tr>
-                            <td>
-                                ${banque.code}
-                            </td>
-                            <td>
-                                ${banque.libelle}
-                            </td>
-                            <td class="text-center">
-                                <sec:authorize access="hasRole('ROLE_ADMIN')" >
-                                    <spring:url value="/banque/${banque.id}/edit" htmlEscape="true" var="banque_edit" />
-                                    <a href="${banque_edit}" class="btn btn-primary btn-sm">
-                                        <span class="glyphicon glyphicon-edit"></span>
-                                        <spring:message code="action.modifier" />
+                        <c:if test="${banque.deleted}" >
+                            <tr class="text-danger" >
+                                <td>
+                                    ${banque.code}
+                                </td>
+                                <td>
+                                    ${banque.libelle}
+                                </td>
+                                <td class="text-center">
+                                    <sec:authorize access="hasRole('ROLE_ADMIN')" >
+                                        <spring:url value="/banque/${banque.id}/edit" htmlEscape="true" var="banque_edit" />
+                                        <a href="${banque_edit}" class="btn btn-primary btn-sm">
+                                            <span class="glyphicon glyphicon-edit"></span>
+                                            <spring:message code="action.modifier" />
+                                        </a>
+                                        &nbsp;&nbsp;
+                                    </sec:authorize>
+                                    <spring:url value="/banque/${banque.id}/show" htmlEscape="true" var="banque_show" />
+                                    <a href="${banque_show}" class="btn btn-primary btn-sm">
+                                        <span class="glyphicon glyphicon-open"></span>
+                                        <spring:message code="action.detail" />
                                     </a>
-                                    &nbsp;&nbsp;
-                                </sec:authorize>
-                                <spring:url value="/banque/${banque.id}/show" htmlEscape="true" var="banque_show" />
-                                <a href="${banque_show}" class="btn btn-primary btn-sm">
-                                    <span class="glyphicon glyphicon-open"></span>
-                                    <spring:message code="action.detail" />
-                                </a>
-                            </td>
-                        </tr>
+                                </td>
+                            </tr>
+                        </c:if>
+                        <c:if test="${not banque.deleted}" >
+                            <tr>
+                                <td>
+                                    ${banque.code}
+                                </td>
+                                <td>
+                                    ${banque.libelle}
+                                </td>
+                                <td class="text-center">
+                                    <sec:authorize access="hasRole('ROLE_ADMIN')" >
+                                        <spring:url value="/banque/${banque.id}/edit" htmlEscape="true" var="banque_edit" />
+                                        <a href="${banque_edit}" class="btn btn-primary btn-sm">
+                                            <span class="glyphicon glyphicon-edit"></span>
+                                            <spring:message code="action.modifier" />
+                                        </a>
+                                        &nbsp;&nbsp;
+                                    </sec:authorize>
+                                    <spring:url value="/banque/${banque.id}/show" htmlEscape="true" var="banque_show" />
+                                    <a href="${banque_show}" class="btn btn-primary btn-sm">
+                                        <span class="glyphicon glyphicon-open"></span>
+                                        <spring:message code="action.detail" />
+                                    </a>
+                                </td>
+                            </tr>
+                        </c:if>
+
                     </c:forEach>
 
                     </tbody>

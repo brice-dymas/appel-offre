@@ -81,13 +81,11 @@ public class MaterielService
     @Override
     public Page<Materiel> findPaginated(String query, int i, Integer size)
     {
-        if (query == null)
-        {
+        if (query == null) {
             System.out.println("Query = " + query);
             return super.findPaginated(i, size);
         }
-        else
-        {
+        else {
             System.out.println("Not null Query = " + query);
             return dao.findByNomLike('%' + query + '%', new PageRequest(i, size));
         }
@@ -105,17 +103,28 @@ public class MaterielService
     public Page<Materiel> findPaginated(Long typeMaterielId, String code, String nom, int page, Integer size)
     {
         System.out.println("debut find");
-        if (-1 == typeMaterielId)
-        {
+        if (-1 == typeMaterielId) {
             System.out.println("find-1");
             return dao.searchLike('%' + code + '%', '%' + nom + '%', new PageRequest(page, size, Sort.Direction.ASC, "code"));
         }
-        else
-        {
+        else {
             System.out.println("find-2");
             return dao.searchLikeWithTypeMateriel(typeMaterielId, '%' + code + '%', '%' + nom + '%', new PageRequest(page, size, Sort.Direction.ASC, "code"));
         }
 
+    }
+
+    @Override
+    public void disableEntity(final Materiel entity)
+    {
+        final Materiel materielToDisable = dao.findOne(entity.getId());
+        if (materielToDisable.isDeleted() == true) {
+            materielToDisable.setDeleted(false);
+        }
+        else {
+            materielToDisable.setDeleted(true);
+        }
+        dao.save(materielToDisable);
     }
 
 }
