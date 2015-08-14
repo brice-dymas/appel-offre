@@ -89,7 +89,7 @@
             <ol class="breadcrumb">
                 <li>
                     <a href="<spring:url value="/" />">
-                        Accueil
+                        <spring:message code="fil.accueil" />
                     </a>
                 </li>
                 <c:forEach var="i" begin="${fn:length(urlPart)-2}" end='${fn:length(urlPart)-1}'>
@@ -97,13 +97,16 @@
                         <c:choose>
                             <c:when test="${fn:containsIgnoreCase(urlPart[i], 'jsp')}">
                                 <span>
-                                    ${fn:toLowerCase(fn:substringBefore(urlPart[i], '.'))}
+                                    <%--${fn:toLowerCase(fn:substringBefore(urlPart[i], '.'))}--%>
+                                    <spring:message code="fil.${(fn:substringBefore(urlPart[i], '.'))}" />
                                 </span>
                             </c:when>
                             <c:otherwise>
                                 <spring:url   value="/${urlPart[i]}/" var="path_element"  htmlEscape="true" />
                                 <a href="${path_element}">
-                                    ${fn:toLowerCase((urlPart[i]))}
+                                    <%--<c:out value="--- ${urlPart[i]} ---" />--%>
+                                    <spring:message code="fil.${urlPart[i]}" />
+                                    <%--${fn:toLowerCase((urlPart[i]))}--%>
                                 </a>
                             </c:otherwise>
                         </c:choose>
