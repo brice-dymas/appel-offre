@@ -2,6 +2,7 @@ package com.cami.web.controller;
 
 import com.cami.persistence.model.Filiale;
 import com.cami.persistence.service.IFilialeService;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import javax.validation.Valid;
@@ -51,11 +52,15 @@ public class FilialeController
         final String nom = webRequest.getParameter("querynom") != null ? webRequest.getParameter("querynom") : "";
         final Integer page = webRequest.getParameter("page") != null ? Integer.valueOf(webRequest.getParameter("page")) : 0;
         final Integer size = webRequest.getParameter("size") != null ? Integer.valueOf(webRequest.getParameter("size")) : 5;
+        boolean deleted = false;
+        if (webRequest.getParameter("querydeleted") != null) {
+            deleted = webRequest.getParameter("querydeleted").equals("true");
+        }
 
         System.out.println("querynom = " + nom);
         System.out.println("querycode = " + code);
 
-        final Page<Filiale> resultPage = filialeService.findPaginated(agence, code, nom, page, size);
+        final Page<Filiale> resultPage = filialeService.findPaginated(agence, code, nom, deleted, page, size);
 
         final Filiale filiale = new Filiale();
         filiale.setCode(code);
@@ -152,5 +157,14 @@ public class FilialeController
         filiales.put("Pneumatiques", "Pneumatiques");
         filiales.put("Generateurs", "Generateurs");
         return filiales;
+    }
+
+    @ModelAttribute("etats")
+    public Map<Boolean, String> populateEtatFields()
+    {
+        final Map<Boolean, String> results = new HashMap<>();
+        results.put(false, "Actif");
+        results.put(true, "Inactif");
+        return results;
     }
 }

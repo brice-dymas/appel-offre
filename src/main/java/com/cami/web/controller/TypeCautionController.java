@@ -2,6 +2,7 @@ package com.cami.web.controller;
 
 import com.cami.persistence.model.TypeCaution;
 import com.cami.persistence.service.ITypeCautionService;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import javax.validation.Valid;
@@ -59,11 +60,15 @@ public class TypeCautionController
         final Integer size = webRequest.getParameter("size") != null
                 ? Integer.valueOf(webRequest.getParameter("size"))
                 : 5;
+        boolean deleted = false;
+        if (webRequest.getParameter("querydeleted") != null) {
+            deleted = webRequest.getParameter("querydeleted").equals("true");
+        }
 
         System.out.println("querynom = " + nom);
         System.out.println("querycode = " + code);
 
-        final Page<TypeCaution> resultPage = typeCautionService.findPaginated(code, nom, page, size);
+        final Page<TypeCaution> resultPage = typeCautionService.findPaginated(code, nom, deleted, page, size);
 
         final TypeCaution typeCaution = new TypeCaution();
         typeCaution.setCode(code);
@@ -162,5 +167,14 @@ public class TypeCautionController
         typeCautions.put("Pneumatiques", "Pneumatiques");
         typeCautions.put("Generateurs", "Generateurs");
         return typeCautions;
+    }
+
+    @ModelAttribute("etats")
+    public Map<Boolean, String> populateEtatFields()
+    {
+        final Map<Boolean, String> results = new HashMap<>();
+        results.put(false, "Actif");
+        results.put(true, "Inactif");
+        return results;
     }
 }

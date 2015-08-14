@@ -2,6 +2,7 @@ package com.cami.web.controller;
 
 import com.cami.persistence.model.TypeMateriel;
 import com.cami.persistence.service.ITypeMaterielService;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -52,11 +53,15 @@ public class TypeMaterielController
         final String nom = webRequest.getParameter("querynom") != null ? webRequest.getParameter("querynom") : "";
         final Integer page = webRequest.getParameter("page") != null ? Integer.valueOf(webRequest.getParameter("page")) : 0;
         final Integer size = webRequest.getParameter("size") != null ? Integer.valueOf(webRequest.getParameter("size")) : 55;
+        boolean deleted = false;
+        if (webRequest.getParameter("querydeleted") != null) {
+            deleted = webRequest.getParameter("querydeleted").equals("true");
+        }
 
         System.out.println("querynom = " + nom);
         System.out.println("querycode = " + code);
 
-        final Page<TypeMateriel> resultPage = typeMaterielService.findPaginated(code, nom, page, size);
+        final Page<TypeMateriel> resultPage = typeMaterielService.findPaginated(code, nom, deleted, page, size);
         final List<TypeMateriel> mesTypeMateriels = typeMaterielService
                 .findAll();
 
@@ -153,5 +158,14 @@ public class TypeMaterielController
         typeMateriels.put("Pneumatiques", "Pneumatiques");
         typeMateriels.put("Generateurs", "Generateurs");
         return typeMateriels;
+    }
+
+    @ModelAttribute("etats")
+    public Map<Boolean, String> populateEtatFields()
+    {
+        final Map<Boolean, String> results = new HashMap<>();
+        results.put(false, "Actif");
+        results.put(true, "Inactif");
+        return results;
     }
 }

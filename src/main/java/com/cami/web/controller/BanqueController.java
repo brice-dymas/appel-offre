@@ -7,12 +7,15 @@ package com.cami.web.controller;
 
 import com.cami.persistence.model.Banque;
 import com.cami.persistence.service.IBanqueService;
+import java.util.HashMap;
+import java.util.Map;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -57,11 +60,15 @@ public class BanqueController
         final String libelle = webRequest.getParameter("querynom") != null ? webRequest.getParameter("querynom") : "";
         final Integer page = webRequest.getParameter("page") != null ? Integer.valueOf(webRequest.getParameter("page")) : 0;
         final Integer size = webRequest.getParameter("size") != null ? Integer.valueOf(webRequest.getParameter("size")) : 55;
+        boolean deleted = false;
+        if (webRequest.getParameter("querydeleted") != null) {
+            deleted = webRequest.getParameter("querydeleted").equals("true");
+        }
 
         System.out.println("querynom = " + libelle);
         System.out.println("querycode = " + code);
 
-        final Page<Banque> resultPage = banqueService.findPaginated(code, libelle, page, size);
+        final Page<Banque> resultPage = banqueService.findPaginated(code, libelle, deleted, page, size);
 
         final Banque banque = new Banque();
         banque.setCode(code);
@@ -141,5 +148,14 @@ public class BanqueController
             banqueService.update(banque);
             return "redirect:/banque/" + banque.getId() + "/show";
         }
+    }
+
+    @ModelAttribute("etats")
+    public Map<Boolean, String> populateEtatFields()
+    {
+        final Map<Boolean, String> results = new HashMap<>();
+        results.put(false, "Actif");
+        results.put(true, "Inactif");
+        return results;
     }
 }

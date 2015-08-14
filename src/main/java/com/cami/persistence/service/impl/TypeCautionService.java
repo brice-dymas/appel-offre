@@ -84,9 +84,9 @@ public class TypeCautionService
     }
 
     @Override
-    public Page<TypeCaution> findPaginated(String query_code, String query_nom, int i, Integer size)
+    public Page<TypeCaution> findPaginated(String query_code, String query_nom, boolean deleted, int i, Integer size)
     {
-        return dao.searchLike('%' + query_code + '%', '%' + query_nom + '%', new PageRequest(i, size, Sort.Direction.ASC, "code"));
+        return dao.searchLike('%' + query_code + '%', '%' + query_nom + '%', deleted, new PageRequest(i, size, Sort.Direction.ASC, "code"));
     }
 
     @Override

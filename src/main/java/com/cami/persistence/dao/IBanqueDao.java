@@ -28,7 +28,7 @@ public interface IBanqueDao extends JpaRepository<Banque, Long>, JpaSpecificatio
 
     Page<Banque> findByLibelle(String libelle, Pageable pageable);
 
-    @Query("SELECT b FROM Banque b WHERE b.libelle LIKE :libelle and b.code LIKE :code")
-    Page<Banque> chercherSuivant(@Param("libelle") String libelle, @Param("code") String code, Pageable pageable);
+    @Query("SELECT b FROM Banque b WHERE b.libelle LIKE :libelle and b.code LIKE :code AND b.deleted= :deleted")
+    Page<Banque> chercherSuivant(@Param("libelle") String libelle, @Param("code") String code, @Param("deleted") boolean deleted, Pageable pageable);
 
 }

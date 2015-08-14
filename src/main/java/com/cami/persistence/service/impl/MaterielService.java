@@ -100,16 +100,16 @@ public class MaterielService
     }
 
     @Override
-    public Page<Materiel> findPaginated(Long typeMaterielId, String code, String nom, int page, Integer size)
+    public Page<Materiel> findPaginated(Long typeMaterielId, String code, String nom, boolean deleted, int page, Integer size)
     {
         System.out.println("debut find");
         if (-1 == typeMaterielId) {
             System.out.println("find-1");
-            return dao.searchLike('%' + code + '%', '%' + nom + '%', new PageRequest(page, size, Sort.Direction.ASC, "code"));
+            return dao.searchLike('%' + code + '%', '%' + nom + '%', deleted, new PageRequest(page, size, Sort.Direction.ASC, "code"));
         }
         else {
             System.out.println("find-2");
-            return dao.searchLikeWithTypeMateriel(typeMaterielId, '%' + code + '%', '%' + nom + '%', new PageRequest(page, size, Sort.Direction.ASC, "code"));
+            return dao.searchLikeWithTypeMateriel(typeMaterielId, '%' + code + '%', '%' + nom + '%', deleted, new PageRequest(page, size, Sort.Direction.ASC, "code"));
         }
 
     }

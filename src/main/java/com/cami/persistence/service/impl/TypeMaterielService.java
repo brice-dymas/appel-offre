@@ -43,7 +43,7 @@ public class TypeMaterielService extends AbstractService<TypeMateriel> implement
 
     // overridden to be secured
     @Override
-	//    @Transactional(readOnly = true)
+    //    @Transactional(readOnly = true)
     //    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public List<TypeMateriel> findAll()
     {
@@ -86,10 +86,10 @@ public class TypeMaterielService extends AbstractService<TypeMateriel> implement
     }
 
     @Override
-    public Page<TypeMateriel> findPaginated(final String query_code, final String query_nom, final int i, final Integer size)
+    public Page<TypeMateriel> findPaginated(final String query_code, final String query_nom, boolean deleted, final int i, final Integer size)
     {
 
-        return dao.searchLike('%' + query_code + '%', '%' + query_nom + '%', new PageRequest(i, size, Sort.Direction.ASC, "code"));
+        return dao.searchLike('%' + query_code + '%', '%' + query_nom + '%', deleted, new PageRequest(i, size, Sort.Direction.ASC, "code"));
 
     }
 

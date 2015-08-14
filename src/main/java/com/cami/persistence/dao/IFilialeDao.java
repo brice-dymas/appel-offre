@@ -10,14 +10,14 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-public interface IFilialeDao extends JpaRepository<Filiale, Long>, JpaSpecificationExecutor<TypeMateriel> {   
-    
-    Page<Filiale> findByNomLike(String nom, Pageable pageable);
-    
-    List<Filiale> findByNomLike(String nom);
-    
-    @Query("SELECT f FROM Filiale f WHERE f.nom LIKE :nom and f.code LIKE :code and f.agence LIKE :agence")
-    Page<Filiale> searchLike(@Param("agence") String agence,@Param("code") String code, @Param("nom") String nom,Pageable pageable);
+public interface IFilialeDao extends JpaRepository<Filiale, Long>, JpaSpecificationExecutor<TypeMateriel>
+{
 
+    Page<Filiale> findByNomLike(String nom, Pageable pageable);
+
+    List<Filiale> findByNomLike(String nom);
+
+    @Query("SELECT f FROM Filiale f WHERE f.nom LIKE :nom and f.code LIKE :code and f.agence LIKE :agence AND f.deleted= :deleted")
+    Page<Filiale> searchLike(@Param("agence") String agence, @Param("code") String code, @Param("nom") String nom, @Param("deleted") boolean deleted, Pageable pageable);
 
 }

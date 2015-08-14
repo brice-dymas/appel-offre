@@ -228,7 +228,21 @@
                             htmlEscape="true" />
                 <form:form method="get" commandName="typeMateriel" action="${typemateriel}">
 
+                    <div class="form-group">
+                        <label>
+                            <spring:message code="element.statut" />
+                        </label>
 
+                        <select name="querydeleted" class="form-control input-sm">
+                            <option value="">---</option>
+                            <c:forEach var="deleted" items="${etats}">
+
+                                <option value="${deleted.key}" >
+                                    ${deleted.value}
+                                </option>
+                            </c:forEach>
+                        </select>
+                    </div>
                     <div class="form-group">
                         <label>
                             <spring:message code="typeMateriel.code" />

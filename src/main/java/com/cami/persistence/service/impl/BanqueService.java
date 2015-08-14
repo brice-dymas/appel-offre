@@ -59,9 +59,9 @@ public class BanqueService extends AbstractService<Banque> implements IBanqueSer
     }
 
     @Override
-    public Page<Banque> findPaginated(String code, String nom, int page, Integer size)
+    public Page<Banque> findPaginated(String code, String nom, boolean deleted, int page, Integer size)
     {
-        return banqueDao.chercherSuivant('%' + nom + '%', '%' + code + '%', new PageRequest(page, size, Sort.Direction.ASC, "code"));
+        return banqueDao.chercherSuivant('%' + nom + '%', '%' + code + '%', deleted, new PageRequest(page, size, Sort.Direction.ASC, "code"));
     }
 
     @Override

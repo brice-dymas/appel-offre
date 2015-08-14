@@ -75,9 +75,9 @@ public class FilialeService extends AbstractService<Filiale> implements IFiliale
     }
 
     @Override
-    public Page<Filiale> findPaginated(final String agence, final String code, final String nom, final int page, final Integer size)
+    public Page<Filiale> findPaginated(final String agence, final String code, final String nom, boolean deleted, final int page, final Integer size)
     {
-        return dao.searchLike('%' + agence + '%', '%' + code + '%', '%' + nom + '%', new PageRequest(page, size, Sort.Direction.ASC, "code"));
+        return dao.searchLike('%' + agence + '%', '%' + code + '%', '%' + nom + '%', deleted, new PageRequest(page, size, Sort.Direction.ASC, "code"));
     }
 
     @Override

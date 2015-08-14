@@ -215,7 +215,7 @@
                 <form:form method="get" commandName="appelOffre" action="${appeloffre_home}">
                     <div class="form-group">
                         <label>
-                            <spring:message code="appelOffre.statut" />
+                            <spring:message code="element.statut" />
                         </label>
 
                         <select name="querydeleted" class="form-control input-sm">

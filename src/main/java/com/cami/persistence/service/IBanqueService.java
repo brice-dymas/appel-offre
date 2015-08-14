@@ -22,5 +22,5 @@ public interface IBanqueService extends IOperations<Banque>
 
     public Page<Banque> findPaginated(String query, int i, Integer size);
 
-    public Page<Banque> findPaginated(String code, String nom, int page, Integer size);
+    public Page<Banque> findPaginated(String code, String nom, boolean deleted, int page, Integer size);
 }

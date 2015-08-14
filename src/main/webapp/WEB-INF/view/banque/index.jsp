@@ -25,12 +25,12 @@
                         <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-                        <li role="presentation"><a role="menuitem" tabindex="-1" href="?querycode=${banque.code}&querynom=${banque.libelle}&size=5">5</a></li>
-                        <li role="presentation"><a role="menuitem" tabindex="-1" href="?querycode=${banque.code}&querynom=${banque.libelle}&size=10">10</a></li>
-                        <li role="presentation"><a role="menuitem" tabindex="-1" href="?querycode=${banque.code}&querynom=${banque.libelle}&size=20">20</a></li>
-                        <li role="presentation"><a role="menuitem" tabindex="-1" href="?querycode=${banque.code}&querynom=${banque.libelle}&size=30">30</a></li>
-                        <li role="presentation"><a role="menuitem" tabindex="-1" href="?querycode=${banque.code}&querynom=${banque.libelle}&size=40">40</a></li>
-                        <li role="presentation"><a role="menuitem" tabindex="-1" href="?querycode=${banque.code}&querynom=${banque.libelle}&size=50">50</a></li>
+                        <li role="presentation"><a role="menuitem" tabindex="-1" href="?querycode=${banque.code}&querynom=${banque.libelle}&querydeleted=${banque.deleted}&size=5">5</a></li>
+                        <li role="presentation"><a role="menuitem" tabindex="-1" href="?querycode=${banque.code}&querynom=${banque.libelle}&querydeleted=${banque.deleted}&size=10">10</a></li>
+                        <li role="presentation"><a role="menuitem" tabindex="-1" href="?querycode=${banque.code}&querynom=${banque.libelle}&querydeleted=${banque.deleted}&size=20">20</a></li>
+                        <li role="presentation"><a role="menuitem" tabindex="-1" href="?querycode=${banque.code}&querynom=${banque.libelle}&querydeleted=${banque.deleted}&size=30">30</a></li>
+                        <li role="presentation"><a role="menuitem" tabindex="-1" href="?querycode=${banque.code}&querynom=${banque.libelle}&querydeleted=${banque.deleted}&size=40">40</a></li>
+                        <li role="presentation"><a role="menuitem" tabindex="-1" href="?querycode=${banque.code}&querynom=${banque.libelle}&querydeleted=${banque.deleted}&size=50">50</a></li>
                     </ul>
                 </div>
                 <table class="table table-condensed table-hover table-bordered">
@@ -158,17 +158,17 @@
                             <div class="pull-right">
                                 <ul class="pager">
 
-                                    <li><a href="?querycode=${banque.code}&querynom=${banque.libelle}&page=0&size=${size}" <c:if test="${page eq 0}">class ="btn btn-sm disabled"</c:if>>
+                                    <li><a href="?querycode=${banque.code}&querynom=${banque.libelle}&querydeleted=${banque.deleted}&page=0&size=${size}" <c:if test="${page eq 0}">class ="btn btn-sm disabled"</c:if>>
                                                 <span class="glyphicon glyphicon-fast-backward"></span>
                                             </a></li>
-                                        <li><a href="?querycode=${banque.code}&querynom=${banque.libelle}&page=${page-1}&size=${size}" <c:if test="${page eq 0}">class ="btn btn-sm disabled"</c:if>>
+                                        <li><a href="?querycode=${banque.code}&querynom=${banque.libelle}&querydeleted=${banque.deleted}&page=${page-1}&size=${size}" <c:if test="${page eq 0}">class ="btn btn-sm disabled"</c:if>>
                                                 <span class="glyphicon glyphicon-backward"></span>
                                             </a></li>
                                         <li><input type="text" class="pager_detail text-center" readonly value="${page+1}/${Totalpage}"/></li>
-                                    <li><a href="?querycode=${banque.code}&querynom=${banque.libelle}&page=${page+1}&size=${size}" <c:if test="${page+1 eq Totalpage}">class ="btn btn-sm disabled"</c:if>>
+                                    <li><a href="?querycode=${banque.code}&querynom=${banque.libelle}&querydeleted=${banque.deleted}&querydeleted=${banque.deleted}&page=${page+1}&size=${size}" <c:if test="${page+1 eq Totalpage}">class ="btn btn-sm disabled"</c:if>>
                                                 <span class="glyphicon glyphicon-forward"></span>
                                             </a></li>
-                                        <li><a href="?querycode=${banque.code}&querynom=${banque.libelle}&page=${Totalpage-1}&size=${size}" <c:if test="${page+1 eq Totalpage}">class ="btn btn-sm disabled"</c:if>>
+                                        <li><a href="?querycode=${banque.code}&querynom=${banque.libelle}&querydeleted=${banque.deleted}&page=${Totalpage-1}&size=${size}" <c:if test="${page+1 eq Totalpage}">class ="btn btn-sm disabled"</c:if>>
                                                 <span class="glyphicon glyphicon-fast-forward"></span>
                                             </a></li>
                                     </ul>
@@ -187,6 +187,21 @@
                 <spring:url value="/banque/" var="banque"
                             htmlEscape="true" />
                 <form:form method="get" commandName="banque" action="${banque}">
+                    <div class="form-group">
+                        <label>
+                            <spring:message code="element.statut" />
+                        </label>
+
+                        <select name="querydeleted" class="form-control input-sm">
+                            <option value="">---</option>
+                            <c:forEach var="deleted" items="${etats}">
+
+                                <option value="${deleted.key}" >
+                                    ${deleted.value}
+                                </option>
+                            </c:forEach>
+                        </select>
+                    </div>
                     <div class="input-group">
                         <label>
                             <spring:message code="banque.libelle" />

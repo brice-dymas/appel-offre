@@ -75,8 +75,13 @@ public class MaterielController
         final Integer size = webRequest.getParameter("size") != null
                 ? Integer.valueOf(webRequest.getParameter("size"))
                 : 5;
+        boolean deleted = false;
+        if (webRequest.getParameter("querydeleted") != null) {
+            deleted = webRequest.getParameter("querydeleted").equals("true");
+        }
+        System.out.println("deletd=" + deleted);
 
-        final Page<Materiel> resultPage = materielService.findPaginated(typeMaterielId, code, nom, page, size);
+        final Page<Materiel> resultPage = materielService.findPaginated(typeMaterielId, code, nom, deleted, page, size);
         final Materiel materiel = new Materiel();
         materiel.setCode(code);
         materiel.setNom(nom);
@@ -173,6 +178,15 @@ public class MaterielController
             results.put(typeMateriel.getId(), typeMateriel.getNom());
         }
 
+        return results;
+    }
+
+    @ModelAttribute("etats")
+    public Map<Boolean, String> populateEtatFields()
+    {
+        final Map<Boolean, String> results = new HashMap<>();
+        results.put(false, "Actif");
+        results.put(true, "Inactif");
         return results;
     }
 }
