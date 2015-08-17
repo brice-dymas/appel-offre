@@ -10,6 +10,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <tiles:insertDefinition name="layout">
     <tiles:putAttribute name="body">
@@ -46,13 +47,13 @@
                             <th><spring:message code="appelOffre.maitreDouvrage" /></th>
                             <td>${appelOffre.maitreDouvrage}</td>
                             <th><spring:message code="appelOffre.datedepot" /></th>
-                            <td>${appelOffre.getTrueDate(appelOffre.dateDepot)}</td>
+                            <td><fmt:formatDate type="date" value="${appelOffre.dateDepot}" pattern="dd/MM/yyyy" /></td>
                             <th><spring:message code="appelOffre.delai" /></th>
                             <td>${appelOffre.delaiDeValidite}</td>
                         </tr>
                         <tr class="text-danger">
                             <th><spring:message code="appelOffre.dateModification" /></th>
-                            <td>${appelOffre.getTrueDate(appelOffre.dateModification)}</td>
+                            <td><fmt:formatDate value="${appelOffre.dateModification}" pattern="dd/MM/yyyy" /></td>
                             <th><spring:message code="modified.byNom" /></th>
                             <td>${user.user.nom}</td>
                             <th><spring:message code="modified.byUsername" /></th>
@@ -215,8 +216,8 @@
                                         <td>${caution.typeCaution.nom}</td>
                                         <td>${caution.banque.libelle} </td>
                                         <td>${caution.montant} </td>
-                                        <td>${caution.getTrueDate(caution.dateDebut)} </td>
-                                        <td>${caution.getTrueDate(caution.dateFin)} </td>
+                                        <td><fmt:formatDate type="date" value="${caution.dateDebut}" pattern="dd/MM/yyyy" /> </td>
+                                        <td><fmt:formatDate type="date" value="${caution.dateFin}" pattern="dd/MM/yyyy" /> </td>
                                     </tr>
                                 </c:if>
                                 <c:if test="${caution.dateFin gt todayDate}">
@@ -228,8 +229,8 @@
                                         <td>${caution.typeCaution.nom}</td>
                                         <td>${caution.banque.libelle} </td>
                                         <td>${caution.montant} </td>
-                                        <td>${caution.getTrueDate(caution.dateDebut)} </td>
-                                        <td>${caution.getTrueDate(caution.dateFin)} </td>
+                                        <td><fmt:formatDate type="date" value="${caution.dateDebut}" pattern="dd/MM/yyyy" /> </td>
+                                        <td><fmt:formatDate type="date" value="${caution.dateFin}" pattern="dd/MM/yyyy" /> </td>
                                     </tr>
                                 </c:if>
 

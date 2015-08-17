@@ -5,6 +5,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <tiles:insertDefinition name="layout">
     <tiles:putAttribute name="body">
@@ -73,7 +74,7 @@
                                             <tr class="text-danger">
 
                                                 <td>
-                                                    ${caution.getTrueDate(caution.dateDebut)}
+                                                    <fmt:formatDate type="date" value="${caution.dateDebut}" pattern="dd/MM/yyyy" />
                                                 </td>
                                                 <td>
                                                     ${caution.banque.libelle}
@@ -102,7 +103,7 @@
                                         <c:if test="${caution.dateFin gt todayDate}">
                                             <tr>
                                                 <td>
-                                                    ${caution.getTrueDate(caution.dateDebut)}
+                                                    <fmt:formatDate type="date" value="${caution.dateDebut}" pattern="dd/MM/yyyy" />
                                                 </td>
                                                 <td>
                                                     ${caution.banque.libelle}

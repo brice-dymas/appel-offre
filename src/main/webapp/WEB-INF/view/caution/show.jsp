@@ -10,6 +10,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <tiles:insertDefinition name="layout">
     <tiles:putAttribute name="body">
@@ -36,15 +37,17 @@
                         </tr>
                         <tr>
                             <th><spring:message code="caution.dateDebut" /></th>
-                            <td>${caution.getTrueDate(caution.dateDebut)}</td>
+                            <td><fmt:formatDate value="${caution.dateDebut}" pattern="dd/MM/yyyy" /></td>
                         </tr>
                         <tr>
                             <th><spring:message code="caution.dateFin" /></th>
                                 <c:if test="${caution.dateFin le todayDate}">
-                                <td  class="text-danger">${caution.getTrueDate(caution.dateFin)}</td>
+                                <td  class="text-danger">
+                                    <fmt:formatDate type="date" value="${caution.dateFin}" pattern="dd/MM/yyyy" />
+                                </td>
                             </c:if>
                             <c:if test="${caution.dateFin gt todayDate}">
-                                <td>${caution.getTrueDate(caution.dateFin)}</td>
+                                <td><fmt:formatDate type="date" value="${caution.dateFin}" pattern="dd/MM/yyyy" /> </td>
                             </c:if>
                         </tr>
 

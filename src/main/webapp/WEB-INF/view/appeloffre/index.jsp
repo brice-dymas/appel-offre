@@ -5,6 +5,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <tiles:insertDefinition name="layout">
     <tiles:putAttribute name="body">
@@ -85,7 +86,7 @@
                                                     ${appelOffre.filiale.nom}
                                                 </td>
                                                 <td>
-                                                    ${appelOffre.getTrueDate(appelOffre.dateDepot)}
+                                                    <fmt:formatDate type="date" value="${appelOffre.dateDepot}" pattern="dd/MM/yyyy" />
                                                 </td>
                                                 <td class="text-center">
                                                     <spring:url value="/appeloffre/${appelOffre.id}/edit" htmlEscape="true" var="appeloffre_edit" />
@@ -117,7 +118,7 @@
                                                     ${appelOffre.filiale.nom}
                                                 </td>
                                                 <td>
-                                                    ${appelOffre.getTrueDate(appelOffre.dateDepot)}
+                                                    <fmt:formatDate type="date" value="${appelOffre.dateDepot}" pattern="dd/MM/yyyy" />
                                                 </td>
                                                 <td class="text-center">
                                                     <spring:url value="/appeloffre/${appelOffre.id}/edit" htmlEscape="true" var="appeloffre_edit" />
@@ -246,7 +247,7 @@
                         <label>
                             <spring:message code="appelOffre.debutPeriode" />
                         </label>
-                        <input id="dateDebut" type="text" value="${materiel.nom}" class="form-control input-sm" name="querydebutperiode"/>
+                        <input id="dateDebut" type="text" value="${appelOffre.dateDepot}" class="form-control input-sm" name="querydebutperiode"/>
                     </div>
                     <div class="form-group">
                         <label>

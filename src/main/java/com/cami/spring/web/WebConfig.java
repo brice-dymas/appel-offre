@@ -79,7 +79,7 @@ public class WebConfig extends WebMvcConfigurerAdapter
     {
         final ContentNegotiatingViewResolver resolver = new ContentNegotiatingViewResolver();
         resolver.setContentNegotiationManager(manager);
-        final List<ViewResolver> resolvers = new ArrayList<ViewResolver>();
+        final List<ViewResolver> resolvers = new ArrayList<>();
         resolvers.add(getInternalResourceViewResolver());
         resolvers.add(pdfViewResolver());
         resolvers.add(excelViewResolver());
