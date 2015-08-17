@@ -15,6 +15,7 @@ import com.cami.persistence.model.Role;
 import com.cami.persistence.service.ICautionService;
 import com.cami.persistence.service.common.AbstractService;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -115,16 +116,17 @@ public class CautionService
     public Page<Caution> filterByBank(final String banque, final int page,
             final Integer size)
     {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        final Role userConnected = roleDao.retrieveAUser(auth.getName()); // get the current logged user
-        if (userConnected.getRole().equals("ROLE_COMMERCIAL")) {
-            return dao.filterByBankAndUser('%' + banque + '%', userConnected.getId(), new PageRequest(page, size,
-                    Sort.Direction.DESC, "dateFin"));
-        }
-        else {
-            return dao.filterByBank('%' + banque + '%', new PageRequest(page, size,
-                    Sort.Direction.DESC, "dateFin"));
-        }
+        return null;
+//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//        final Role userConnected = roleDao.retrieveAUser(auth.getName()); // get the current logged user
+//        if (userConnected.getRole().equals("ROLE_COMMERCIAL")) {
+//            return dao.filterByBankAndUser('%' + banque + '%', userConnected.getId(), new PageRequest(page, size,
+//                    Sort.Direction.DESC, "dateFin"));
+//        }
+//        else {
+//            return dao.filterByBank('%' + banque + '%', new PageRequest(page, size,
+//                    Sort.Direction.DESC, "dateFin"));
+//        }
     }
 
     @Override
@@ -143,6 +145,65 @@ public class CautionService
     public List<Object[]> totalCautionParBanqueParMois(int year) {
         System.out.println("HomeController Service "+year);
         return dao.totalCautionParBanqueParMois(year);
+    }
+
+    @Override
+    public Page<Caution> filter(long banque, long typeCaution, Date debutEcheance, Date finEcheance, int page, Integer size) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        final Role userConnected = roleDao.retrieveAUser(auth.getName()); // get the current logged user
+        if (userConnected.getRole().equals("ROLE_COMMERCIAL")) {
+            
+            if(banque ==-1 && typeCaution > -1){
+                 return dao.filterByTypeCautionAndUser(typeCaution, debutEcheance, finEcheance, userConnected.getId(),  new PageRequest(page, size,
+                    Sort.Direction.DESC, "dateFin"));
+            
+            }
+            
+            if(banque > 1 && typeCaution == -1){
+                 return dao.filterByBanqueAndUser(banque,  debutEcheance, finEcheance, userConnected.getId(),  new PageRequest(page, size,
+                    Sort.Direction.DESC, "dateFin"));
+            }
+                
+            
+            if(banque > -1 && typeCaution > -1){
+            
+            return dao.filterByTypeCautionBanqueAndUser(banque, typeCaution, debutEcheance, finEcheance, userConnected.getId(),  new PageRequest(page, size,
+                    Sort.Direction.DESC, "dateFin"));
+            }
+            
+            if(banque == -1 && typeCaution == -1){
+                return dao.filterByUser(debutEcheance, finEcheance, userConnected.getId(),  new PageRequest(page, size,
+                    Sort.Direction.DESC, "dateFin"));
+            
+            }
+        }
+        else {
+            if(banque ==-1 && typeCaution > -1){
+                System.out.println("filtre-1");
+                 return dao.filterByTypeCaution(typeCaution, debutEcheance, finEcheance,  new PageRequest(page, size,
+                    Sort.Direction.DESC, "dateFin"));
+            }
+            
+            if(banque > -1 && typeCaution == -1){
+                System.out.println("filtre-2");
+                 return dao.filterByBanque(banque, debutEcheance, finEcheance,  new PageRequest(page, size,
+                    Sort.Direction.DESC, "dateFin"));
+            }
+            
+            if(banque > -1 && typeCaution > -1){
+                System.out.println("filtre-3");
+                return dao.filterByTypeCautionAndBanque(banque, typeCaution, debutEcheance, finEcheance,  new PageRequest(page, size,
+                    Sort.Direction.DESC, "dateFin"));
+            }
+            
+            if(banque == -1 && typeCaution == -1){
+                System.out.println("filtre-4"); 
+                return dao.filter(debutEcheance, finEcheance,  new PageRequest(page, size,
+                    Sort.Direction.DESC, "dateFin"));
+            }
+            
+        }
+        return null; 
     }
 
 }

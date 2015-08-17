@@ -14,6 +14,7 @@ import com.cami.persistence.model.LigneAppel;
 import com.cami.persistence.model.Role;
 import com.cami.persistence.service.IAppelOffreService;
 import com.cami.persistence.service.common.AbstractService;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -216,5 +217,47 @@ public class AppelOffreService
             return dao.searchLikeWithFiliale(filialeId, '%' + numero + '%', '%' + maitreDouvrage + '%', '%' + intitule + '%', new PageRequest(page, size, Sort.Direction.ASC, "numero"));
         }
     }
+
+    @Override
+    @Transactional
+    public AppelOffre updateFiles(AppelOffre appelOffre) {
+        System.out.println("updateFile");
+        AppelOffre editAppelOffre = dao.findOne(appelOffre.getId());
+        List<String> files = editAppelOffre.getFiles();
+        for (String file : appelOffre.getFiles()) {
+           if(!files.contains(file)){
+               System.out.println("File not inside");
+            editAppelOffre.addFile(file);
+           }else{
+               System.out.println("File not inside");
+           }
+           
+        }
+        
+        return dao.save(editAppelOffre);
+        
+    }
+
+    @Override
+    
+    public AppelOffre deleteFiles(Long idAppelOffre, String file) {
+         System.out.println("removeFile");
+        AppelOffre editAppelOffre = dao.findOne(idAppelOffre);
+        List<String> files = editAppelOffre.getFiles();
+        List<String> savedfiles = new ArrayList<>();
+        for (String fi : files) {
+           if(!fi.contains(file)){
+
+               savedfiles.add(fi);
+           }
+           
+        }
+        editAppelOffre.setFiles(savedfiles);
+        return dao.save(editAppelOffre);
+    }
+    
+    
+    
+    
 
 }

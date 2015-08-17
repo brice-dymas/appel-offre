@@ -4,6 +4,7 @@ import com.cami.persistence.IOperations;
 import com.cami.persistence.model.AppelOffre;
 import java.util.List;
 import org.springframework.data.domain.Page;
+import org.springframework.transaction.annotation.Transactional;
 
 public interface IAppelOffreService extends IOperations<AppelOffre>
 {
@@ -17,5 +18,11 @@ public interface IAppelOffreService extends IOperations<AppelOffre>
     public Page<AppelOffre> findPaginated(Long filialeId,
             String numero, String intitule, String maitreDouvrage, int page,
             Integer size);
+    
+    @Transactional
+    public AppelOffre updateFiles(AppelOffre appelOffre);
+    
+    
+    public AppelOffre deleteFiles(Long idAppelOffre, String file);
 
 }

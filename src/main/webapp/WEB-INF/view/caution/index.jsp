@@ -9,7 +9,7 @@
 <tiles:insertDefinition name="layout">
     <tiles:putAttribute name="body">
         <div class="row">
-            <div class="col-md-9">
+            <div class="col-md-10">
                 <div class="row">
                     <div class="col-md-12">
                         <div>
@@ -18,27 +18,28 @@
                             </h3>
                             <hr/>
                         </div>
-                        <div class="dropdown pull-right ">
-                            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
-                                <spring:message code="search.taille" />
-                                : ${size}&nbsp;
-                                <span class="caret"></span>
-                            </button>
-                            <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-                                <li role="presentation"><a role="menuitem" tabindex="-1" href="?&querybanque=${caution.banque.libelle}&size=5">5</a></li>
-                                <li role="presentation"><a role="menuitem" tabindex="-1" href="?&querybanque=${caution.banque.libelle}&size=5">10</a></li>
-                                <li role="presentation"><a role="menuitem" tabindex="-1" href="?&querybanque=${caution.banque.libelle}&size=5">20</a></li>
-                                <li role="presentation"><a role="menuitem" tabindex="-1" href="?&querybanque=${caution.banque.libelle}&size=5">30</a></li>
-                                <li role="presentation"><a role="menuitem" tabindex="-1" href="?&querybanque=${caution.banque.libelle}&size=5">40</a></li>
-                                <li role="presentation"><a role="menuitem" tabindex="-1" href="?&querybanque=${caution.banque.libelle}&size=5">50</a></li>
-                            </ul>
-                        </div>
-                        <table class="table table-condensed table-hover table-bordered">
+                        
+                    </div>
+                </div>
+                 
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <table class="table table-condensed table-hover table-bordered">
                             <thead class="text-center btn-primary" >
                                 <tr>
                                     <th>
                                         <span class="btn">
+                                            <spring:message code="caution.typeCaution" />
+                                        </span>
+                                    </th>
+                                    <th>
+                                        <span class="btn">
                                             <spring:message code="caution.dateDebut" />
+                                        </span>
+                                    </th>
+                                     <th>
+                                        <span class="btn">
+                                            <spring:message code="caution.dateFin" />
                                         </span>
                                     </th>
                                     <th>
@@ -51,6 +52,12 @@
                                             <spring:message code="caution.commercial" />
                                         </span>
                                     </th>
+                                     <th>
+                                        <span class="btn">
+                                            <spring:message code="caution.montant" />
+                                        </span>
+                                    </th>
+                                    
                                     <th>
                                         <span class="btn">
                                             <spring:message code="action.titre" />
@@ -71,15 +78,20 @@
                                     <c:forEach items="${cautions}" var="caution">
                                         <c:if test="${caution.dateFin le todayDate}">
                                             <tr class="text-danger">
-
+                                                
+                                                 <td>${caution.typeCaution.nom}</td>
                                                 <td>
                                                     ${caution.getTrueDate(caution.dateDebut)}
                                                 </td>
+                                                <td>${caution.getTrueDate(caution.dateFin)} </td>
                                                 <td>
                                                     ${caution.banque.libelle}
                                                 </td>
                                                 <td>
                                                     ${caution.commercial.user.nom}
+                                                </td>
+                                                 <td>
+                                                    ${caution.montant}
                                                 </td>
                                                 <td class="text-center">
                                                     <spring:url value="/appeloffre/${caution.appelOffre.id}/show" htmlEscape="true" var="appeloffre_show" />
@@ -101,14 +113,19 @@
                                         </c:if>
                                         <c:if test="${caution.dateFin gt todayDate}">
                                             <tr>
+                                                <td>${caution.typeCaution.nom}</td>
                                                 <td>
                                                     ${caution.getTrueDate(caution.dateDebut)}
                                                 </td>
+                                                <td>${caution.getTrueDate(caution.dateFin)} </td>
                                                 <td>
                                                     ${caution.banque.libelle}
                                                 </td>
                                                 <td>
                                                     ${caution.commercial.user.nom}
+                                                </td>
+                                                 <td>
+                                                    ${caution.montant}
                                                 </td>
                                                 <td class="text-center">
                                                     <spring:url value="/appeloffre/${caution.appelOffre.id}/show" htmlEscape="true" var="appeloffre_show" />
@@ -148,6 +165,21 @@
                                         </ul>
                                     </div>
                                 </c:if>
+                                <div class="dropdown pull-right ">
+                            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+                                <spring:message code="search.taille" />
+                                : ${size}&nbsp;
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                                <li role="presentation"><a role="menuitem" tabindex="-1" href="?&querybanque=${caution.banque.id}&size=5&querydebutperiode=${querydebutperiode}&queryfinperiode=${queryfinperiode}&querytypecaution=${caution.typeCaution.id}">5</a></li>
+                                <li role="presentation"><a role="menuitem" tabindex="-1" href="?&querybanque=${caution.banque.id}&size=10&querydebutperiode=${querydebutperiode}&queryfinperiode=${queryfinperiode}&querytypecaution=${caution.typeCaution.id}">10</a></li>
+                                <li role="presentation"><a role="menuitem" tabindex="-1" href="?&querybanque=${caution.banque.id}&size=20&querydebutperiode=${querydebutperiode}&queryfinperiode=${queryfinperiode}&querytypecaution=${caution.typeCaution.id}">20</a></li>
+                                <li role="presentation"><a role="menuitem" tabindex="-1" href="?&querybanque=${caution.banque.id}&size=30&querydebutperiode=${querydebutperiode}&queryfinperiode=${queryfinperiode}&querytypecaution=${caution.typeCaution.id}">30</a></li>
+                                <li role="presentation"><a role="menuitem" tabindex="-1" href="?&querybanque=${caution.banque.id}&size=40&querydebutperiode=${querydebutperiode}&queryfinperiode=${queryfinperiode}&querytypecaution=${caution.typeCaution.id}">40</a></li>
+                                <li role="presentation"><a role="menuitem" tabindex="-1" href="?&querybanque=${caution.banque.id}&size=50&querydebutperiode=${querydebutperiode}&queryfinperiode=${queryfinperiode}&querytypecaution=${caution.typeCaution.id}">50</a></li>
+                            </ul>
+                        </div>
                             </c:if>
                             </tbody>
                         </table>
@@ -156,15 +188,19 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-lg-12">
+                    <div class="col-md-12">
                         <hr/>
-
+                        <spring:url value="/caution/stats" var="caution_stats"
+                            htmlEscape="true" />
+                        <a class="btn btn-primary btn-sm" href="${caution_stats}">
+                        <span class="glyphicon glyphicon-stats"></span> <spring:message code="action.stats"/>
+                    </a>
                         <div class="pull-right">
                             <ul class="pager">
-                                <li><a href="?&querybanque=${caution.banque.libelle}&page=0&size=${size}" <c:if test="${page eq 0}">class ="btn btn-sm disabled"</c:if>>
+                                <li><a href="?&querybanque=${caution.banque.id}&size=${size}&querydebutperiode=${querydebutperiode}&queryfinperiode=${queryfinperiode}&querytypecaution=${caution.typeCaution.id}&page=0" <c:if test="${page eq 0}">class ="btn btn-sm disabled"</c:if>>
                                             <span class="glyphicon glyphicon-fast-backward"></span>
                                         </a></li>
-                                    <li><a href="?&querybanque=${caution.banque.libelle}&page=${page-1}&size=${size}" <c:if test="${page eq 0}">class ="btn btn-sm disabled"</c:if>>
+                                    <li><a href="?&querybanque=${caution.banque.id}&size=${size}&querydebutperiode=${querydebutperiode}&queryfinperiode=${queryfinperiode}&querytypecaution=${caution.typeCaution.id}&page=${page-1}" <c:if test="${page eq 0}">class ="btn btn-sm disabled"</c:if>>
                                             <span class="glyphicon glyphicon-backward"></span>
                                         </a></li>
                                     <li><input type="text" class="pager_detail text-center" readonly
@@ -175,7 +211,7 @@
                                         />
                                 </li>
                                 <li>
-                                    <a href="?&querybanque=${caution.banque.libelle}&page=${page+1}&size=${size}"
+                                    <a href="?&querybanque=${caution.banque.id}&size=${size}&querydebutperiode=${querydebutperiode}&queryfinperiode=${queryfinperiode}&querytypecaution=${caution.typeCaution.id}&page=${page+1}"
                                        <c:choose>
                                            <c:when test="${page+1 eq Totalpage}">class ="btn btn-sm disabled"</c:when>
                                            <c:when test="${Totalpage eq 0}">class ="btn btn-sm disabled"</c:when>
@@ -184,7 +220,7 @@
                                         <span class="glyphicon glyphicon-forward"></span>
                                     </a>
                                 </li>
-                                <li><a href="?&querybanque=${caution.banque.libelle}&page=${Totalpage-1}&size=${size}"
+                                <li><a href="?querybanque=${caution.banque.id}&size=${size}&querydebutperiode=${querydebutperiode}&queryfinperiode=${queryfinperiode}&querytypecaution=${caution.typeCaution.id}&page=${Totalpage-1}"
                                        <c:choose>
                                            <c:when test="${page+1 eq Totalpage}">class ="btn btn-sm disabled"</c:when>
                                            <c:when test="${Totalpage eq 0}">class ="btn btn-sm disabled"</c:when>
@@ -198,7 +234,7 @@
                 </div>
             </div>
 
-            <div class="col-md-3">
+            <div class="col-md-2">
                 <div>
                     <h3>
                         <spring:message code="action.rechercher" />
@@ -217,7 +253,7 @@
                             <option value="">---</option>
                             <c:forEach var="banque" items="${banques}">
 
-                                <option value="${banque.value}"
+                                <option value="${banque.key}"
                                         <c:if test="${banque.key eq caution.banque.id}">
                                             selected
                                         </c:if>
@@ -227,6 +263,38 @@
                             </c:forEach>
                         </select>
                         <input type="hidden" value="${size}" name="size"/>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <spring:message code="caution.debutPeriodeEcheance" />
+                        </label>
+                        <input id="dateDebut" type="text" value="${querydebutperiode}" class="form-control input-sm" name="querydebutperiode"/>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <spring:message code="caution.finPeriodeEcheance" />
+                        </label>
+                        <input id="dateFin" type="text" value="${queryfinperiode}" class="form-control input-sm" name="queryfinperiode"/>
+                    </div>
+
+                    <div class="form-group">
+                        <label>
+                            <spring:message code="caution.typeCaution" />
+                        </label>
+
+                        <select name="querytypecaution" class="form-control input-sm">
+                            <option value="">---</option>
+                            <c:forEach var="typeCaution" items="${typeCautions}">
+
+                                <option value="${typeCaution.key}"
+                                        <c:if test="${typeCaution.key eq caution.typeCaution.id}">
+                                            selected
+                                        </c:if>
+                                        >
+                                    ${typeCaution.value}
+                                </option>
+                            </c:forEach>
+                        </select>
                     </div>
                     <hr/>
                     <button class="btn btn-default btn-sm">

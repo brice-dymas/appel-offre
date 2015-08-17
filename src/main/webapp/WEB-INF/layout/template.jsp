@@ -17,7 +17,8 @@
         <!-- Bootstrap -->
         <link href="<c:url value="/resources/css/app.css" />" rel="stylesheet">
         <link href="<c:url value="/resources/css/bootstrap.min.css" />" rel="stylesheet">
-        
+        <link href="<c:url value="/resources/css/jquery-ui.min.css" />" rel="stylesheet">
+                <link href="<c:url value="/resources/css/jquery.loader.min.css" />" rel="stylesheet">
         
         <link href="<c:url value="/resources/css/jquery.jqplot.min.css" />" rel="stylesheet">
         <link href="<c:url value="/resources/img/cami.png" />" rel="shortcut icon"  type="image/png">
