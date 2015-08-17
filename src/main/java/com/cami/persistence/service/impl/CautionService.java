@@ -142,68 +142,13 @@ public class CautionService
     }
 
     @Override
-    public List<Object[]> totalCautionParBanqueParMois(int year) {
-        System.out.println("HomeController Service "+year);
+    public List<Object[]> totalCautionParBanqueParMois(int year)
+    {
+        System.out.println("HomeController Service " + year);
         return dao.totalCautionParBanqueParMois(year);
     }
 
     @Override
-    public Page<Caution> filter(long banque, long typeCaution, Date debutEcheance, Date finEcheance, int page, Integer size) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        final Role userConnected = roleDao.retrieveAUser(auth.getName()); // get the current logged user
-        if (userConnected.getRole().equals("ROLE_COMMERCIAL")) {
-            
-            if(banque ==-1 && typeCaution > -1){
-                 return dao.filterByTypeCautionAndUser(typeCaution, debutEcheance, finEcheance, userConnected.getId(),  new PageRequest(page, size,
-                    Sort.Direction.DESC, "dateFin"));
-            
-            }
-            
-            if(banque > 1 && typeCaution == -1){
-                 return dao.filterByBanqueAndUser(banque,  debutEcheance, finEcheance, userConnected.getId(),  new PageRequest(page, size,
-                    Sort.Direction.DESC, "dateFin"));
-            }
-                
-            
-            if(banque > -1 && typeCaution > -1){
-            
-            return dao.filterByTypeCautionBanqueAndUser(banque, typeCaution, debutEcheance, finEcheance, userConnected.getId(),  new PageRequest(page, size,
-                    Sort.Direction.DESC, "dateFin"));
-            }
-            
-            if(banque == -1 && typeCaution == -1){
-                return dao.filterByUser(debutEcheance, finEcheance, userConnected.getId(),  new PageRequest(page, size,
-                    Sort.Direction.DESC, "dateFin"));
-            
-            }
-        }
-        else {
-            if(banque ==-1 && typeCaution > -1){
-                System.out.println("filtre-1");
-                 return dao.filterByTypeCaution(typeCaution, debutEcheance, finEcheance,  new PageRequest(page, size,
-                    Sort.Direction.DESC, "dateFin"));
-            }
-            
-            if(banque > -1 && typeCaution == -1){
-                System.out.println("filtre-2");
-                 return dao.filterByBanque(banque, debutEcheance, finEcheance,  new PageRequest(page, size,
-                    Sort.Direction.DESC, "dateFin"));
-            }
-            
-            if(banque > -1 && typeCaution > -1){
-                System.out.println("filtre-3");
-                return dao.filterByTypeCautionAndBanque(banque, typeCaution, debutEcheance, finEcheance,  new PageRequest(page, size,
-                    Sort.Direction.DESC, "dateFin"));
-            }
-            
-            if(banque == -1 && typeCaution == -1){
-                System.out.println("filtre-4"); 
-                return dao.filter(debutEcheance, finEcheance,  new PageRequest(page, size,
-                    Sort.Direction.DESC, "dateFin"));
-            }
-            
-        }
-        return null; 
     public void disableEntity(final Caution entity)
     {
         final Caution cautionToDisable = dao.findOne(entity.getId());
@@ -216,4 +161,63 @@ public class CautionService
         dao.save(cautionToDisable);
     }
 
+    @Override
+    public Page<Caution> filter(long banque, long typeCaution, Date debutEcheance, Date finEcheance, int page, Integer size)
+    {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        final Role userConnected = roleDao.retrieveAUser(auth.getName()); // get the current logged user
+        if (userConnected.getRole().equals("ROLE_COMMERCIAL")) {
+
+            if (banque == -1 && typeCaution > -1) {
+                return dao.filterByTypeCautionAndUser(typeCaution, debutEcheance, finEcheance, userConnected.getId(), new PageRequest(page, size,
+                        Sort.Direction.DESC, "dateFin"));
+
+            }
+
+            if (banque > 1 && typeCaution == -1) {
+                return dao.filterByBanqueAndUser(banque, debutEcheance, finEcheance, userConnected.getId(), new PageRequest(page, size,
+                        Sort.Direction.DESC, "dateFin"));
+            }
+
+            if (banque > -1 && typeCaution > -1) {
+
+                return dao.filterByTypeCautionBanqueAndUser(banque, typeCaution, debutEcheance, finEcheance, userConnected.getId(), new PageRequest(page, size,
+                        Sort.Direction.DESC, "dateFin"));
+            }
+
+            if (banque == -1 && typeCaution == -1) {
+                return dao.filterByUser(debutEcheance, finEcheance, userConnected.getId(), new PageRequest(page, size,
+                        Sort.Direction.DESC, "dateFin"));
+
+            }
+        }
+        else {
+            if (banque == -1 && typeCaution > -1) {
+                System.out.println("filtre-1");
+                return dao.filterByTypeCaution(typeCaution, debutEcheance, finEcheance, new PageRequest(page, size,
+                        Sort.Direction.DESC, "dateFin"));
+            }
+
+            if (banque > -1 && typeCaution == -1) {
+                System.out.println("filtre-2");
+                return dao.filterByBanque(banque, debutEcheance, finEcheance, new PageRequest(page, size,
+                        Sort.Direction.DESC, "dateFin"));
+            }
+
+            if (banque > -1 && typeCaution > -1) {
+                System.out.println("filtre-3");
+                return dao.filterByTypeCautionAndBanque(banque, typeCaution, debutEcheance, finEcheance, new PageRequest(page, size,
+                        Sort.Direction.DESC, "dateFin"));
+            }
+
+            if (banque == -1 && typeCaution == -1) {
+                System.out.println("filtre-4");
+                return dao.filter(debutEcheance, finEcheance, new PageRequest(page, size,
+                        Sort.Direction.DESC, "dateFin"));
+            }
+
+        }
+        return null;
+
+    }
 }
