@@ -24,6 +24,12 @@ public class TypeCaution
 
     }
 
+    public TypeCaution(Long id) {
+        this.id = id;
+    }
+    
+    
+
     public String getPourcentage()
     {
         return pourcentage;

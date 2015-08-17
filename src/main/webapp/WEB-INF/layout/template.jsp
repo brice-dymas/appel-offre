@@ -15,16 +15,16 @@
         </title>
 
         <!-- Bootstrap -->
-        <link href="<c:url value="/resources/css/bootstrap.min.css" />" rel="stylesheet">
         <link href="<c:url value="/resources/css/app.css" />" rel="stylesheet">
-        <link href="<c:url value="/resources/css/jquery-ui.css" />" rel="stylesheet">
-        <link href="<c:url value="/resources/css/jquery-ui.structure.css" />" rel="stylesheet">
-        <link href="<c:url value="/resources/css/jquery-ui.theme.css" />" rel="stylesheet">
-        <link href="<c:url value="/resources/css/jquery.jqplot.min.css.css" />" rel="stylesheet">
+        <link href="<c:url value="/resources/css/bootstrap.min.css" />" rel="stylesheet">
+        <link href="<c:url value="/resources/css/jquery-ui.min.css" />" rel="stylesheet">
+                <link href="<c:url value="/resources/css/jquery.loader.min.css" />" rel="stylesheet">
+        
+        <link href="<c:url value="/resources/css/jquery.jqplot.min.css" />" rel="stylesheet">
         <link href="<c:url value="/resources/img/cami.png" />" rel="shortcut icon"  type="image/png">
 
         <script src="<c:url value="/resources/js/jquery.min.js" />"></script>
-
+        <script src="<c:url value="/resources/js/bootstrap.min.js" />"></script>
         <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
@@ -112,7 +112,6 @@
 
 
 
-        <!-- Include all compiled plugins (below), or include individual files as needed -->
-        <script src="<c:url value="/resources/js/bootstrap.min.js" />"></script>
+        
     </body>
 </html>

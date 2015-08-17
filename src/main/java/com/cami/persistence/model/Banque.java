@@ -26,6 +26,12 @@ public class Banque extends EntityObject
     {
     }
 
+    public Banque(Long id) {
+        this.id = id;
+    }
+    
+    
+
     public String getLibelle()
     {
         return libelle;

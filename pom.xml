@@ -190,7 +190,8 @@
             <version>${spring-framework.version}</version>
         </dependency>
 
-        <dependency>
+        <!--JSON dependency-->
+         <dependency>
             <groupId>org.codehaus.jackson</groupId>
             <artifactId>jackson-mapper-asl</artifactId>
             <version>1.9.13</version>
@@ -206,7 +207,8 @@
             <artifactId>jackson-annotations</artifactId>
             <version>2.4.1</version>
         </dependency>
-
+        <!-- End of JSON dependency-->
+ 
         <!-- Apache Commons Upload -->
         <dependency>
             <groupId>commons-fileupload</groupId>
