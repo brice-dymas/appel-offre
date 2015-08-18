@@ -10,7 +10,6 @@ import com.cami.persistence.service.ICautionService;
 import com.cami.persistence.service.ITypeCautionService;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -39,7 +38,7 @@ public class CautionController
 
     @Autowired
     IBanqueService banqueService;
-    
+
     @Autowired
     ITypeCautionService typeCautionService;
 
@@ -55,15 +54,14 @@ public class CautionController
     public String statAction(final ModelMap model, final WebRequest webRequest)
     {
         final Integer year = webRequest.getParameter("year") != null ? Integer.valueOf(webRequest.getParameter("year")) : 2015;
-        
+
         List<Object[]> datas = cautionService.totalCautionParBanqueParMois(year);
         model.addAttribute("results", datas);
         model.addAttribute("year", year);
         System.out.println("HomeController");
         return "caution/stat";
     }
-    
-    
+
     @RequestMapping(value = "/{id}/show", method = RequestMethod.GET)
     public String ShowAction(@PathVariable("id") final Long id,
             final ModelMap model)
@@ -94,16 +92,18 @@ public class CautionController
         Long typeCautionId = 0L;
         try {
             banqueId = Long.valueOf(webRequest.getParameter("querybanque"));
-        } catch (NumberFormatException numberFormatException) {
+        }
+        catch (NumberFormatException numberFormatException) {
             banqueId = -1L;
         }
-        
+
         try {
             typeCautionId = Long.valueOf(webRequest.getParameter("querytypecaution"));
-        } catch (NumberFormatException numberFormatException) {
+        }
+        catch (NumberFormatException numberFormatException) {
             typeCautionId = -1L;
         }
-        
+
 //        final Long banqueId =  (webRequest.getParameter("querybanque") != null
 //                ? Long.valueOf(webRequest.getParameter("querybanque"))
 //                : -1);
@@ -111,7 +111,7 @@ public class CautionController
 //                ? Long.valueOf(webRequest.getParameter("querytypecaution"))
 //                : -1;
         SimpleDateFormat dateFormatter = new SimpleDateFormat("dd/MM/yyyy");
-        
+
         final String debutPeriodeEcheance = (webRequest.getParameter("querydebutperiode") != null)
                 ? webRequest.getParameter("querydebutperiode")
                 : "31/12/1975";
@@ -122,19 +122,23 @@ public class CautionController
         Date finPeriode = new Date();
         try {
             debutPeriode = dateFormatter.parse(debutPeriodeEcheance);
-        } catch (ParseException ex) {
+        }
+        catch (ParseException ex) {
             try {
                 debutPeriode = dateFormatter.parse("31/12/1975");
-            } catch (ParseException ex1) {
+            }
+            catch (ParseException ex1) {
                 Logger.getLogger(CautionController.class.getName()).log(Level.SEVERE, null, ex1);
             }
         }
         try {
             finPeriode = dateFormatter.parse(finPeriodeEcheance);
-        } catch (ParseException ex) {
+        }
+        catch (ParseException ex) {
             try {
                 finPeriode = dateFormatter.parse("31/12/9999");
-            } catch (ParseException ex1) {
+            }
+            catch (ParseException ex1) {
                 Logger.getLogger(CautionController.class.getName()).log(Level.SEVERE, null, ex1);
             }
         }
@@ -148,14 +152,13 @@ public class CautionController
                 : 5;
         final Page<Caution> resultPage = cautionService.filter(banqueId, typeCautionId, debutPeriode, finPeriode, page, size);
 
-        
         final Caution caution = new Caution();
         caution.setBanque(new Banque(banqueId));
         caution.setTypeCaution(new TypeCaution(typeCautionId));
         //model.addAttribute("cautionsReport", appelOffres); //for the report
         model.addAttribute("caution", caution);
-        model.addAttribute("querydebutperiode",debutPeriodeEcheance.equals("31/12/1975")?"":debutPeriodeEcheance);
-        model.addAttribute("queryfinperiode", finPeriodeEcheance.equals("31/12/9999")?"": finPeriodeEcheance );
+        model.addAttribute("querydebutperiode", debutPeriodeEcheance.equals("31/12/1975") ? "" : debutPeriodeEcheance);
+        model.addAttribute("queryfinperiode", finPeriodeEcheance.equals("31/12/9999") ? "" : finPeriodeEcheance);
         model.addAttribute("page", page);
         model.addAttribute("Totalpage", resultPage.getTotalPages());
         model.addAttribute("size", size);
@@ -179,7 +182,7 @@ public class CautionController
         }
         return results;
     }
-    
+
     @ModelAttribute("typeCautions")
     public Map<Long, String> populateTypeCautionFields()
     {

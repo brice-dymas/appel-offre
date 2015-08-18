@@ -26,12 +26,12 @@
                                 <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-                                <li role="presentation"><a role="menuitem" tabindex="-1" href="?querynumero=${appeloffre.numero}&queryintitule=${appeloffre.intitule}&querymaitredouvrage=${appeloffre.maitreDouvrage}&queryfiliale=${appeloffre.filiale.id}&querydeleted=${appeloffre.deleted}&size=5">5</a></li>
-                                <li role="presentation"><a role="menuitem" tabindex="-1" href="?querynumero=${appeloffre.numero}&queryintitule=${appeloffre.intitule}&querymaitredouvrage=${appeloffre.maitreDouvrage}&queryfiliale=${appeloffre.filiale.id}&querydeleted=${appeloffre.deleted}&size=10">10</a></li>
-                                <li role="presentation"><a role="menuitem" tabindex="-1" href="?querynumero=${appeloffre.numero}&queryintitule=${appeloffre.intitule}&querymaitredouvrage=${appeloffre.maitreDouvrage}&queryfiliale=${appeloffre.filiale.id}&querydeleted=${appeloffre.deleted}&size=20">20</a></li>
-                                <li role="presentation"><a role="menuitem" tabindex="-1" href="?querynumero=${appeloffre.numero}&queryintitule=${appeloffre.intitule}&querymaitredouvrage=${appeloffre.maitreDouvrage}&queryfiliale=${appeloffre.filiale.id}&querydeleted=${appeloffre.deleted}&size=30">30</a></li>
-                                <li role="presentation"><a role="menuitem" tabindex="-1" href="?querynumero=${appeloffre.numero}&queryintitule=${appeloffre.intitule}&querymaitredouvrage=${appeloffre.maitreDouvrage}&queryfiliale=${appeloffre.filiale.id}&querydeleted=${appeloffre.deleted}&size=40">40</a></li>
-                                <li role="presentation"><a role="menuitem" tabindex="-1" href="?querynumero=${appeloffre.numero}&queryintitule=${appeloffre.intitule}&querymaitredouvrage=${appeloffre.maitreDouvrage}&queryfiliale=${appeloffre.filiale.id}&querydeleted=${appeloffre.deleted}&size=50">50</a></li>
+                                <li role="presentation"><a role="menuitem" tabindex="-1" href="?querynumero=${appeloffre.numero}&queryintitule=${appeloffre.intitule}&querydebutperiode=${querydebutperiode}&queryfinperiode=${queryfinperiode}&querydebutperiode=${querydebutperiode}&queryfinperiode=${queryfinperiode}&querymaitredouvrage=${appeloffre.maitreDouvrage}&queryfiliale=${appeloffre.filiale.id}&querydeleted=${appeloffre.deleted}&size=5">5</a></li>
+                                <li role="presentation"><a role="menuitem" tabindex="-1" href="?querynumero=${appeloffre.numero}&queryintitule=${appeloffre.intitule}&querydebutperiode=${querydebutperiode}&queryfinperiode=${queryfinperiode}&querymaitredouvrage=${appeloffre.maitreDouvrage}&queryfiliale=${appeloffre.filiale.id}&querydeleted=${appeloffre.deleted}&size=10">10</a></li>
+                                <li role="presentation"><a role="menuitem" tabindex="-1" href="?querynumero=${appeloffre.numero}&queryintitule=${appeloffre.intitule}&querydebutperiode=${querydebutperiode}&queryfinperiode=${queryfinperiode}&querymaitredouvrage=${appeloffre.maitreDouvrage}&queryfiliale=${appeloffre.filiale.id}&querydeleted=${appeloffre.deleted}&size=20">20</a></li>
+                                <li role="presentation"><a role="menuitem" tabindex="-1" href="?querynumero=${appeloffre.numero}&queryintitule=${appeloffre.intitule}&querydebutperiode=${querydebutperiode}&queryfinperiode=${queryfinperiode}&querymaitredouvrage=${appeloffre.maitreDouvrage}&queryfiliale=${appeloffre.filiale.id}&querydeleted=${appeloffre.deleted}&size=30">30</a></li>
+                                <li role="presentation"><a role="menuitem" tabindex="-1" href="?querynumero=${appeloffre.numero}&queryintitule=${appeloffre.intitule}&querydebutperiode=${querydebutperiode}&queryfinperiode=${queryfinperiode}&querymaitredouvrage=${appeloffre.maitreDouvrage}&queryfiliale=${appeloffre.filiale.id}&querydeleted=${appeloffre.deleted}&size=40">40</a></li>
+                                <li role="presentation"><a role="menuitem" tabindex="-1" href="?querynumero=${appeloffre.numero}&queryintitule=${appeloffre.intitule}&querydebutperiode=${querydebutperiode}&queryfinperiode=${queryfinperiode}&querymaitredouvrage=${appeloffre.maitreDouvrage}&queryfiliale=${appeloffre.filiale.id}&querydeleted=${appeloffre.deleted}&size=50">50</a></li>
                             </ul>
                         </div>
                         <table class="table table-condensed table-hover table-bordered">
@@ -162,12 +162,12 @@
                             <ul class="pager">
 
                                 <li>
-                                    <a href="?querynumero=${appeloffre.numero}&queryintitule=${appeloffre.intitule}&querymaitredouvrage=${appeloffre.maitreDouvrage}&queryfiliale=${appeloffre.filiale.id}&page=0&size=${size}" <c:if test="${page eq 0}">class ="btn btn-sm disabled"</c:if>>
+                                    <a href="?querynumero=${appeloffre.numero}&queryintitule=${appeloffre.intitule}&querydebutperiode=${querydebutperiode}&queryfinperiode=${queryfinperiode}&querymaitredouvrage=${appeloffre.maitreDouvrage}&queryfiliale=${appeloffre.filiale.id}&page=0&size=${size}" <c:if test="${page eq 0}">class ="btn btn-sm disabled"</c:if>>
                                             <span class="glyphicon glyphicon-fast-backward"></span>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="?querynumero=${appeloffre.numero}&queryintitule=${appeloffre.intitule}&querymaitredouvrage=${appeloffre.maitreDouvrage}&queryfiliale=${appeloffre.filiale.id}&page=${page-1}&size=${size}" <c:if test="${page eq 0}">class ="btn btn-sm disabled"</c:if>>
+                                        <a href="?querynumero=${appeloffre.numero}&queryintitule=${appeloffre.intitule}&querydebutperiode=${querydebutperiode}&queryfinperiode=${queryfinperiode}&querymaitredouvrage=${appeloffre.maitreDouvrage}&queryfiliale=${appeloffre.filiale.id}&page=${page-1}&size=${size}" <c:if test="${page eq 0}">class ="btn btn-sm disabled"</c:if>>
                                             <span class="glyphicon glyphicon-backward"></span>
                                         </a>
                                     </li>
@@ -180,7 +180,7 @@
                                         />
                                 </li>
                                 <li>
-                                    <a href="?querynumero=${appeloffre.numero}&queryintitule=${appeloffre.intitule}&querymaitredouvrage=${appeloffre.maitreDouvrage}&queryfiliale=${appeloffre.filiale.id}&page=${page+1}&size=${size}"
+                                    <a href="?querynumero=${appeloffre.numero}&queryintitule=${appeloffre.intitule}&querydebutperiode=${querydebutperiode}&queryfinperiode=${queryfinperiode}&querymaitredouvrage=${appeloffre.maitreDouvrage}&queryfiliale=${appeloffre.filiale.id}&page=${page+1}&size=${size}"
                                        <c:choose>
                                            <c:when test="${page+1 eq Totalpage}">class ="btn btn-sm disabled"</c:when>
                                            <c:when test="${Totalpage eq 0}">class ="btn btn-sm disabled"</c:when>
@@ -190,7 +190,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="?querynumero=${appeloffre.numero}&queryintitule=${appeloffre.intitule}&querymaitredouvrage=${appeloffre.maitreDouvrage}&queryfiliale=${appeloffre.filiale.id}&page=${Totalpage-1}&size=${size}"
+                                    <a href="?querynumero=${appeloffre.numero}&queryintitule=${appeloffre.intitule}&querydebutperiode=${querydebutperiode}&queryfinperiode=${queryfinperiode}&querymaitredouvrage=${appeloffre.maitreDouvrage}&queryfiliale=${appeloffre.filiale.id}&page=${Totalpage-1}&size=${size}"
                                        <c:choose>
                                            <c:when test="${page+1 eq Totalpage}">class ="btn btn-sm disabled"</c:when>
                                            <c:when test="${Totalpage eq 0}">class ="btn btn-sm disabled"</c:when>
@@ -229,7 +229,18 @@
                             </c:forEach>
                         </select>
                     </div>
-
+                    <div class="form-group">
+                        <label>
+                            <spring:message code="caution.debutPeriodeEcheance" />
+                        </label>
+                        <input id="dateDebut" type="text" value="${querydebutperiode}" class="form-control input-sm" name="querydebutperiode"/>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <spring:message code="caution.finPeriodeEcheance" />
+                        </label>
+                        <input id="dateFin" type="text" value="${queryfinperiode}" class="form-control input-sm" name="queryfinperiode"/>
+                    </div>
                     <div class="form-group">
                         <label>
                             <spring:message code="appelOffre.numero" />

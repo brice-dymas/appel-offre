@@ -209,59 +209,63 @@ public class AppelOffreService
     @Override
     public Page<AppelOffre> findPaginated(final Long filialeId,
             final String numero, final String intitule,
-            final String maitreDouvrage, final boolean deleted, final int page, final Integer size)
+            final String maitreDouvrage, Date debutPeriodeDepot, Date finPeriodeDepot, final boolean deleted, final int page, final Integer size)
     {
         if (-1 == filialeId) {
             System.out.println("find-1 et deleted=" + deleted);
-            return dao.searchLike('%' + numero + '%', '%' + maitreDouvrage + '%', '%' + intitule + '%', deleted, new PageRequest(page, size, Sort.Direction.ASC, "numero"));
+            return dao.searchLike('%' + numero + '%', '%' + maitreDouvrage + '%',
+                    '%' + intitule + '%', deleted, debutPeriodeDepot, finPeriodeDepot,
+                    new PageRequest(page, size, Sort.Direction.ASC, "numero"));
         }
         else {
             System.out.println("find-2 et deleted=" + deleted);
-            return dao.searchLikeWithFiliale(filialeId, '%' + numero + '%', '%' + maitreDouvrage + '%', '%' + intitule + '%', deleted, new PageRequest(page, size, Sort.Direction.ASC, "numero"));
+            return dao.searchLikeWithFiliale(filialeId, '%' + numero + '%',
+                    '%' + maitreDouvrage + '%', '%' + intitule + '%', deleted, debutPeriodeDepot, finPeriodeDepot,
+                    new PageRequest(page, size, Sort.Direction.ASC, "numero"));
         }
     }
 
     @Override
     @Transactional
-    public AppelOffre updateFiles(AppelOffre appelOffre) {
+    public AppelOffre updateFiles(AppelOffre appelOffre)
+    {
         System.out.println("updateFile");
         AppelOffre editAppelOffre = dao.findOne(appelOffre.getId());
         List<String> files = editAppelOffre.getFiles();
         for (String file : appelOffre.getFiles()) {
-           if(!files.contains(file)){
-               System.out.println("File not inside");
-            editAppelOffre.addFile(file);
-           }else{
-               System.out.println("File not inside");
-           }
-           
+            if (!files.contains(file)) {
+                System.out.println("File not inside");
+                editAppelOffre.addFile(file);
+            }
+            else {
+                System.out.println("File not inside");
+            }
+
         }
-        
+
         return dao.save(editAppelOffre);
-        
+
     }
 
     @Override
-    
-    public AppelOffre deleteFiles(Long idAppelOffre, String file) {
-         System.out.println("removeFile");
+
+    public AppelOffre deleteFiles(Long idAppelOffre, String file)
+    {
+        System.out.println("removeFile");
         AppelOffre editAppelOffre = dao.findOne(idAppelOffre);
         List<String> files = editAppelOffre.getFiles();
         List<String> savedfiles = new ArrayList<>();
         for (String fi : files) {
-           if(!fi.contains(file)){
+            if (!fi.contains(file)) {
 
-               savedfiles.add(fi);
-           }
-           
+                savedfiles.add(fi);
+            }
+
         }
         editAppelOffre.setFiles(savedfiles);
         return dao.save(editAppelOffre);
     }
-    
-    
-    
-    
+
     public void disableEntity(AppelOffre entity)
     {
         System.out.println("DEBUT UPDATE SIMPLE service  where deleted=" + entity.isDeleted());

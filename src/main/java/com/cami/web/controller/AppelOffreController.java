@@ -19,10 +19,14 @@ import com.cami.persistence.service.ITypeCautionService;
 import com.cami.web.form.AppelOffreForm;
 import java.io.File;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletContext;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -139,6 +143,39 @@ public class AppelOffreController
                 deleted = true;
             }
         }
+        // POur la date
+        SimpleDateFormat dateFormatter = new SimpleDateFormat("dd/MM/yyyy");
+
+        final String debutPeriodeDepot = (webRequest.getParameter("querydebutperiode") != null)
+                ? webRequest.getParameter("querydebutperiode")
+                : "31/12/1975";
+        final String finPeriodeDepot = webRequest.getParameter("queryfinperiode") != null
+                ? webRequest.getParameter("queryfinperiode")
+                : "31/12/9999";
+        Date debutPeriode = new Date();
+        Date finPeriode = new Date();
+        try {
+            debutPeriode = dateFormatter.parse(debutPeriodeDepot);
+        }
+        catch (ParseException ex) {
+            try {
+                debutPeriode = dateFormatter.parse("31/12/1975");
+            }
+            catch (ParseException ex1) {
+                Logger.getLogger(CautionController.class.getName()).log(Level.SEVERE, null, ex1);
+            }
+        }
+        try {
+            finPeriode = dateFormatter.parse(finPeriodeDepot);
+        }
+        catch (ParseException ex) {
+            try {
+                finPeriode = dateFormatter.parse("31/12/9999");
+            }
+            catch (ParseException ex1) {
+                Logger.getLogger(CautionController.class.getName()).log(Level.SEVERE, null, ex1);
+            }
+        }
 
         final Integer page = webRequest.getParameter("page") != null
                 ? Integer.valueOf(webRequest.getParameter("page"))
@@ -147,13 +184,15 @@ public class AppelOffreController
                 ? Integer.valueOf(webRequest.getParameter("size"))
                 : 5;
 
-        final Page<AppelOffre> resultPage = appelOffreService.findPaginated(filialeId, numero, intitule, maitreDouvrage, deleted, page, size);
+        final Page<AppelOffre> resultPage = appelOffreService.findPaginated(filialeId, numero, intitule, maitreDouvrage, debutPeriode, finPeriode, deleted, page, size);
         final AppelOffre appelOffre = new AppelOffre();
         appelOffre.setIntitule(intitule);
         appelOffre.setMaitreDouvrage(maitreDouvrage);
         appelOffre.setNumero(numero);
         appelOffre.setFiliale(new Filiale(filialeId));
         model.addAttribute("appelOffre", appelOffre);
+        model.addAttribute("querydebutperiode", debutPeriodeDepot.equals("31/12/1975") ? "" : debutPeriodeDepot);
+        model.addAttribute("queryfinperiode", finPeriodeDepot.equals("31/12/9999") ? "" : finPeriodeDepot);
         model.addAttribute("page", page);
         model.addAttribute("Totalpage", resultPage.getTotalPages());
         model.addAttribute("size", size);
@@ -184,13 +223,6 @@ public class AppelOffreController
             return "appeloffre/new";
         }
         else {
-            try {
-                processData(appelOffreForm.getAppelOffre());
-            }
-            catch (IllegalStateException |
-                    IOException e) {
-                System.out.println(e.getMessage());
-            }
             System.out.println("non nul");
             redirectAttributes.addFlashAttribute("info", "alert.success.new");
             appelOffreService.create(appelOffreForm.getAppelOffre());
