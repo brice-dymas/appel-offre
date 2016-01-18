@@ -25,7 +25,8 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @Configuration
 @EnableTransactionManagement
 @EnableJpaRepositories(basePackages
-        = {
+        =
+        {
             "com.cami.persistence.dao"
         })
 public class PersistenceJPAConfig
@@ -36,7 +37,8 @@ public class PersistenceJPAConfig
     {
         final LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
         em.setDataSource(dataSource());
-        em.setPackagesToScan(new String[]{
+        em.setPackagesToScan(new String[]
+        {
             "com.cami.persistence.model"
         });
 
@@ -55,7 +57,7 @@ public class PersistenceJPAConfig
         dataSource
                 .setUrl("jdbc:mysql://localhost:3306/appelOffre?useUnicode=yes&characterEncoding=UTF-8");
         dataSource.setUsername("root");
-        dataSource.setPassword("elise");
+        dataSource.setPassword("");
         return dataSource;
     }
 
